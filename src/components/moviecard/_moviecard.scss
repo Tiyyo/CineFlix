@@ -1,0 +1,21 @@
+.movie-card  {
+    border: 1px solid rgba(57, 39, 9, 0.518);
+    box-shadow: 0 0 10px 1px rgba(40, 24, 10, 0.848);
+    border-radius: 9px;
+    min-width: 150px;
+    height: 300px;
+    overflow: hidden;
+
+    img {
+        height: 225px;
+        width: 100%;
+        object-fit: fill;
+        box-shadow: 0px 3px 18px 11px rgba(231, 155, 33, 0.202);
+    }
+
+    h3  {
+        color: $white;
+        font-size: 0.6rem;
+        padding: 0.2rem;
+    }
+}

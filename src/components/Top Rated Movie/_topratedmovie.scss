@@ -1,0 +1,22 @@
+.top-rated-movie  {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    overflow: hidden;
+    padding: 0 0 15px 0;
+
+    h2 {
+        color: $white;
+        font-size: 1.8rem;
+        font-weight: 500;
+        padding: 0.5rem;
+    }
+    
+    .cards-container  {
+        display: flex;
+        overflow-x: scroll;
+        flex-wrap: nowrap;
+        column-gap: 15px;
+        padding: 1rem 1.5rem;
+    }
+}

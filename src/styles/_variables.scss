@@ -1,0 +1,19 @@
+//--define breakpoints
+$breakpoints:  (
+    'small': (max-width: 480px),
+    'medium': (max-width: 768px),
+    'large': (max-width: 1200px),
+    'extra-large': (min-width: 1201px)
+);
+
+//--- Colors
+$title : rgba(143, 88, 2, 1);
+$blackbg : #121212;
+$main-primary : rgba(231, 154, 33, 1);
+$white : rgba(235, 230, 225, 0.944);
+
+
+//--Sizes
+$avatar-size : 32px;
+$heightheader : 80px;
+
