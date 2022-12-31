@@ -12,4 +12,92 @@ h1 {
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 3rem;
+
+}
+
+.search__container  {
+    position: fixed;
+    top: 80px;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+
+    .search  {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        border: none;
+
+
+        &__input  {
+            color: white;
+            box-shadow: 0 0 10px 5px rgba(231, 155, 33, 0.129);
+            border: none;
+            border-radius: 50%;
+            padding: 0.5rem 0.5rem;
+            font-family: inherit;
+            outline: none;
+            width: 2rem;
+            height: 2rem;
+            background-color: rgba(46, 35, 8, 0.656);
+            transition: border-radius 0.5s ease-in-out,
+                        width 0.5s ease-in-out;
+                        
+                        &:not(:placeholder-shown) ~ .search__backspace{
+                            display: block;
+                        }
+                        
+                        &::placeholder  {
+                padding-left: 0px;
+                color: white;
+            }
+            
+            &.isactive {
+                border-radius: 36px;
+                width: 85vw;            
+                padding-left: 35px;
+            }
+
+        }
+
+        &__icon {
+            position: absolute;
+            padding: 1.5rem;
+            cursor: pointer;
+            z-index: 10;
+
+            &.isactive {
+                left: -10px;
+            }
+
+        }
+        &__close {
+            position: absolute;
+            display: none;
+            right: 0;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: 0.5s ease-in;
+
+            &.isactive{
+                display: block;
+               right: -15px;
+            }
+
+        }
+        &__backspace  {
+            display: none;
+            position: absolute;
+            cursor: pointer;
+            font-size: 16px;
+
+            &.isactive {
+                right: 35px;
+            }
+ 
+        }
+    }
 }

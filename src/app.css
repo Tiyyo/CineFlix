@@ -56,13 +56,99 @@ input {
   min-height: 100vh;
 }
 .app .main {
-  padding-top: 80px;
+  padding-top: 120px;
 }
 
 h1 {
   color: white;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 3rem;
+}
+
+.search__container {
+  position: fixed;
+  top: 80px;
+  width: 100vw;
+  display: flex;
+  justify-content: flex-end;
+  height: 40px;
+}
+.search__container .search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+}
+.search__container .search__input {
+  color: white;
+  box-shadow: 0 0 10px 5px rgba(231, 155, 33, 0.129);
+  border: none;
+  border-radius: 50%;
+  padding: 0.5rem 0.5rem;
+  font-family: inherit;
+  outline: none;
+  width: 2rem;
+  height: 2rem;
+  background-color: rgba(46, 35, 8, 0.656);
+  transition: border-radius 0.5s ease-in-out, width 0.5s ease-in-out;
+}
+.search__container .search__input:not(:-moz-placeholder-shown) ~ .search__backspace {
+  display: block;
+}
+.search__container .search__input:not(:-ms-input-placeholder) ~ .search__backspace {
+  display: block;
+}
+.search__container .search__input:not(:placeholder-shown) ~ .search__backspace {
+  display: block;
+}
+.search__container .search__input::-moz-placeholder {
+  padding-left: 0px;
+  color: white;
+}
+.search__container .search__input:-ms-input-placeholder {
+  padding-left: 0px;
+  color: white;
+}
+.search__container .search__input::placeholder {
+  padding-left: 0px;
+  color: white;
+}
+.search__container .search__input.isactive {
+  border-radius: 36px;
+  width: 85vw;
+  padding-left: 35px;
+}
+.search__container .search__icon {
+  position: absolute;
+  padding: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+}
+.search__container .search__icon.isactive {
+  left: -10px;
+}
+.search__container .search__close {
+  position: absolute;
+  display: none;
+  right: 0;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: 0.5s ease-in;
+}
+.search__container .search__close.isactive {
+  display: block;
+  right: -15px;
+}
+.search__container .search__backspace {
+  display: none;
+  position: absolute;
+  cursor: pointer;
+  font-size: 16px;
+}
+.search__container .search__backspace.isactive {
+  right: 35px;
 }
 
 .logo {
@@ -95,18 +181,29 @@ h1 {
 }
 
 .movie-card {
-  background-color: white;
-  border: 2px solid green;
+  border: 1px solid rgba(57, 39, 9, 0.518);
+  box-shadow: 0 0 10px 1px rgba(40, 24, 10, 0.848);
   border-radius: 9px;
-  min-width: 124px;
-  height: 200px;
+  min-width: 150px;
+  height: 300px;
+  overflow: hidden;
+}
+.movie-card img {
+  height: 225px;
+  width: 100%;
+  -o-object-fit: fill;
+     object-fit: fill;
+  box-shadow: 0px 3px 18px 11px rgba(231, 155, 33, 0.202);
+}
+.movie-card h3 {
+  color: rgba(235, 230, 225, 0.944);
+  font-size: 0.6rem;
+  padding: 0.2rem;
 }
 
 .top-rated-movie {
-  border: 1px solid pink;
   display: flex;
   flex-direction: column;
-  max-height: 40vh;
   width: 100vw;
   overflow: hidden;
   padding: 0 0 15px 0;
@@ -123,12 +220,26 @@ h1 {
   flex-wrap: nowrap;
   -moz-column-gap: 15px;
        column-gap: 15px;
+  padding: 1rem 1.5rem;
 }
 
 .movie-card {
-  background-color: white;
-  border: 2px solid green;
+  border: 1px solid rgba(57, 39, 9, 0.518);
+  box-shadow: 0 0 10px 1px rgba(40, 24, 10, 0.848);
   border-radius: 9px;
-  min-width: 124px;
-  height: 200px;
+  min-width: 150px;
+  height: 300px;
+  overflow: hidden;
+}
+.movie-card img {
+  height: 225px;
+  width: 100%;
+  -o-object-fit: fill;
+     object-fit: fill;
+  box-shadow: 0px 3px 18px 11px rgba(231, 155, 33, 0.202);
+}
+.movie-card h3 {
+  color: rgba(235, 230, 225, 0.944);
+  font-size: 0.6rem;
+  padding: 0.2rem;
 }/*# sourceMappingURL=app.css.map */
