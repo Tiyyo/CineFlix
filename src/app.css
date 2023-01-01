@@ -122,12 +122,11 @@ h1 {
 }
 .search__container .search__icon {
   position: absolute;
-  padding: 1.5rem;
   cursor: pointer;
   z-index: 10;
 }
 .search__container .search__icon.isactive {
-  left: -10px;
+  left: 15px;
 }
 .search__container .search__close {
   position: absolute;

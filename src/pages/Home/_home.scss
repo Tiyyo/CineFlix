@@ -65,12 +65,11 @@ h1 {
 
         &__icon {
             position: absolute;
-            padding: 1.5rem;
             cursor: pointer;
             z-index: 10;
 
             &.isactive {
-                left: -10px;
+                left: 15px;
             }
 
         }

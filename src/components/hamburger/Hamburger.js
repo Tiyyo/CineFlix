@@ -3,9 +3,9 @@ import "./hamburgers.scss";
 
 const Hamburger = () => {
   return (
-    <button class="hamburger hamburger--spring" type="button">
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
+    <button className="hamburger hamburger--spring" type="button">
+      <span className="hamburger-box">
+        <span className="hamburger-inner"></span>
       </span>
     </button>
   );
