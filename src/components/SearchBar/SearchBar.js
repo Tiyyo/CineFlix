@@ -39,14 +39,16 @@ const SearchBar = () => {
 
   useEffect(() => {
     const fetchDataMovies = async () => {
-      const results = await axios
-        .get(
-          `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputValue}&include_adult=false`
-        )
-        .then((res) => setSearchedMovie(res.data.results));
+      const results = inputValue
+        ? await axios
+            .get(
+              `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputValue}&include_adult=false`
+            )
+            .then((res) => setSearchedMovie(res.data.results))
+        : "";
     };
     fetchDataMovies();
-  });
+  }, [inputValue]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -95,9 +97,10 @@ const SearchBar = () => {
           }
         >
           {searchedMovie.slice(0, 5).map((movie) => {
+            console.log(movie);
             return (
               <ul>
-                <li>{movie.title}</li>
+                <li key={movie.id}>{movie.title}</li>
               </ul>
             );
           })}
