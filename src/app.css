@@ -70,8 +70,9 @@ h1 {
   top: 80px;
   width: 100vw;
   display: flex;
-  justify-content: flex-end;
-  height: 40px;
+  flex-wrap: wrap;
+  align-content: flex-end;
+  flex-direction: column;
 }
 .search__container .search {
   position: relative;
@@ -126,7 +127,7 @@ h1 {
   z-index: 10;
 }
 .search__container .search__icon.isactive {
-  left: 15px;
+  left: 10px;
 }
 .search__container .search__close {
   position: absolute;
@@ -144,10 +145,28 @@ h1 {
   display: none;
   position: absolute;
   cursor: pointer;
-  font-size: 16px;
 }
 .search__container .search__backspace.isactive {
+  display: block;
   right: 35px;
+}
+.search__container .result {
+  display: none;
+}
+.search__container .result.isactive {
+  display: flex;
+  color: white;
+  flex-direction: column;
+  text-align: end;
+  padding: 1rem 0.5rem 1rem 0;
+  background-color: #000000;
+}
+.search__container .result.isactive li {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 20px;
+  align-items: center;
 }
 
 .logo {

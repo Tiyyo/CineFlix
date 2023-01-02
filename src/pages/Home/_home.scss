@@ -20,8 +20,9 @@ h1 {
     top: 80px;
     width: 100vw;
     display: flex;
-    justify-content: flex-end;
-    height: 40px;
+    flex-wrap: wrap;
+    align-content: flex-end;
+    flex-direction: column;
 
     .search  {
         position: relative;
@@ -69,7 +70,7 @@ h1 {
             z-index: 10;
 
             &.isactive {
-                left: 15px;
+                left: 10px;
             }
 
         }
@@ -82,7 +83,7 @@ h1 {
             transition: 0.5s ease-in;
 
             &.isactive{
-                display: block;
+              display: block;
                right: -15px;
             }
 
@@ -91,12 +92,32 @@ h1 {
             display: none;
             position: absolute;
             cursor: pointer;
-            font-size: 16px;
 
             &.isactive {
+                display: block;
                 right: 35px;
             }
  
+        }
+    }
+    .result {
+        display: none;
+
+        &.isactive {
+        display: flex;
+        color: white;
+        flex-direction: column;
+        text-align: end;
+        padding: 1rem 0.5rem 1rem 0;
+        background-color: $secondary_dark;
+        
+        li {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 20px;
+            align-items: center;
+            }
         }
     }
 }
