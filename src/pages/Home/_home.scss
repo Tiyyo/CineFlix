@@ -17,6 +17,7 @@ h1 {
 
 .search__container  {
     position: fixed;
+    z-index: 10;
     top: 80px;
     width: 100vw;
     display: flex;
@@ -118,6 +119,28 @@ h1 {
             height: 20px;
             align-items: center;
             }
+        }
+    }
+}
+
+.genre-list  {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    overflow: hidden;
+    padding: 0 0 15px 0;
+    
+    .outer-cards-container {
+        cursor:grab;
+        overflow: hidden;
+        display: flex;
+
+    .cards-container  {
+        display: flex;
+        // overflow-x: scroll;
+        flex-wrap: nowrap;
+        column-gap: 15px;
+        padding: 1rem 1.5rem;
         }
     }
 }

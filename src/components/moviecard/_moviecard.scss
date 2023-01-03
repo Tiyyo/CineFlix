@@ -1,21 +1,94 @@
 .movie-card  {
-    border: 1px solid rgba(57, 39, 9, 0.518);
-    box-shadow: 0 0 10px 1px rgba(40, 24, 10, 0.848);
+    font-family: 'Merriweather', serif;
+    background-color: rgba(0, 0, 0, 0.15);
+    border: 1px solid $primary_light;
+    // box-shadow: 0 0 10px 1px rgba(40, 24, 10, 0.848);
     border-radius: 9px;
     min-width: 150px;
-    height: 300px;
+    height: auto; // 300px 
     overflow: hidden;
+    // pointer-events: none;
+    list-style-type: none;
 
     img {
+        aspect-ratio: 2/3;
         height: 225px;
         width: 100%;
         object-fit: fill;
-        box-shadow: 0px 3px 18px 11px rgba(231, 155, 33, 0.202);
+        box-shadow: 0px -40px 60px 0px rgba(255, 255, 255, 0.414);
+
     }
 
     h3  {
         color: $white;
         font-size: 0.6rem;
-        padding: 0.2rem;
+        font-size: 700;
+ 
+    }
+
+    &__infos  {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.3rem 0.3rem;
+    }
+    &__like-icon {
+        svg  {
+            fill: $white;
+            fill-opacity: 1px;
+            // stroke: $white;
+            // stroke-width: 2px;
+        }
+    }
+
+    &__rating {
+        display: flex;
+        color: $white;
+        padding: 0.1rem 0.3rem 0.5rem 0.3rem;
+        font-size: 0.7rem;
+        align-items: baseline;
+        &__star-icon  {
+            svg {
+                fill: $yellow_star;
+                stroke: $yellow_star;
+                stroke-width: 1px;
+            }
+        }
+
+    }
+}
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-y: scroll;
+}
+
+.modal  {
+    font-family: 'Lato', sans-serif;
+    position: absolute;
+    height: 80%;
+    width: 80%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid $primary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: $secondary;
+    color: $white;
+
+    img {
+        aspect-ratio: 2/3;
+      
     }
 }

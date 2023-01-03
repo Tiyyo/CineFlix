@@ -5,13 +5,12 @@ import MovieCard from "../moviecard/MovieCard";
 import { MotionConfig } from "framer-motion";
 import { motion } from "framer-motion";
 
-const TopRatedMovie = ({ topMovies }) => {
-  const [topMoviesResults, setTopMoviesResults] = useState();
+const GenreList = () => {
+  const [genreMovieResults, setGenreResults] = useState();
+  const [genreList, setGenreList] = useState([]);
   const [config, setConfig] = useState([]);
   const [width, setWidth] = useState(0);
-
   const carousel = useRef();
-
   useEffect(() => {
     if (carousel.current == undefined) {
       console.log("current is not defined");
@@ -19,6 +18,7 @@ const TopRatedMovie = ({ topMovies }) => {
       setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
     }
   });
+
   useEffect(() => {
     const fetchConfig = async () => {
       const result = await axios
@@ -31,13 +31,33 @@ const TopRatedMovie = ({ topMovies }) => {
   }, []);
 
   useEffect(() => {
-    setTopMoviesResults(topMovies);
-  }, [topMovies]);
+    const fetchGenreList = async () => {
+      const result = await axios
+        .get(
+          "https://api.themoviedb.org/3/genre/movie/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR"
+        )
+        .then((res) => setGenreList(res.data.genres));
+    };
+    fetchGenreList();
+  }, []);
+
+  useEffect(() => {
+    const fetchGenreMovies = async () => {
+      const result = await axios
+        .get(
+          "https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=true&page=1&with_genres=comedie&watch_region=FR&with_watch_monetization_types=flatrate"
+        )
+        .then((res) => {
+          setGenreResults(res.data.results);
+        });
+    };
+    fetchGenreMovies();
+  }, []);
 
   return (
-    <div className="top-rated-movie">
-      <h2>Most Popular</h2>
-      {topMoviesResults ? (
+    <div className="genre-list">
+      <h2>Genre</h2>
+      {genreMovieResults ? (
         <motion.div
           className="outer-cards-container"
           ref={carousel}
@@ -48,7 +68,7 @@ const TopRatedMovie = ({ topMovies }) => {
             dragConstraints={{ right: 0, left: -width }}
             className="cards-container"
           >
-            {topMoviesResults.map((movie) => {
+            {genreMovieResults.map((movie) => {
               const props = { movie, config };
               return (
                 <MovieCard className="item" key={movie.id} props={props} />
@@ -63,4 +83,4 @@ const TopRatedMovie = ({ topMovies }) => {
   );
 };
 
-export default TopRatedMovie;
+export default GenreList;

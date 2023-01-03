@@ -2,16 +2,33 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import Loader from "../Loader/Loader";
+import BrowserNotSupportedIcon from "@mui/icons-material/BrowserNotSupported";
 
 import axios from "axios";
 import "swiper/css";
 import "swiper/css/pagination";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const LastestReleases = () => {
   const [lastReleaseMovies, setLastRelease] = useState([]);
   const [config, setConfig] = useState([]);
 
-  console.log(config);
+  const theme = createTheme({
+    palette: {
+      primary: {
+        light: "#ffbd45",
+        main: "#fb8c00",
+        dark: "#c25e00",
+        contrastText: "#000000",
+      },
+      secondary: {
+        light: "#484848",
+        main: "#121212",
+        dark: "#000000",
+        contrastText: "#ffffff",
+      },
+    },
+  });
   let currentDate = new Date();
   const date = currentDate.setMonth(-1);
 
@@ -51,14 +68,31 @@ const LastestReleases = () => {
           lastReleaseMovies.map((movie) => {
             return (
               <SwiperSlide key={movie.id}>
-                <img
-                  src={
-                    config.base_url +
-                    config.backdrop_sizes[0] +
-                    movie.poster_path
-                  }
-                  alt={"image of " + movie.title}
-                />
+                {movie.backdrop_path ? (
+                  <div>
+                    <img
+                      src={
+                        config.base_url +
+                        config.backdrop_sizes[1] +
+                        movie.backdrop_path
+                      }
+                      alt={"image of " + movie.title}
+                    />
+                    <h3>{movie.title}</h3>
+                  </div>
+                ) : (
+                  <ThemeProvider theme={theme}>
+                    <p className="message-error-img">
+                      Image content not avaiable
+                    </p>
+                    <BrowserNotSupportedIcon
+                      className="not-avaiable-icon"
+                      color="primary"
+                      size="large"
+                    />
+                    <p className="title-error-img">{movie.title}</p>
+                  </ThemeProvider>
+                )}
               </SwiperSlide>
             );
           })
