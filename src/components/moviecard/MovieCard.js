@@ -80,14 +80,14 @@ const MovieCard = ({ props }) => {
       <div
         className="movie-card"
         // layoutId={movie.id}
-        onClick={() => {
-          setOpen(true);
-        }}
       >
         {handleConfigState() ? (
           <img
             src={config.base_url + config.poster_sizes[1] + movie.poster_path}
             alt={"poster of " + movie.title}
+            onClick={() => {
+              setOpen(true);
+            }}
           />
         ) : (
           <Loader />
@@ -100,24 +100,15 @@ const MovieCard = ({ props }) => {
             />
           </div>
         </div>
-        <div className="movie-card__rating">
-          <span className="movie-card__rating__star-icon">
-            <StarOutlineIcon
-              sx={{
-                color: "rgba(235, 230, 225, 0.944)",
-              }}
-            />
-          </span>
-          <span className="movie-card__rating__rate">
-            <em>{movie.vote_average}</em> / 10{" "}
-          </span>
-        </div>
+        <div className="movie-card__rating"></div>
       </div>
       {open && (
-        <Overlay close={closeModal}>
+        <Overlay>
           <div className="modal">
             <ThemeProvider theme={theme}>
-              <CloseIcon />
+              <div className="modal__close-icon" onClick={closeModal}>
+                <CloseIcon sx={{ fontSize: "2.5rem" }} />
+              </div>
               {handleConfigState() ? (
                 <img
                   src={
@@ -130,12 +121,23 @@ const MovieCard = ({ props }) => {
               )}
               <h3 className="modal__title">{movie.title}</h3>
               <p className="modal__synopsis">{movie.overview}</p>
-              <div className="modal__genre">{displayGenreMovie()}</div>
-              <div className="modal__rating">
-                <span>
-                  <StarOutlineIcon />
-                </span>
-                <span>{movie.vote_average} / 10</span>
+              <div className="modal__labels">
+                <div className="modal__genre">{displayGenreMovie()}</div>
+
+                <div className="modal__release--date">{movie.release_date}</div>
+
+                <div className="modal__rating">
+                  <span className="modal__rating__star-icon">
+                    <StarOutlineIcon
+                      sx={{
+                        color: "rgba(235, 230, 225, 0.944)",
+                      }}
+                    />
+                  </span>
+                  <span className="modal__rating__rate">
+                    <em>{movie.vote_average}</em> / 10{" "}
+                  </span>
+                </div>
               </div>
               <div className="modal_like-icon">
                 <FavoriteTwoToneIcon />
