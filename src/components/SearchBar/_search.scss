@@ -1,0 +1,106 @@
+.search__container  {
+    align-items: center;
+    // width: 100vw;
+    // display: flex;
+    // flex-wrap: wrap;
+    // align-content: flex-end;
+    // flex-direction: column;
+
+    .search  {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        border: none;
+
+
+        &__input  {
+            color: white;
+            box-shadow: 0 0 10px 5px rgba(231, 155, 33, 0.129);
+            border: none;
+            border-radius: 50%;
+            padding: 0.5rem 0.5rem;
+            font-family: inherit;
+            outline: none;
+            width: 2rem;
+            height: 2rem;
+            background-color: rgba(46, 35, 8, 0.656);
+            transition: border-radius 0.5s ease-in-out,
+                        width 0.5s ease-in-out;
+                        
+                        &:not(:placeholder-shown) ~ .search__backspace{
+                            display: block;
+                        }
+                        
+                        &::placeholder  {
+                padding-left: 0px;
+                color: white;
+            }
+            
+            &.isactive {
+                border-radius: 36px;
+                max-width: 65vw;
+                width: 600px;
+                padding-left: 35px;
+            }
+
+        }
+
+        &__icon {
+            position: absolute;
+            cursor: pointer;
+            z-index: 10;
+
+            &.isactive {
+                left: 10px;
+            }
+
+        }
+        &__close {
+            position: absolute;
+            display: none;
+            right: 0;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: 0.5s ease-in;
+
+            &.isactive{
+              display: block;
+               right: -15px;
+            }
+
+        }
+        &__backspace  {
+            display: none;
+            position: absolute;
+            cursor: pointer;
+
+            &.isactive {
+                display: block;
+                right: 35px;
+            }
+ 
+        }
+    }
+    .result {
+        display: none;
+
+        &.isactive {
+        display: flex;
+        color: white;
+        flex-direction: column;
+        text-align: end;
+        padding: 1rem 0.5rem 1rem 0;
+        background-color: $secondary_dark;
+        
+        li {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 20px;
+            align-items: center;
+            }
+        }
+    }
+}

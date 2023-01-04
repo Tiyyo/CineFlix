@@ -1,0 +1,154 @@
+.banner--container  {
+    display: flex;
+    flex-direction: column;
+    max-height: 80vh;
+    padding: 2rem 0;
+    margin-bottom: 3rem;
+    
+    h2 {
+      color: white;
+      font-size: 1rem;
+      padding: 1rem 0 1rem 0.5rem;
+    }
+  }
+  .swiper {
+    width: 100vw;
+    height: auto;
+    font-size: 1.2rem;
+    // display: flex;
+    // gap : 20px ;
+    // display: none;
+  
+      .swiper-pagination-bullet  {
+       color: red;
+      }
+  }
+  
+  .swiper-slide {
+    position: relative;
+    height: auto;
+    text-align: center;
+    font-size: 18px;
+    background: transparent;
+  
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    flex-direction: column;
+  
+    p {
+      padding: 3rem 2rem;
+      color: white;
+      flex: 1 1 10%;
+    }
+  
+    .not-avaiable-icon  {
+      flex: 2 1 80%;
+    }
+  
+    h3  {
+      position: absolute;
+      bottom: 30px;
+      right: 25px;
+      background-color: black;
+      color: white;
+    }
+    
+  }
+  
+  .swiper-slide img {
+  
+    display: block;
+    aspect-ratio: 16/9;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    // border-radius: 18px;
+    // border: 3px solid $primary;
+  }
+
+  .horizontal--single-x-card  {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    overflow: hidden;
+    padding: 0 0 15px 0;
+
+    h2 {
+        font-family: 'Merriweather', serif;
+        letter-spacing: 1px;
+        color: $white;
+        font-size: 1.8rem;
+        font-weight: 700;
+        padding: 0.5rem;
+    }
+    .outer-cards-container {
+        cursor:grab;
+        overflow: hidden;
+        display: flex;
+
+    .cards-container  {
+        display: flex;
+        flex-wrap: nowrap;
+        column-gap: 15px;
+        padding: 1rem 1.5rem;
+        }
+    }
+}
+
+.recommendation--list  {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid green;
+    padding: 2rem 0;
+
+
+    h2 {
+        color: white;
+        // font-size: 1rem;
+        // padding: 1rem 0 1rem 0.5rem;
+        border: 1px solid red;
+      }
+}
+
+.recommendation--swiper  {
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    
+
+    .swiper-slide {
+        border-radius: 18px;
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        height: calc((100% - 30px) / 2) !important;
+      
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      }
+}

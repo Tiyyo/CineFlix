@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Loader from "../Loader/Loader";
-import MovieCard from "../moviecard/MovieCard";
-import { MotionConfig } from "framer-motion";
-import { motion } from "framer-motion";
+import "swiper/css";
+import "swiper/css/pagination";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import BrowserNotSupportedIcon from "@mui/icons-material/BrowserNotSupported";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
 
 const Trendings = () => {
   const [trendingMovies, setTrendMovie] = useState();
@@ -11,12 +14,22 @@ const Trendings = () => {
   const [width, setWidth] = useState(0);
   const carousel = useRef();
   const [genreList, setGenreList] = useState([]);
-  useEffect(() => {
-    if (carousel.current == undefined) {
-      console.log("current is not defined");
-    } else {
-      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-    }
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        light: "#ffbd45",
+        main: "#fb8c00",
+        dark: "#c25e00",
+        contrastText: "#000000",
+      },
+      secondary: {
+        light: "#484848",
+        main: "#121212",
+        dark: "#000000",
+        contrastText: "#ffffff",
+      },
+    },
   });
 
   useEffect(() => {
@@ -53,31 +66,53 @@ const Trendings = () => {
     };
     fetchTrendingMovies();
   }, []);
+
   return (
-    <div className="genre-list">
-      <h2>Trends Last Week</h2>
-      {trendingMovies ? (
-        <motion.div
-          className="outer-cards-container"
-          ref={carousel}
-          whileTap={{ cursor: "grabbing" }}
-        >
-          <motion.div
-            drag="x"
-            dragConstraints={{ right: 0, left: -width }}
-            className="cards-container"
-          >
-            {trendingMovies.map((movie) => {
-              const props = { movie, config };
-              return (
-                <MovieCard className="item" key={movie.id} props={props} />
-              );
-            })}
-          </motion.div>
-        </motion.div>
-      ) : (
-        <Loader />
-      )}
+    <div className="banner--container">
+      <h2>Trending Last week</h2>
+      <Swiper
+        pagination={{
+          dynamicBullets: true,
+        }}
+        modules={[Pagination]}
+        className="swiper"
+      >
+        {trendingMovies ? (
+          trendingMovies.map((movie) => {
+            return (
+              <SwiperSlide key={movie.id}>
+                {movie.backdrop_path ? (
+                  <div>
+                    <img
+                      src={
+                        config.base_url +
+                        config.backdrop_sizes[1] +
+                        movie.backdrop_path
+                      }
+                      alt={"image of " + movie.title}
+                    />
+                    <h3>{movie.title}</h3>
+                  </div>
+                ) : (
+                  <ThemeProvider theme={theme}>
+                    <p className="message-error-img">
+                      Image content not avaiable
+                    </p>
+                    <BrowserNotSupportedIcon
+                      className="not-avaiable-icon"
+                      color="primary"
+                      size="large"
+                    />
+                    <p className="title-error-img">{movie.title}</p>
+                  </ThemeProvider>
+                )}
+              </SwiperSlide>
+            );
+          })
+        ) : (
+          <Loader />
+        )}
+      </Swiper>
     </div>
   );
 };

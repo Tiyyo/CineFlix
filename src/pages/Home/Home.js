@@ -5,13 +5,15 @@ import Loader from "../../components/Loader/Loader";
 import Navigation from "../../components/Navigation/Navigation";
 import TopRatedMovie from "../../components/Top Rated Movie/TopRatedMovie";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import MoviesByGenre from "../../components/Genre/MoviesByGenre";
 import Trendings from "../../components/Genre/Trendings";
+import Recommendations from "../../components/Recommendations/Recommendations";
+import Avatar from "../../components/Navigation/Avatar";
 
 const Home = () => {
   const URLTopRated =
     "https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate";
 
+  const [searchIsActive, setSearchActive] = useState(false);
   const [topMovies, setTopMovies] = useState(null);
   const [lastestMovies, setlastestMovies] = useState([]);
   const [genreList, setGenreList] = useState([]);
@@ -43,16 +45,21 @@ const Home = () => {
       <div className="header">
         <Navigation />
         <SearchBar />
+        <Avatar />
       </div>
-      {loading ? (
+      {searchIsActive ? (
+        <div className="search--result__container"></div>
+      ) : loading ? (
         <div className="main">
-          <LastestReleases />
-          <TopRatedMovie topMovies={topMovies} />
-          <MoviesByGenre />
           <Trendings />
+          <LastestReleases />
+          <Recommendations />
+          {/* <TopRatedMovie topMovies={topMovies} /> */}
         </div>
       ) : (
-        <Loader />
+        <div className="loader--container">
+          <Loader />
+        </div>
       )}
     </div>
   );

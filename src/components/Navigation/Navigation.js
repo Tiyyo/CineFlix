@@ -15,9 +15,6 @@ const Navigation = () => {
           <li></li>
         </NavLink>
       </ul>
-      <button className="hamburger"></button>
-      <Logo></Logo>
-      <div className="avatar"></div>
     </div>
   );
 };

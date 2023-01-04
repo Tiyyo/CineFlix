@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+import React, { useEffect, useState, useRef } from "react";
 import Loader from "../Loader/Loader";
-import BrowserNotSupportedIcon from "@mui/icons-material/BrowserNotSupported";
+import { motion } from "framer-motion";
+import MovieCard from "../moviecard/MovieCard";
 
 import axios from "axios";
 import "swiper/css";
@@ -12,7 +11,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 const LastestReleases = () => {
   const [lastReleaseMovies, setLastRelease] = useState([]);
   const [config, setConfig] = useState([]);
-
+  const [width, setWidth] = useState(0);
   const theme = createTheme({
     palette: {
       primary: {
@@ -29,6 +28,8 @@ const LastestReleases = () => {
       },
     },
   });
+
+  const carousel = useRef();
   let currentDate = new Date();
   const date = currentDate.setMonth(-1);
 
@@ -44,6 +45,14 @@ const LastestReleases = () => {
   }, []);
 
   useEffect(() => {
+    if (carousel.current == undefined) {
+      console.log("current is not defined");
+    } else {
+      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
+    }
+  });
+
+  useEffect(() => {
     const fetchLastRelease = async () => {
       const results = await axios
         .get(
@@ -55,51 +64,30 @@ const LastestReleases = () => {
     fetchLastRelease();
   }, []);
   return (
-    <div className="last-release">
-      <h2>Latest Release</h2>
-      <Swiper
-        pagination={{
-          dynamicBullets: true,
-        }}
-        modules={[Pagination]}
-        className="swiper"
-      >
-        {lastReleaseMovies ? (
-          lastReleaseMovies.map((movie) => {
-            return (
-              <SwiperSlide key={movie.id}>
-                {movie.backdrop_path ? (
-                  <div>
-                    <img
-                      src={
-                        config.base_url +
-                        config.backdrop_sizes[1] +
-                        movie.backdrop_path
-                      }
-                      alt={"image of " + movie.title}
-                    />
-                    <h3>{movie.title}</h3>
-                  </div>
-                ) : (
-                  <ThemeProvider theme={theme}>
-                    <p className="message-error-img">
-                      Image content not avaiable
-                    </p>
-                    <BrowserNotSupportedIcon
-                      className="not-avaiable-icon"
-                      color="primary"
-                      size="large"
-                    />
-                    <p className="title-error-img">{movie.title}</p>
-                  </ThemeProvider>
-                )}
-              </SwiperSlide>
-            );
-          })
-        ) : (
-          <Loader />
-        )}
-      </Swiper>
+    <div className="horizontal--single-x-card">
+      <h2>Horizontal Single Card</h2>
+      {lastReleaseMovies ? (
+        <motion.div
+          className="outer-cards-container"
+          ref={carousel}
+          whileTap={{ cursor: "grabbing" }}
+        >
+          <motion.div
+            drag="x"
+            dragConstraints={{ right: 0, left: -width }}
+            className="cards-container"
+          >
+            {lastReleaseMovies.map((movie) => {
+              const props = { movie, config };
+              return (
+                <MovieCard className="item" key={movie.id} props={props} />
+              );
+            })}
+          </motion.div>
+        </motion.div>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };
