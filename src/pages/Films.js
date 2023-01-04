@@ -8,13 +8,9 @@
   { 
    loading ? <Loader /> : (                    
    <div classname='main--content'>
-    <Trendings>
-      <BannerCard>
-    <Trendings>
-    <Lastreleas
+    <Trendings />
+    <Lastrelease />
     <Recomandations>
-        <MovieCard/>
-    </Recomandations>
     <Genre />
     <Genre />
     <Genre />                                         
