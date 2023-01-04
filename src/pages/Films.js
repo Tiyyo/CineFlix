@@ -10,10 +10,10 @@
    <div classname='main--content'>
     <Trendings />
     <Lastrelease />
-    <Recomandations>
-    <Genre />
-    <Genre />
-    <Genre />                                         
+    <Recomandations />
+    {FavoriteGenre.map((genre) => {
+    return <Genre genre={genre} />
+  })}                                    
    </div>)
    )                  
    }                    
