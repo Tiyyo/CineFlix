@@ -1,5 +1,5 @@
 .app  {
-    background-color: $blackbg;
+    background-color: $secondary;
     min-height: 100vh;
 
     .header  {
@@ -9,6 +9,7 @@
         width: 100%;
         position: fixed;
         height: 50px;
+        background-color: $secondary;
 
         .nav {
             position: absolute;
@@ -29,7 +30,7 @@
             top: 50%;
             transform: translateY(-50%);
             right: 0.5rem;
-            border: 2px solid $main-primary;
+            border: 2px solid $primary;
             border-radius: 50%;
             width: $avatar-size;
             height: $avatar-size;
