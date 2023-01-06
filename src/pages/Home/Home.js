@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import LastestReleases from "../../components/LastestRelease/LastestReleases";
 import Loader from "../../components/Loader/Loader";
 import Navigation from "../../components/Navigation/Navigation";
-import TopRatedMovie from "../../components/Top Rated Movie/TopRatedMovie";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import Trendings from "../../components/Genre/Trendings";
-import Recommendations from "../../components/Recommendations/Recommendations";
+import Trendings from "../../components/Container/Trendings";
+import Recommendations from "../../components/Container/Recommendations";
 import Avatar from "../../components/Navigation/Avatar";
+import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
 
 const Home = () => {
   let currentDate = new Date();
@@ -44,6 +43,7 @@ const Home = () => {
   const [lastReleaseTvShow, setLastReleaseTvShow] = useState([]);
   const [recommendationsMovie, setRecommendationsMovie] = useState([]);
   const [recommendationsTvShow, setRecommendationsTvShow] = useState([]);
+  const [config, setConfig] = useState([]);
 
   const [topMovies, setTopMovies] = useState(null);
   const [lastestMovies, setlastestMovies] = useState([]);
@@ -59,9 +59,16 @@ const Home = () => {
 
   const lastReleaseAll = [...lastReleaseMovies, ...lastReleaseTvShow];
   const recommendationsAll = [
-    ...recommendationsMoviesUrl,
+    ...recommendationsMovie,
     ...recommendationsTvShow,
   ];
+  console.log(recommendationsAll);
+
+  let x = Math.ceil(Math.random() * 19); // random number to limit the amout n of elements in content arry to map
+
+  const pullData = (dataToPull) => {
+    console.log(dataToPull);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +83,6 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(lastReleaseMoviesUrl).then((res) => {
-        console.log(res.data.results);
         setLastReleaseMovies(res.data.results);
         setLoading(true);
       });
@@ -87,7 +93,6 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(lastReleaseTvShowUrl).then((res) => {
-        console.log(res.data.results);
         setLastReleaseTvShow(res.data.results);
         setLoading(true);
       });
@@ -125,6 +130,17 @@ const Home = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchConfig = async () => {
+      const result = await axios
+        .get(
+          "https://api.themoviedb.org/3/configuration?api_key=3e2abd7e10753ed410ed7439f7e1f93f"
+        )
+        .then((res) => setConfig(res.data.images));
+    };
+    fetchConfig();
+  }, []);
+
   // useEffect(() => {
   //   const fetchGenreList = async () => {
   //     const result = await axios
@@ -157,9 +173,14 @@ const Home = () => {
         <div className="search--result__container"></div>
       ) : loading ? (
         <div className="main">
-          <Trendings />
-          <LastestReleases />
-          <Recommendations />
+          <Trendings content={trendingAll} config={config} />
+          <HonrizontalCarousel
+            content={lastReleaseAll}
+            config={config}
+            title="What has been out lately ?"
+            randomValue={x}
+          />
+          <Recommendations content={recommendationsAll} config={config} />
           {/* <TopRatedMovie topMovies={topMovies} /> */}
         </div>
       ) : (

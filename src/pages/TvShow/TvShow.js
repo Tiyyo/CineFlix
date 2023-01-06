@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Trendings from "../../components/Genre/Trendings";
-import LastestReleases from "../../components/LastestRelease/LastestReleases";
+import Trendings from "../../components/Container/Trendings";
 import Loader from "../../components/Loader/Loader";
-import MovieCard from "../../components/moviecard/MovieCard";
+import MovieCard from "../../components/Cards/MovieCard";
 import Navigation from "../../components/Navigation/Navigation";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import BannerCard from "../../components/moviecard/BannerCard";
-import Recommendations from "../../components/Recommendations/Recommendations";
-import ListByGenre from "../../components/Genre/ListByGenre";
+import BannerCard from "../../components/Cards/BannerCard";
+import Recommendations from "../../components/Container/Recommendations";
+import ListByGenre from "../../components/Container/ListByGenre";
+import HorizontalCarousel from "../../components/Container/HonrizontalCarousel";
 
 const TvShow2 = () => {
   const [searchIsActive, setSearchActive] = useState(false);
@@ -31,7 +31,7 @@ const TvShow2 = () => {
           <Trendings>
             <BannerCard />
           </Trendings>
-          <LastestReleases />
+          <HorizontalCarousel />
           <Recommendations>
             <MovieCard />
           </Recommendations>

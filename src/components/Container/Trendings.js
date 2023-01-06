@@ -8,12 +8,14 @@ import BrowserNotSupportedIcon from "@mui/icons-material/BrowserNotSupported";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 
-const Trendings = () => {
-  const [trendingMovies, setTrendMovie] = useState();
-  const [config, setConfig] = useState([]);
-  const [width, setWidth] = useState(0);
-  const carousel = useRef();
+const Trendings = (props) => {
   const [genreList, setGenreList] = useState([]);
+
+  const { content, config } = props;
+
+  const imageFormatUrl = (el, number) => {
+    return config.base_url + config.backdrop_sizes[number] + el.backdrop_path;
+  };
 
   const theme = createTheme({
     palette: {
@@ -33,17 +35,6 @@ const Trendings = () => {
   });
 
   useEffect(() => {
-    const fetchConfig = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/configuration?api_key=3e2abd7e10753ed410ed7439f7e1f93f"
-        )
-        .then((res) => setConfig(res.data.images));
-    };
-    fetchConfig();
-  }, []);
-
-  useEffect(() => {
     const fetchGenreList = async () => {
       const result = await axios
         .get(
@@ -52,19 +43,6 @@ const Trendings = () => {
         .then((res) => setGenreList(res.data.genres));
     };
     fetchGenreList();
-  }, []);
-
-  useEffect(() => {
-    const fetchTrendingMovies = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/trending/movie/week?api_key=3e2abd7e10753ed410ed7439f7e1f93f"
-        )
-        .then((res) => {
-          setTrendMovie(res.data.results);
-        });
-    };
-    fetchTrendingMovies();
   }, []);
 
   return (
@@ -77,21 +55,17 @@ const Trendings = () => {
         modules={[Pagination]}
         className="swiper"
       >
-        {trendingMovies ? (
-          trendingMovies.map((movie) => {
+        {content && config !== undefined ? (
+          content.map((el) => {
             return (
-              <SwiperSlide key={movie.id}>
-                {movie.backdrop_path ? (
+              <SwiperSlide key={el.id}>
+                {el.backdrop_path ? (
                   <div>
                     <img
-                      src={
-                        config.base_url +
-                        config.backdrop_sizes[1] +
-                        movie.backdrop_path
-                      }
-                      alt={"image of " + movie.title}
+                      src={imageFormatUrl(el, 1)}
+                      alt={"image of " + el.title || el.original_name}
                     />
-                    <h3>{movie.title}</h3>
+                    <h3>{el.title || el.original_name}</h3>
                   </div>
                 ) : (
                   <ThemeProvider theme={theme}>
@@ -103,7 +77,9 @@ const Trendings = () => {
                       color="primary"
                       size="large"
                     />
-                    <p className="title-error-img">{movie.title}</p>
+                    <p className="title-error-img">
+                      {el.title || el.original_name}
+                    </p>
                   </ThemeProvider>
                 )}
               </SwiperSlide>

@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import Loader from "../Loader/Loader";
 import { motion } from "framer-motion";
-import MovieCard from "../moviecard/MovieCard";
+import MovieCard from "../Cards/MovieCard";
 
 import axios from "axios";
 import "swiper/css";
 import "swiper/css/pagination";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const LastestReleases = () => {
+const HonrizontalCarousel = (props) => {
   const [lastReleaseMovies, setLastRelease] = useState([]);
-  const [config, setConfig] = useState([]);
   const [width, setWidth] = useState(0);
   const theme = createTheme({
     palette: {
@@ -28,21 +27,10 @@ const LastestReleases = () => {
       },
     },
   });
-
+  const { content, config, title, randomValue } = props;
   const carousel = useRef();
   let currentDate = new Date();
   const date = currentDate.setMonth(-1);
-
-  useEffect(() => {
-    const fetchConfig = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/configuration?api_key=3e2abd7e10753ed410ed7439f7e1f93f"
-        )
-        .then((res) => setConfig(res.data.images));
-    };
-    fetchConfig();
-  }, []);
 
   useEffect(() => {
     if (carousel.current == undefined) {
@@ -52,21 +40,10 @@ const LastestReleases = () => {
     }
   });
 
-  useEffect(() => {
-    const fetchLastRelease = async () => {
-      const results = await axios
-        .get(
-          `https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=release_date.desc&include_adult=false&include_video=true&page=1&release_date.lte=${date}&watch_region=FR&with_watch_monetization_types=flatrate
-          `
-        )
-        .then((res) => setLastRelease(res.data.results));
-    };
-    fetchLastRelease();
-  }, []);
   return (
     <div className="horizontal--single-x-card">
-      <h2>Horizontal Single Card</h2>
-      {lastReleaseMovies ? (
+      <h2>{title}</h2>
+      {content ? (
         <motion.div
           className="outer-cards-container"
           ref={carousel}
@@ -77,10 +54,14 @@ const LastestReleases = () => {
             dragConstraints={{ right: 0, left: -width }}
             className="cards-container"
           >
-            {lastReleaseMovies.map((movie) => {
-              const props = { movie, config };
+            {content.slice(randomValue, 20).map((el) => {
               return (
-                <MovieCard className="item" key={movie.id} props={props} />
+                <MovieCard
+                  className="item"
+                  key={el.id}
+                  content={el}
+                  config={config}
+                />
               );
             })}
           </motion.div>
@@ -92,4 +73,4 @@ const LastestReleases = () => {
   );
 };
 
-export default LastestReleases;
+export default HonrizontalCarousel;

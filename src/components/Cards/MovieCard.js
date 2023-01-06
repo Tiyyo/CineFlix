@@ -7,8 +7,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
 
-const MovieCard = ({ props }) => {
-  const { movie, config } = props;
+const MovieCard = (props) => {
+  const { content, config } = props;
   const [open, setOpen] = useState(false);
   const [genreList, setGenreList] = useState([]);
 
@@ -45,7 +45,7 @@ const MovieCard = ({ props }) => {
   });
 
   const displayGenreMovie = () => {
-    let movieGenre = movie.genre_ids;
+    let movieGenre = content.genre_ids;
     let movieGenreNames = [];
     movieGenre.forEach((genre) => {
       genreList.forEach((el) => {
@@ -57,7 +57,7 @@ const MovieCard = ({ props }) => {
     });
     return movieGenreNames.map((genreName) => {
       return (
-        <span key={movie.name} className="genre-name">
+        <span key={content.name} className="genre-name">
           {genreName}
         </span>
       );
@@ -81,10 +81,10 @@ const MovieCard = ({ props }) => {
         className="movie-card"
         // layoutId={movie.id}
       >
-        {handleConfigState() ? (
+        {handleConfigState() && content.poster_path ? (
           <img
-            src={config.base_url + config.poster_sizes[1] + movie.poster_path}
-            alt={"poster of " + movie.title}
+            src={config.base_url + config.poster_sizes[1] + content.poster_path}
+            alt={"poster of " + content.title}
             onClick={() => {
               setOpen(true);
             }}
@@ -93,7 +93,7 @@ const MovieCard = ({ props }) => {
           <Loader />
         )}
         <div className="movie-card__infos">
-          <h3>{props.movie.title}</h3>
+          <h3>{props.content.title}</h3>
           <div className="movie-card__like-icon">
             <FavoriteTwoToneIcon
               sx={{ color: "rgba(235, 230, 225, 0.944)", fontSize: "1.2rem" }}
@@ -112,19 +112,23 @@ const MovieCard = ({ props }) => {
               {handleConfigState() ? (
                 <img
                   src={
-                    config.base_url + config.poster_sizes[2] + movie.poster_path
+                    config.base_url +
+                    config.poster_sizes[2] +
+                    content.poster_path
                   }
-                  alt={"poster of " + movie.title}
+                  alt={"poster of " + content.title}
                 />
               ) : (
                 <Loader />
               )}
-              <h3 className="modal__title">{movie.title}</h3>
-              <p className="modal__synopsis">{movie.overview}</p>
+              <h3 className="modal__title">{content.title}</h3>
+              <p className="modal__synopsis">{content.overview}</p>
               <div className="modal__labels">
                 <div className="modal__genre">{displayGenreMovie()}</div>
 
-                <div className="modal__release--date">{movie.release_date}</div>
+                <div className="modal__release--date">
+                  {content.release_date}
+                </div>
 
                 <div className="modal__rating">
                   <span className="modal__rating__star-icon">
@@ -135,7 +139,7 @@ const MovieCard = ({ props }) => {
                     />
                   </span>
                   <span className="modal__rating__rate">
-                    <em>{movie.vote_average}</em> / 10{" "}
+                    <em>{content.vote_average}</em> / 10{" "}
                   </span>
                 </div>
               </div>
