@@ -14,9 +14,12 @@ const Navigation = () => {
 
     useEffect(() => {
       const fetchData = async () => {
-        const result = await axios.get(url).then((res) => {
-          setContent(res.data.results);
-        });
+        const result = await axios
+          .get(url)
+          .then((res) => {
+            setContent(res.data.results);
+          })
+          .catch((error) => console.log(error));
       };
       fetchData();
     }, []);
