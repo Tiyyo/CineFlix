@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React from "react";
 
 const RecommendCard = (props) => {
@@ -7,11 +8,13 @@ const RecommendCard = (props) => {
   };
   return (
     <>
-      <img
-        src={imageFormatUrl(content, 1)}
-        alt={"poster of " + content.title || content.original_name}
-      />
-      <p style={{ color: "teal" }}>{content.title || content.original_name}</p>
+      <motion.div className="recommend-card">
+        <img
+          src={imageFormatUrl(content, 0)}
+          alt={"poster of " + content.title || content.original_name}
+        />
+        <p>{content.title || content.original_name}</p>
+      </motion.div>
     </>
   );
 };

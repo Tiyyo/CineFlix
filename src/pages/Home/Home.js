@@ -62,7 +62,6 @@ const Home = () => {
     ...recommendationsMovie,
     ...recommendationsTvShow,
   ];
-  console.log(recommendationsAll);
 
   let x = Math.ceil(Math.random() * 19); // random number to limit the amout n of elements in content arry to map
 
