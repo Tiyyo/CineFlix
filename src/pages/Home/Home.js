@@ -7,6 +7,7 @@ import Trendings from "../../components/Container/Trendings";
 import Recommendations from "../../components/Container/Recommendations";
 import Avatar from "../../components/Navigation/Avatar";
 import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
+import useFetch from "../../utils/useFetch";
 
 const Home = () => {
   let currentDate = new Date();
@@ -38,15 +39,7 @@ const Home = () => {
 
   const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [trendingAll, setTrendingAll] = useState([]);
-  const [lastReleaseMovies, setLastReleaseMovies] = useState([]);
-  const [lastReleaseTvShow, setLastReleaseTvShow] = useState([]);
-  const [recommendationsMovie, setRecommendationsMovie] = useState([]);
-  const [recommendationsTvShow, setRecommendationsTvShow] = useState([]);
   const [config, setConfig] = useState([]);
-
-  const [topMovies, setTopMovies] = useState(null);
-  const [lastestMovies, setlastestMovies] = useState([]);
   const [genreList, setGenreList] = useState([]);
 
   const token = {
@@ -57,78 +50,26 @@ const Home = () => {
     },
   };
 
-  const lastReleaseAll = [...lastReleaseMovies, ...lastReleaseTvShow];
-  const recommendationsAll = [
-    ...recommendationsMovie,
-    ...recommendationsTvShow,
-  ];
+ 
+
 
   let x = Math.ceil(Math.random() * 19); // random number to limit the amout n of elements in content arry to map
 
   const pullData = (dataToPull) => {
     console.log(dataToPull);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(trendingAllUrl).then((res) => {
-        setTrendingAll(res.data.results);
-        setLoading(true);
-      });
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(lastReleaseMoviesUrl).then((res) => {
-        setLastReleaseMovies(res.data.results);
-        setLoading(true);
-      });
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(lastReleaseTvShowUrl).then((res) => {
-        setLastReleaseTvShow(res.data.results);
-        setLoading(true);
-      });
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(recommendationsMoviesUrl).then((res) => {
-        setRecommendationsMovie(res.data.results);
-        setLoading(true);
-      });
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(recommendationsMoviesUrl).then((res) => {
-        setRecommendationsMovie(res.data.results);
-        setLoading(true);
-      });
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get(recommendationsTvShowUrl).then((res) => {
-        setRecommendationsTvShow(res.data.results);
-        setLoading(true);
-      });
-    };
-    fetchData();
-  }, []);
-
+  
+  const trendingAll = useFetch(trendingAllUrl);
+  const lastReleaseMovies = useFetch(lastReleaseMoviesUrl)
+  const lastReleaseTvShow = useFetch(lastReleaseTvShowUrl)
+  const lastReleaseAll = [...lastReleaseMovies, ...lastReleaseTvShow];
+  const recommendationsMovie = useFetch(recommendationsMoviesUrl)
+  const recommendationsTvShow = useFetch(recommendationsTvShowUrl)
+    const recommendationsAll = [
+    ...recommendationsMovie,
+    ...recommendationsTvShow,
+  ];
+  
   useEffect(() => {
     const fetchConfig = async () => {
       const result = await axios
@@ -151,15 +92,6 @@ const Home = () => {
   //   fetchGenreList();
   // }, []);
 
-  // useEffect(() => {
-  //   const fetchDataTopMovies = async () => {
-  //     const result = await axios.get(URLTopRated).then((res) => {
-  //       setTopMovies(res.data.results);
-  //       setLoading(true);
-  //     });
-  //   };
-  //   fetchDataTopMovies();
-  // }, []);
 
   return (
     <div className="app">
