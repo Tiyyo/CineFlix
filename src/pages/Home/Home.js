@@ -38,7 +38,7 @@ const Home = () => {
   ];
 
   const [searchIsActive, setSearchActive] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [config, setConfig] = useState([]);
   const [genreList, setGenreList] = useState([]);
 
@@ -50,26 +50,66 @@ const Home = () => {
     },
   };
 
- 
-
-
   let x = Math.ceil(Math.random() * 19); // random number to limit the amout n of elements in content arry to map
 
   const pullData = (dataToPull) => {
     console.log(dataToPull);
   };
-  
-  const trendingAll = useFetch(trendingAllUrl);
-  const lastReleaseMovies = useFetch(lastReleaseMoviesUrl)
-  const lastReleaseTvShow = useFetch(lastReleaseTvShowUrl)
+  useEffect(() => {}, []);
+
+  const {
+    content: trendingAll,
+    error: error1,
+    loading: loadTrends,
+  } = useFetch(trendingAllUrl);
+
+  const {
+    content: lastReleaseMovies,
+    error: error2,
+    loading: loadLastMovies,
+  } = useFetch(lastReleaseMoviesUrl);
+  const {
+    content: lastReleaseTvShow,
+    error: error3,
+    loading: loadLastTvShows,
+  } = useFetch(lastReleaseTvShowUrl);
+
   const lastReleaseAll = [...lastReleaseMovies, ...lastReleaseTvShow];
-  const recommendationsMovie = useFetch(recommendationsMoviesUrl)
-  const recommendationsTvShow = useFetch(recommendationsTvShowUrl)
-    const recommendationsAll = [
+
+  const {
+    content: recommendationsMovie,
+    error: error5,
+    loading: loadRecommendMovies,
+  } = useFetch(recommendationsMoviesUrl);
+  const {
+    content: recommendationsTvShow,
+    error: error6,
+    loading: loadRecommendTvShows,
+  } = useFetch(recommendationsTvShowUrl);
+
+  const recommendationsAll = [
     ...recommendationsMovie,
     ...recommendationsTvShow,
   ];
-  
+
+  const handleLoads = () => {
+    let loadsArray = [
+      loadTrends,
+      loadLastMovies,
+      loadLastTvShows,
+      loadRecommendMovies,
+      loadRecommendMovies,
+    ];
+
+    const loadState = () => {
+      loadsArray.every((load) => {
+        console.log(load);
+        load === true;
+      });
+    };
+  };
+  handleLoads();
+
   useEffect(() => {
     const fetchConfig = async () => {
       const result = await axios
@@ -81,6 +121,24 @@ const Home = () => {
     fetchConfig();
   }, []);
 
+  // const handleLoadingState = () => {
+  //   let arrData = [trendingAll, lastReleaseAll, recommendationsAll];
+  //   arrData.forEach((el) => {
+  //     if (el.length > 1) {
+  //       alert("empty");
+  //       setLoading(false);
+  //     } else {
+  //       setLoading(true);
+  //     }
+  //   });
+  //   console.log(arrData);
+  //   setLoading(true);
+  // };
+
+  // useEffect(() => {
+  //   handleLoadingState();
+  // }, [trendingAll, lastReleaseAll, recommendationsAll]);
+
   // useEffect(() => {
   //   const fetchGenreList = async () => {
   //     const result = await axios
@@ -91,7 +149,6 @@ const Home = () => {
   //   };
   //   fetchGenreList();
   // }, []);
-
 
   return (
     <div className="app">

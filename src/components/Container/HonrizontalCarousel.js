@@ -3,34 +3,10 @@ import Loader from "../Loader/Loader";
 import { motion } from "framer-motion";
 import MovieCard from "../Cards/MovieCard";
 
-import axios from "axios";
-import "swiper/css";
-import "swiper/css/pagination";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 const HonrizontalCarousel = (props) => {
-  const [lastReleaseMovies, setLastRelease] = useState([]);
   const [width, setWidth] = useState(0);
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: "#ffbd45",
-        main: "#fb8c00",
-        dark: "#c25e00",
-        contrastText: "#000000",
-      },
-      secondary: {
-        light: "#484848",
-        main: "#121212",
-        dark: "#000000",
-        contrastText: "#ffffff",
-      },
-    },
-  });
   const { content, config, title, randomValue } = props;
   const carousel = useRef();
-  let currentDate = new Date();
-  const date = currentDate.setMonth(-1);
 
   useEffect(() => {
     if (carousel.current == undefined) {
@@ -54,16 +30,23 @@ const HonrizontalCarousel = (props) => {
             dragConstraints={{ right: 0, left: -width }}
             className="cards-container"
           >
-            {content.slice(randomValue, 20).map((el) => {
-              return (
-                <MovieCard
-                  className="item"
-                  key={el.id}
-                  content={el}
-                  config={config}
-                />
-              );
-            })}
+            {content.length === 40 ? (
+              content.slice(randomValue, 20).map((el) => {
+                console.log(content);
+                return (
+                  <MovieCard
+                    className="item"
+                    key={el.id}
+                    content={el}
+                    config={config}
+                  />
+                );
+              })
+            ) : (
+              <div className="loader_horizontal">
+                <Loader />
+              </div>
+            )}
           </motion.div>
         </motion.div>
       ) : (

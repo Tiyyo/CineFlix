@@ -29,14 +29,6 @@ const Recommendations = (props) => {
     return arr;
   };
 
-  console.log(tableau);
-  console.log(shuffle(tableau));
-
-  // // Used like so
-  // var arr = [2, 11, 37, 42];
-  // shuffle(arr);
-  // console.log(arr);
-
   return (
     <div className="recommendation--list">
       <h2>You should look at it </h2>
