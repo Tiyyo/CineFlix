@@ -100,15 +100,20 @@ const Home = () => {
       loadRecommendMovies,
       loadRecommendMovies,
     ];
+    
 
-    const loadState = () => {
-      loadsArray.every((load) => {
-        console.log(load);
-        load === true;
-      });
-    };
-  };
-  handleLoads();
+
+    const updatelLoading = () => {
+      const isTrue = (el) => {
+        return el === true
+          }
+      return setLoading(loadsArray.every(isTrue))
+    }
+    
+    useEffect(() => {
+      updateLoading()
+    },[loadsArray])
+    
 
   useEffect(() => {
     const fetchConfig = async () => {
