@@ -38,7 +38,7 @@ const Home = () => {
   ];
 
   const [searchIsActive, setSearchActive] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState([]);
   const [genreList, setGenreList] = useState([]);
 
@@ -91,15 +91,14 @@ const Home = () => {
     ...recommendationsMovie,
     ...recommendationsTvShow,
   ];
-
-  const handleLoads = () => {
+  
     let loadsArray = [
       loadTrends,
       loadLastMovies,
       loadLastTvShows,
       loadRecommendMovies,
       loadRecommendMovies,
-    ];
+ 
     
 
 
@@ -112,7 +111,7 @@ const Home = () => {
     
     useEffect(() => {
       updateLoading()
-    },[loadsArray])
+    }, loadsArray )
     
 
   useEffect(() => {
