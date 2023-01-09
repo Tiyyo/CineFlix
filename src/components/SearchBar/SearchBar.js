@@ -10,7 +10,9 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+  const { getInputValue, getOpenState } = props;
+
   const [searchActive, setSearchActive] = useState(false);
   const [searchedMovie, setSearchedMovie] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -56,7 +58,10 @@ const SearchBar = () => {
         <button className="search">
           <div
             className={searchActive ? "search__icon isactive" : "search__icon"}
-            onClick={() => setSearchActive(true)}
+            onClick={() => {
+              setSearchActive(true);
+              getOpenState(true);
+            }}
           >
             <SearchIcon color="primary" />
           </div>
@@ -67,6 +72,7 @@ const SearchBar = () => {
             onClick={() => {
               setSearchActive(false);
               handleBackSpace();
+              getOpenState(false);
             }}
           >
             <CloseIcon color="primary" />
@@ -75,7 +81,9 @@ const SearchBar = () => {
             className={
               searchActive ? "search__backspace isactive" : "search__backspace"
             }
-            onClick={handleBackSpace}
+            onClick={() => {
+              handleBackSpace();
+            }}
           >
             <BackspaceIcon color="primary" />
           </div>
@@ -85,7 +93,7 @@ const SearchBar = () => {
               searchActive ? "search__input isactive" : "search__input"
             }
             placeholder={searchActive ? "Search" : ""}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => getInputValue(e.target.value)}
             autoFocus
           />
         </button>
@@ -97,7 +105,6 @@ const SearchBar = () => {
           }
         >
           {searchedMovie.slice(0, 5).map((movie) => {
-            console.log(movie);
             return (
               <ul>
                 <li key={movie.id}>{movie.title}</li>

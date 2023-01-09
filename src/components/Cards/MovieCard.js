@@ -90,7 +90,7 @@ const MovieCard = (props) => {
             }}
           />
         ) : (
-          <Loader />
+          <div className="load--image__container"></div>
         )}
         <div className="movie-card__infos">
           <h3>{props.content.title}</h3>

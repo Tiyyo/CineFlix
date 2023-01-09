@@ -4,9 +4,23 @@ import { motion } from "framer-motion";
 import MovieCard from "../Cards/MovieCard";
 
 const HonrizontalCarousel = (props) => {
+  const { content, config, title } = props;
   const [width, setWidth] = useState(0);
-  const { content, config, title, randomValue } = props;
   const carousel = useRef();
+
+  const shuffle = (arr) => {
+    let currentIndex = arr.length,
+      randomIndex;
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      [arr[currentIndex], arr[randomIndex]] = [
+        arr[randomIndex],
+        arr[currentIndex],
+      ];
+    }
+    return arr;
+  };
 
   useEffect(() => {
     if (carousel.current == undefined) {
@@ -19,7 +33,7 @@ const HonrizontalCarousel = (props) => {
   return (
     <div className="horizontal--single-x-card">
       <h2>{title}</h2>
-      {content ? (
+      {content.length > 1 ? (
         <motion.div
           className="outer-cards-container"
           ref={carousel}
@@ -30,9 +44,9 @@ const HonrizontalCarousel = (props) => {
             dragConstraints={{ right: 0, left: -width }}
             className="cards-container"
           >
-            {content.length === 40 ? (
-              content.slice(randomValue, 20).map((el) => {
-                console.log(content);
+            {shuffle(content)
+              .slice(0, 20)
+              .map((el) => {
                 return (
                   <MovieCard
                     className="item"
@@ -41,12 +55,7 @@ const HonrizontalCarousel = (props) => {
                     config={config}
                   />
                 );
-              })
-            ) : (
-              <div className="loader_horizontal">
-                <Loader />
-              </div>
-            )}
+              })}
           </motion.div>
         </motion.div>
       ) : (

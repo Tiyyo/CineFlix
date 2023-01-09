@@ -1,19 +1,11 @@
 import React, { useRef, useState } from "react";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Grid, Pagination } from "swiper";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";
-import MovieCard from "../Cards/MovieCard";
 import RecommendCard from "../Cards/RecommendCard";
 
 const Recommendations = (props) => {
   const { content, config } = props;
-
-  const tableau = [1, 2, 3, 4, 5];
 
   const shuffle = (arr) => {
     let currentIndex = arr.length,

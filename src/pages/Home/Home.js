@@ -1,13 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import Navigation from "../../components/Navigation/Navigation";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Trendings from "../../components/Container/Trendings";
+import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import Recommendations from "../../components/Container/Recommendations";
 import Avatar from "../../components/Navigation/Avatar";
 import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
+import useSearch from "../../utils/useSearch";
 
 const Home = () => {
   let currentDate = new Date();
@@ -41,6 +43,8 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState([]);
   const [genreList, setGenreList] = useState([]);
+  const [inputSearchValue, setInputSearchValue] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const token = {
     headers: {
@@ -50,12 +54,26 @@ const Home = () => {
     },
   };
 
-  let x = Math.ceil(Math.random() * 19); // random number to limit the amout n of elements in content arry to map
-
-  const pullData = (dataToPull) => {
-    console.log(dataToPull);
+  const pullInputValue = (inputValue) => {
+    setInputSearchValue(inputValue);
+    if (inputValue.length >= 1) {
+      setSearchActive(true);
+    } else {
+      setSearchActive(false);
+    }
   };
-  useEffect(() => {}, []);
+
+  const pullSearchOpenState = (state) => {
+    if (state === true) {
+      setSearchActive(true);
+    } else {
+      setSearchActive(false);
+    }
+  };
+
+  const pullPageNumber = (something) => {
+    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+  };
 
   const {
     content: trendingAll,
@@ -91,28 +109,25 @@ const Home = () => {
     ...recommendationsMovie,
     ...recommendationsTvShow,
   ];
-  
-    let loadsArray = [
-      loadTrends,
-      loadLastMovies,
-      loadLastTvShows,
-      loadRecommendMovies,
-      loadRecommendMovies,
- 
-    
 
+  const search = useSearch(inputSearchValue, pageNumber);
+  let loadsArray = [
+    loadTrends,
+    loadLastMovies,
+    loadLastTvShows,
+    loadRecommendMovies,
+    loadRecommendTvShows,
+  ];
 
+  useEffect(() => {
     const updatelLoading = () => {
       const isTrue = (el) => {
-        return el === true
-          }
-      return setLoading(loadsArray.every(isTrue))
-    }
-    
-    useEffect(() => {
-      updateLoading()
-    }, loadsArray )
-    
+        return el === true;
+      };
+      return setLoading(loadsArray.every(isTrue));
+    };
+    updatelLoading();
+  }, [loadsArray]);
 
   useEffect(() => {
     const fetchConfig = async () => {
@@ -125,23 +140,18 @@ const Home = () => {
     fetchConfig();
   }, []);
 
-  // const handleLoadingState = () => {
-  //   let arrData = [trendingAll, lastReleaseAll, recommendationsAll];
-  //   arrData.forEach((el) => {
-  //     if (el.length > 1) {
-  //       alert("empty");
-  //       setLoading(false);
-  //     } else {
-  //       setLoading(true);
-  //     }
-  //   });
-  //   console.log(arrData);
-  //   setLoading(true);
-  // };
-
   // useEffect(() => {
-  //   handleLoadingState();
-  // }, [trendingAll, lastReleaseAll, recommendationsAll]);
+  //   const fetchDataMovies = async () => {
+  //     const results = inputValue
+  //       ? await axios
+  //           .get(
+  //             `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputValue}&include_adult=false`
+  //           )
+  //           .then((res) => setSearchedMovie(res.data.results))
+  //       : "";
+  //   };
+  //   fetchDataMovies();
+  // }, [inputValue]);
 
   // useEffect(() => {
   //   const fetchGenreList = async () => {
@@ -158,11 +168,16 @@ const Home = () => {
     <div className="app">
       <div className="header">
         <Navigation />
-        <SearchBar />
+        <SearchBar
+          getInputValue={pullInputValue}
+          getOpenState={pullSearchOpenState}
+        />
         <Avatar />
       </div>
-      {searchIsActive ? (
-        <div className="search--result__container"></div>
+      {searchIsActive === true ? (
+        <div className="search--result__container">
+          <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
+        </div>
       ) : loading ? (
         <div className="main">
           <Trendings content={trendingAll} config={config} />
@@ -170,10 +185,8 @@ const Home = () => {
             content={lastReleaseAll}
             config={config}
             title="What has been out lately ?"
-            randomValue={x}
           />
           <Recommendations content={recommendationsAll} config={config} />
-          {/* <TopRatedMovie topMovies={topMovies} /> */}
         </div>
       ) : (
         <div className="loader--container">
@@ -185,6 +198,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// --header 'Authorization: Bearer <<access_token>>' \
-// --header 'Content-Type: application/json;charset=utf-8'

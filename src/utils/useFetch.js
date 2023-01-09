@@ -16,11 +16,11 @@ const useFetch = (url) => {
         .catch((error) => {
           setError(error);
         })
-        .finnaly(() => setLoading(true));
+        .finally(() => setLoading(true));
     };
     fetchData();
   }, []);
-  return { content, error };
+  return { content, error, loading };
 };
 
 export default useFetch;
