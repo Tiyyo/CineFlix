@@ -63,9 +63,9 @@ const Trendings = (props) => {
                   <div>
                     <img
                       src={imageFormatUrl(el, 1)}
-                      alt={"image of " + el.title || el.original_name}
+                      alt={"image of " + el.title || el.name}
                     />
-                    <h3>{el.title || el.original_name}</h3>
+                    <h3>{el.title || el.name}</h3>
                   </div>
                 ) : (
                   <ThemeProvider theme={theme}>
@@ -77,9 +77,7 @@ const Trendings = (props) => {
                       color="primary"
                       size="large"
                     />
-                    <p className="title-error-img">
-                      {el.title || el.original_name}
-                    </p>
+                    <p className="title-error-img">{el.title || el.name}</p>
                   </ThemeProvider>
                 )}
               </SwiperSlide>

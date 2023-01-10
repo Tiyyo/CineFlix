@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Trendings from "../../components/Container/Trendings";
 import Loader from "../../components/Loader/Loader";
 import MovieCard from "../../components/Cards/MovieCard";
@@ -8,36 +8,129 @@ import BannerCard from "../../components/Cards/BannerCard";
 import Recommendations from "../../components/Container/Recommendations";
 import ListByGenre from "../../components/Container/ListByGenre";
 import HorizontalCarousel from "../../components/Container/HonrizontalCarousel";
+import useFetch from "../../utils/useFetch";
+import useSearch from "../../utils/useSearch";
+import Avatar from "../../components/Navigation/Avatar";
+import DisplaySearchResult from "../../utils/DisplaySearchResult";
+import axios from "axios";
 
 const TvShow2 = () => {
+  let currentDate = new Date();
+  const date = currentDate.setMonth(-1);
+
+  const trendingTvShowUrl =
+    "https://api.themoviedb.org/3/trending/tv/week?api_key=3e2abd7e10753ed410ed7439f7e1f93f";
+
+  const lastReleaseTvShowUrl = `https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=popularity.asc&air_date.lte=${date}&page=1&timezone=Europe%2FParis&include_null_first_air_dates=false&with_watch_providers=FR&with_watch_monetization_types=flatrate&with_status=0&with_type=0`;
+
+  const recommendationsTvShowUrl =
+    "https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=vote_average.desc&page=1&vote_average.gte=6&vote_count.gte=100&include_null_first_air_dates=false&with_watch_providers=FR&with_watch_monetization_types=flatrate&with_status=0&with_type=0";
+
   const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [config, setConfig] = useState([]);
+  const [genreList, setGenreList] = useState([]);
+  const [inputSearchValue, setInputSearchValue] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
   const favoriteGenre = [];
 
+  const pullInputValue = (inputValue) => {
+    setInputSearchValue(inputValue);
+    if (inputValue.length >= 1) {
+      setSearchActive(true);
+    } else {
+      setSearchActive(false);
+    }
+  };
+
+  const pullSearchOpenState = (state) => {
+    if (state === true) {
+      setSearchActive(true);
+    } else {
+      setSearchActive(false);
+    }
+  };
+
+  const pullPageNumber = (something) => {
+    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+  };
+
+  const {
+    content: trendingTvShows,
+    error: error1,
+    loading: loadTrends,
+  } = useFetch(trendingTvShowUrl);
+
+  const {
+    content: lastReleaseTvShow,
+    error: error3,
+    loading: loadLastTvShows,
+  } = useFetch(lastReleaseTvShowUrl);
+
+  const {
+    content: recommendationsTvShow,
+    error: error6,
+    loading: loadRecommendTvShows,
+  } = useFetch(recommendationsTvShowUrl);
+
+  let loadsArray = [loadTrends, loadLastTvShows, loadRecommendTvShows];
+
+  useEffect(() => {
+    const updatelLoading = () => {
+      const isTrue = (el) => {
+        return el === true;
+      };
+      return setLoading(loadsArray.every(isTrue));
+    };
+    updatelLoading();
+  }, [loadsArray]);
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      const result = await axios
+        .get(
+          "https://api.themoviedb.org/3/configuration?api_key=3e2abd7e10753ed410ed7439f7e1f93f"
+        )
+        .then((res) => setConfig(res.data.images));
+    };
+    fetchConfig();
+  }, []);
+
+  const search = useSearch(inputSearchValue, pageNumber);
   return (
-    <div>
+    <div className="app">
       <div className="header">
         <Navigation></Navigation>
-        <SearchBar />
+        <SearchBar
+          getInputValue={pullInputValue}
+          getOpenState={pullSearchOpenState}
+        />
+        <Avatar />
       </div>
       {searchIsActive ? (
-        <div className="search--result"></div>
-      ) : loading ? (
+        <div className="search--result__container">
+          <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
+        </div>
+      ) : !loading ? (
         <div className="loader--container">
           <Loader />
         </div>
       ) : (
-        <div className="main--content">
-          <Trendings>
-            <BannerCard />
+        <div className="main">
+          <Trendings content={trendingTvShows} config={config}>
+            {/* <BannerCard /> */}
           </Trendings>
-          <HorizontalCarousel />
-          <Recommendations>
+          <HorizontalCarousel
+            content={lastReleaseTvShow}
+            config={config}
+            title="What has been out lately"
+          />
+          <Recommendations content={recommendationsTvShow} config={config}>
             <MovieCard />
           </Recommendations>
-          {favoriteGenre.map((genre) => {
+          {/* {favoriteGenre.map((genre) => {
             return <ListByGenre key={genre} />;
-          })}
+          })} */}
         </div>
       )}
     </div>

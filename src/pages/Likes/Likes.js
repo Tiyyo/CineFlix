@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import FavoriteList from "../../components/Favorites/FavoriteList";
 import Loader from "../../components/Loader/Loader";
+import Avatar from "../../components/Navigation/Avatar";
 import Navigation from "../../components/Navigation/Navigation";
 
 const Likes = () => {
-  const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
 
   return (
-    <div>
+    <div className="app">
       <div className="header">
         <Navigation />
+        <Avatar />
       </div>
       {loading ? (
         <Loader />

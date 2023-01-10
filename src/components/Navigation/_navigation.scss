@@ -1,1 +1,21 @@
 
+.nav__links  {
+    position: fixed;
+    background-color: $secondary;
+    z-index: 100;
+    top: 50px;
+    left: -15vw;
+    height: calc(100vh - 50px) ;
+    width: 17.5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 40px;
+    padding-top: 25px;
+    transition: left 0.25s ease-in;
+
+    &.is-active  {
+        left: -0.5rem;
+        transition: left 0.3s ease-in;
+    }
+}

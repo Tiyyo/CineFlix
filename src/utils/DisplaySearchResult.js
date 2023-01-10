@@ -5,8 +5,6 @@ import useSearch from "./useSearch";
 
 const DisplaySearchResult = (props) => {
   const { content, error, loading, hasMore } = props.search;
-  console.log(props);
-
   const observer = useRef();
   const lastContentRef = useCallback(
     (node) => {
@@ -21,49 +19,6 @@ const DisplaySearchResult = (props) => {
     },
     [loading, hasMore]
   );
-
-  //   const fetchData = async () => {
-  //     const result = await axios
-  //       .get(
-  //         `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputValue}&page=1&include_adult=false`
-  //       )
-  //       .then((res) => {
-  //         setTotalPages(res.data.total_pages);
-  //         currentResult.push(...res.data.results);
-  //       });
-
-  //     for (let i = 2; i < nTotalPages; i++) {
-  //       const fetchDataPages = async () => {
-  //         const resultTwo = await axios
-  //           .get(
-  //             `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputValue}&page=${i}&include_adult=false`
-  //           )
-  //           .then((res) => {
-  //             currentResult.push(...res.data.results);
-  //           });
-  //       };
-  //       fetchDataPages();
-  //     }
-  //     setSearchResult(currentResult);
-  //   };
-
-  //   useEffect(() => {
-  //     fetchData();
-  //     console.log(searchResult);
-  //   }, []);
-
-  // useEffect(() => {
-  //   const fetchDataMovies = async () => {
-  //     const results = inputValue
-  //       ? await axios
-  //           .get(
-  //             `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputValue}&include_adult=false`
-  //           )
-  //           .then((res) => setSearchedMovie(res.data.results))
-  //       : "";
-  //   };
-  //   fetchDataMovies();
-  // }, [inputValue]);
 
   return (
     <div className="search--result__wrapper">

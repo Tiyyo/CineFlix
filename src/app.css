@@ -60,28 +60,110 @@ input {
 }
 
 .app {
-  background-color: #121212;
+  background-color: #0b0b0b;
   min-height: 100vh;
 }
+.app .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  height: 50px;
+  background-color: #0b0b0b;
+}
+.app .header .nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0.5rem;
+}
+.app .header .search__container {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 3.5rem;
+}
+.app .header .avatar {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.5rem;
+  border: 2px solid #fb8c00;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  align-self: center;
+}
 .app .main {
-  padding-top: 120px;
+  padding-top: 20px;
 }
 
 h1 {
   color: white;
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-family: "Merriweather", serif;
   font-size: 3rem;
 }
 
-.search__container {
-  position: fixed;
-  z-index: 10;
-  top: 80px;
-  width: 100vw;
+.genre-list {
   display: flex;
-  flex-wrap: wrap;
-  align-content: flex-end;
   flex-direction: column;
+  width: 100vw;
+  overflow: hidden;
+  padding: 0 0 15px 0;
+}
+.genre-list h2 {
+  font-family: "Merriweather", serif;
+  letter-spacing: 1px;
+  color: rgba(235, 230, 225, 0.944);
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 0.5rem;
+}
+.genre-list .outer-cards-container {
+  cursor: -webkit-grab;
+  cursor: grab;
+  overflow: hidden;
+  display: flex;
+}
+.genre-list .outer-cards-container .cards-container {
+  display: flex;
+  flex-wrap: nowrap;
+  -moz-column-gap: 15px;
+       column-gap: 15px;
+  padding: 1rem 1.5rem;
+}
+
+.logo {
+  flex: 5;
+  font-family: "Lobster", cursive;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: rgb(143, 88, 2);
+}
+
+.nav__links {
+  position: fixed;
+  background-color: #0b0b0b;
+  z-index: 100;
+  top: 50px;
+  left: -15vw;
+  height: calc(100vh - 50px);
+  width: 17.5vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 40px;
+  padding-top: 25px;
+  transition: left 0.25s ease-in;
+}
+.nav__links.is-active {
+  left: -0.5rem;
+  transition: left 0.3s ease-in;
+}
+
+.search__container {
+  align-items: center;
 }
 .search__container .search {
   position: relative;
@@ -127,7 +209,8 @@ h1 {
 }
 .search__container .search__input.isactive {
   border-radius: 36px;
-  width: 85vw;
+  max-width: 65vw;
+  width: 600px;
   padding-left: 35px;
 }
 .search__container .search__icon {
@@ -178,64 +261,28 @@ h1 {
   align-items: center;
 }
 
-.genre-list {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  overflow: hidden;
-  padding: 0 0 15px 0;
-}
-.genre-list h2 {
-  font-family: "Merriweather", serif;
-  letter-spacing: 1px;
-  color: rgba(235, 230, 225, 0.944);
-  font-size: 1.8rem;
-  font-weight: 700;
-  padding: 0.5rem;
-}
-.genre-list .outer-cards-container {
-  cursor: -webkit-grab;
-  cursor: grab;
-  overflow: hidden;
-  display: flex;
-}
-.genre-list .outer-cards-container .cards-container {
-  display: flex;
-  flex-wrap: nowrap;
-  -moz-column-gap: 15px;
-       column-gap: 15px;
-  padding: 1rem 1.5rem;
-}
-
-.logo {
-  flex: 5;
-  font-family: "Lobster", cursive;
-  font-size: 1.2rem;
-  font-weight: 400;
-  color: rgb(143, 88, 2);
-}
-
-.nav {
-  position: fixed;
-  z-index: 5;
-  width: 100%;
-  min-height: 80px;
+.search--result__container {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 0 15px;
-  background-color: #121212;
-}
-.nav .logo {
-  display: flex;
   justify-content: center;
+  height: 100vh;
+  width: 100%;
+  overflow-y: scroll;
+  padding-bottom: 50px;
 }
-.nav .avatar {
-  border: 2px solid rgb(231, 154, 33);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  align-self: center;
+
+.search--result__wrapper {
+  padding-top: 50px;
+  height: 90vh;
+  width: 90%;
+  display: grid;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  row-gap: 70px;
+}
+.search--result__wrapper h1 {
+  text-align: center;
 }
 
 .movie-card {
@@ -314,7 +361,7 @@ h1 {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #121212;
+  background-color: #0b0b0b;
   color: rgba(235, 230, 225, 0.944);
   padding: 0.7rem;
   line-height: 1.3;
@@ -392,199 +439,32 @@ h1 {
   stroke-width: 1px;
 }
 
-.top-rated-movie {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
+.recommend-card {
+  position: relative;
+  border-radius: 15px;
   overflow: hidden;
-  padding: 0 0 15px 0;
 }
-.top-rated-movie h2 {
-  font-family: "Merriweather", serif;
-  letter-spacing: 1px;
-  color: rgba(235, 230, 225, 0.944);
-  font-size: 1.8rem;
-  font-weight: 700;
-  padding: 0.5rem;
-}
-.top-rated-movie .outer-cards-container {
-  cursor: -webkit-grab;
-  cursor: grab;
-  overflow: hidden;
-  display: flex;
-}
-.top-rated-movie .outer-cards-container .cards-container {
-  display: flex;
-  flex-wrap: nowrap;
-  -moz-column-gap: 15px;
-       column-gap: 15px;
-  padding: 1rem 1.5rem;
-}
-
-.movie-card {
-  font-family: "Merriweather", serif;
-  background-color: rgba(0, 0, 0, 0.15);
-  border: 1px solid #ffbd45;
-  border-radius: 9px;
-  min-width: 150px;
-  height: auto;
-  overflow: hidden;
-  list-style-type: none;
-}
-.movie-card img {
-  aspect-ratio: 2/3;
-  height: auto;
+.recommend-card img {
   width: 100%;
-  -o-object-fit: fill;
-     object-fit: fill;
-  box-shadow: 0px -40px 60px 0px rgba(255, 255, 255, 0.414);
 }
-.movie-card h3 {
-  color: rgba(235, 230, 225, 0.944);
-  font-size: 0.6rem;
-  font-size: 700;
-}
-.movie-card__infos {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.3rem 0.3rem;
-}
-.movie-card__like-icon svg {
-  fill: rgba(235, 230, 225, 0.944);
-  fill-opacity: 1px;
-}
-.movie-card__rating {
-  display: flex;
-  color: rgba(235, 230, 225, 0.944);
-  padding: 0.1rem 0.3rem 0.5rem 0.3rem;
-  font-size: 0.7rem;
-  align-items: baseline;
-}
-.movie-card__rating__star-icon svg {
-  fill: rgb(234, 223, 14);
-  stroke: rgb(234, 223, 14);
-  stroke-width: 1px;
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  overflow-y: scroll;
-}
-
-.modal {
-  font-family: "Lato", sans-serif;
+.recommend-card p {
   position: absolute;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  width: 80%;
-  max-width: 1200px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #fb8c00;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #121212;
-  color: rgba(235, 230, 225, 0.944);
-  padding: 0.7rem;
-  line-height: 1.3;
-  border-radius: 6px;
-}
-.modal__close-icon {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}
-.modal img {
-  aspect-ratio: 2/3;
-  border-radius: 9px;
-}
-.modal__title {
-  font-family: "Merriweather", serif;
-  font-weight: 700;
-  padding: 1rem;
-  text-align: center;
-}
-.modal__synopsis {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-size: 0.9rem;
-}
-.modal__labels {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: 1rem;
-  width: 100%;
-}
-.modal__genre {
-  flex: 2 1 25%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 7px;
-  flex-wrap: wrap;
-  align-content: center;
-}
-.modal__genre .genre-name {
+  bottom: 10px;
+  padding-left: 5px;
   font-size: 0.6rem;
-  background-color: #fb8c00;
   color: rgba(235, 230, 225, 0.944);
-  font-weight: 700;
-  padding: 0.2rem 0.6rem;
-  border-radius: 22px;
-}
-.modal__release--date {
-  font-family: "Lato", sans-serif;
-  font-weight: 700;
-  font-size: 0.7rem;
-  padding: 0.5rem;
-  display: flex;
-  flex: 1 1 25%;
-  border-radius: 21px;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  justify-content: center;
-  background-color: #c25e00;
-}
-.modal__rating {
-  flex: 4 1 50%;
-  display: flex;
-  justify-content: flex-end;
-  color: rgba(235, 230, 225, 0.944);
-  padding: 0.1rem 0.3rem 0.5rem 0.3rem;
-  font-size: 0.7rem;
-  align-items: baseline;
-}
-.modal__rating__star-icon svg {
-  fill: rgb(234, 223, 14);
-  stroke: rgb(234, 223, 14);
-  stroke-width: 1px;
 }
 
-.last-release {
+.banner--container {
   display: flex;
   flex-direction: column;
   max-height: 80vh;
   padding: 2rem 0;
   margin-bottom: 3rem;
 }
-.last-release h2 {
+.banner--container h2 {
   color: white;
-  font-size: 1.7rem;
+  font-size: 1rem;
   padding: 1rem 0 1rem 0.5rem;
 }
 
@@ -634,4 +514,67 @@ h1 {
      object-fit: cover;
   -o-object-position: center;
      object-position: center;
+}
+
+.horizontal--single-x-card {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  overflow: hidden;
+  padding: 0 0 15px 0;
+}
+.horizontal--single-x-card h2 {
+  font-family: "Merriweather", serif;
+  letter-spacing: 1px;
+  color: rgba(235, 230, 225, 0.944);
+  font-size: 1.8rem;
+  font-weight: 700;
+  padding: 0.5rem;
+}
+.horizontal--single-x-card .outer-cards-container {
+  cursor: -webkit-grab;
+  cursor: grab;
+  overflow: hidden;
+  display: flex;
+}
+.horizontal--single-x-card .outer-cards-container .cards-container {
+  display: flex;
+  flex-wrap: nowrap;
+  -moz-column-gap: 15px;
+       column-gap: 15px;
+  padding: 1rem 1.5rem;
+}
+
+.recommendation--list {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem 3rem 1rem;
+  height: 600px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.recommendation--list h2 {
+  color: white;
+}
+
+.recommendation--swiper {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+}
+.recommendation--swiper .swiper-slide {
+  border: 3px solid blue;
+  border-radius: 18px;
+  align-items: stretch;
+  height: 100%;
+  text-align: center;
+  font-size: 18px;
+  background-color: #fff;
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=app.css.map */

@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import Navigation from "../../components/Navigation/Navigation";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -14,9 +14,6 @@ import useSearch from "../../utils/useSearch";
 const Home = () => {
   let currentDate = new Date();
   const date = currentDate.setMonth(-1);
-
-  const URLTopRated =
-    "https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate";
 
   const trendingAllUrl =
     "https://api.themoviedb.org/3/trending/all/week?api_key=3e2abd7e10753ed410ed7439f7e1f93f";
@@ -139,19 +136,6 @@ const Home = () => {
     };
     fetchConfig();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchDataMovies = async () => {
-  //     const results = inputValue
-  //       ? await axios
-  //           .get(
-  //             `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputValue}&include_adult=false`
-  //           )
-  //           .then((res) => setSearchedMovie(res.data.results))
-  //       : "";
-  //   };
-  //   fetchDataMovies();
-  // }, [inputValue]);
 
   // useEffect(() => {
   //   const fetchGenreList = async () => {
