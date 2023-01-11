@@ -6,7 +6,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import Trendings from "../../components/Container/Trendings";
 import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import Recommendations from "../../components/Container/Recommendations";
-import Avatar from "../../components/Navigation/Avatar";
+import ProfileBtn from "../../components/Navigation/ProfileBtn";
 import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
@@ -149,7 +149,7 @@ const Home = () => {
           getInputValue={pullInputValue}
           getOpenState={pullSearchOpenState}
         />
-        <Avatar />
+        <ProfileBtn />
       </div>
       {searchIsActive === true ? (
         <div className="search--result__container">

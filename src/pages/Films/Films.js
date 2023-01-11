@@ -8,7 +8,7 @@ import BannerCard from "../../components/Cards/BannerCard";
 import MovieCard from "../../components/Cards/MovieCard";
 import Recommendations from "../../components/Container/Recommendations";
 import ListByGenre from "../../components/Container/ListByGenre";
-import Avatar from "../../components/Navigation/Avatar";
+import ProfileBtn from "../../components/Navigation/ProfileBtn";
 import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
@@ -104,7 +104,7 @@ const Films = () => {
           getInputValue={pullInputValue}
           getOpenState={pullSearchOpenState}
         />
-        <Avatar />
+        <ProfileBtn />
       </div>
       {searchIsActive ? (
         <div className="search--result__container">

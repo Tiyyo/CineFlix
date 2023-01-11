@@ -6,6 +6,8 @@ const RecommendCard = (props) => {
   const imageFormatUrl = (el, number) => {
     return config.base_url + config.backdrop_sizes[number] + el.backdrop_path;
   };
+
+  console.log(content);
   return (
     <>
       <motion.div className="recommend-card">

@@ -10,9 +10,9 @@ import ListByGenre from "../../components/Container/ListByGenre";
 import HorizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
-import Avatar from "../../components/Navigation/Avatar";
 import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import axios from "axios";
+import ProfileBtn from "../../components/Navigation/ProfileBtn";
 
 const TvShow2 = () => {
   let currentDate = new Date();
@@ -105,7 +105,7 @@ const TvShow2 = () => {
           getInputValue={pullInputValue}
           getOpenState={pullSearchOpenState}
         />
-        <Avatar />
+        <ProfileBtn />
       </div>
       {searchIsActive ? (
         <div className="search--result__container">

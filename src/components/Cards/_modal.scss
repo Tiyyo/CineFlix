@@ -17,6 +17,7 @@
     background-color: $secondary;
     color: $white;
     line-height: 1.6;
+    overflow: hidden;
 
   }
   .card {
@@ -29,7 +30,10 @@
         padding : 1rem 1rem;
 
         &__return-btn  {
-            flex : 1 1 10%
+            flex : 1 1 10%;
+            border: 0;
+            background-color: transparent;
+            color: $white;
         }
 
         &__search-bar  {
@@ -39,44 +43,58 @@
 
         &__avatar  {
             flex : 1 0 10%;
+        }
+    }
+
+    &__trailer-container {
+        display : grid;
+        place-items : center;
+        height : 40vh;
+        width : 100%;
+        border : 1px solid white;
+    }
+    &__title  {
+        padding : 0.25rem 0.5rem
+    }
+    &__infos  {
+        display : flex;
+        padding : 0.25rem 0.5rem;
+        column-gap : 10px;
+
+        &__type  {
+            flex: 1 1 10%
+        }
+        &__release-year  {
+            flex :1 1 10%
+        }
+        &__genres  {
+            flex: 5 1 70%;
+            display : flex;
+            flex-wrap: wrap;
+            align-content: center;
+
+            .genre  {
+                font-size: 0.8rem;
+                background-color: $primary;
+                color: $white;
+                font-weight: 700;
+                padding: 0.2rem 0.6rem;
+                border-radius: 22px;
+                margin: 5px 5px;
+            }
+        }
+        &__rating  {
+            flex: 1 1 10%
+        }
+    }
+    &__synopsis  {
+        font-family: 'Merriweather', sans-serif;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.5rem ;
+        width: 95%;
+    }
+    &__actors  {
+        display: flex;
+        padding: 0.5rem
     }
   }
-
-  .trailer-container  {
-    display : grid;
-    place-items : center;
-    height : 40vh;
-    width : 100%;
-    border : 1px solid white;
-  }
-  .title {
-    padding : 0.25rem 0.5rem
-  }
-  .infos  {
-    display : flex;
-    padding : 0.25rem 0.5rem;
-    column-gap : 10px;
-  }
-  .type {
-    flex: 1 1 10%
-  }
-  .release-year {
-    flex :1 1 10%
-  }
-  .genres {
-    flex: 5 1 70%;
-    display : flex;
-    
-    
-  }
-  .rating {
-    flex: 1 1 10%
-  }
-  .synopsis  {
-    padding: 0.25rem 0.5rem ;
-    width: 70%;
-  }
-  .actor {
-    display: flex;
-    padding: 0.5rem
-  }}

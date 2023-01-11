@@ -12,7 +12,6 @@ import Modal from "./Modal";
 
 const MovieCard = (props) => {
   const { content, config } = props;
-  console.log(content);
   const [open, setOpen] = useState(false);
   const [genreList, setGenreList] = useState([]);
 
@@ -31,6 +30,7 @@ const MovieCard = (props) => {
       return true;
     }
   };
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -47,26 +47,6 @@ const MovieCard = (props) => {
       },
     },
   });
-
-  const displayGenreMovie = () => {
-    let movieGenre = content.genre_ids;
-    let movieGenreNames = [];
-    movieGenre.forEach((genre) => {
-      genreList.forEach((el) => {
-        console.log(el.id);
-        if (el.id == genre) {
-          movieGenreNames.push(el.name);
-        }
-      });
-    });
-    return movieGenreNames.map((genreName) => {
-      return (
-        <span key={content.name} className="genre-name">
-          {genreName}
-        </span>
-      );
-    });
-  };
 
   const displayTypeIcon = (entries) => {
     if (entries === "movie") {
@@ -123,7 +103,7 @@ const MovieCard = (props) => {
           <h3>{content.title || content.name}</h3>
         </div>
       </div>
-      {open && <Modal />}
+      {open && <Modal element={content} genres={genreList} />}
     </>
   );
 };

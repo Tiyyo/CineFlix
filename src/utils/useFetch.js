@@ -20,8 +20,8 @@ const useFetch = (url) => {
     };
     fetchData();
   }, []);
+
   content.forEach((el) => {
-    console.log(url);
     if (!url.includes("tv")) {
       el.type = "Movie";
     }
