@@ -2,8 +2,7 @@
 .nav__links  {
     position: fixed;
     background-color: $secondary;
-    z-index: 100;
-    top: 50px;
+    top: 35px;
     left: -15vw;
     height: calc(100vh - 50px) ;
     width: 17.5vw;
@@ -18,4 +17,13 @@
         left: -0.5rem;
         transition: left 0.3s ease-in;
     }
+}
+
+.blur {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(255, 255, 255, 0.227);
 }

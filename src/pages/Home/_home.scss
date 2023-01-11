@@ -8,6 +8,7 @@
         align-items: center;
         width: 100%;
         position: fixed;
+        z-index: 10;
         height: 50px;
         background-color: $secondary;
 
@@ -16,7 +17,6 @@
             top: 50%;
             transform: translateY(-50%);
             left: 0.5rem;
-
         }
         .search__container  {
             position: absolute;

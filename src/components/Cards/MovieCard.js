@@ -6,9 +6,13 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import CloseIcon from "@mui/icons-material/Close";
 import { ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
+import DynamicRating from "./DynamicRating";
+import TheatersOutlinedIcon from "@mui/icons-material/TheatersOutlined";
+import Modal from "./Modal";
 
 const MovieCard = (props) => {
   const { content, config } = props;
+  console.log(content);
   const [open, setOpen] = useState(false);
   const [genreList, setGenreList] = useState([]);
 
@@ -64,6 +68,12 @@ const MovieCard = (props) => {
     });
   };
 
+  const displayTypeIcon = (entries) => {
+    if (entries === "movie") {
+      return `<div>`;
+    }
+  };
+
   useEffect(() => {
     const fetchGenreList = async () => {
       const result = await axios
@@ -75,6 +85,7 @@ const MovieCard = (props) => {
     fetchGenreList();
   }, []);
 
+  // console.log(content);
   return (
     <>
       <div
@@ -82,74 +93,37 @@ const MovieCard = (props) => {
         // layoutId={movie.id}
       >
         {handleConfigState() && content.poster_path ? (
-          <img
-            src={config.base_url + config.poster_sizes[1] + content.poster_path}
-            alt={"poster of " + content.title}
-            onClick={() => {
-              setOpen(true);
-            }}
-          />
+          <div className="movie-card__image--container">
+            <p className="movie-card__image--container__type">
+              <TheatersOutlinedIcon sx={{ fontSize: "0.8rem" }} />
+            </p>
+            <DynamicRating
+              rate={content.vote_average}
+              className="movie-card__image--container__rating"
+            />
+            <img
+              src={
+                config.base_url + config.poster_sizes[1] + content.poster_path
+              }
+              alt={"poster of " + content.title}
+              onClick={() => {
+                setOpen(true);
+              }}
+            />
+            <button className="movie-card__image--container__like-icon">
+              <FavoriteTwoToneIcon
+                sx={{ color: "rgba(235, 230, 225, 0.944)", fontSize: "1.2rem" }}
+              />
+            </button>
+          </div>
         ) : (
           <div className="load--image__container"></div>
         )}
-        <div className="movie-card__infos">
-          <h3>{props.content.title}</h3>
-          <div className="movie-card__like-icon">
-            <FavoriteTwoToneIcon
-              sx={{ color: "rgba(235, 230, 225, 0.944)", fontSize: "1.2rem" }}
-            />
-          </div>
+        <div className="movie-card__title">
+          <h3>{content.title || content.name}</h3>
         </div>
-        <div className="movie-card__rating"></div>
       </div>
-      {open && (
-        <Overlay>
-          <div className="modal">
-            <ThemeProvider theme={theme}>
-              <div className="modal__close-icon" onClick={closeModal}>
-                <CloseIcon sx={{ fontSize: "2.5rem" }} />
-              </div>
-              {handleConfigState() ? (
-                <img
-                  src={
-                    config.base_url +
-                    config.poster_sizes[2] +
-                    content.poster_path
-                  }
-                  alt={"poster of " + content.title}
-                />
-              ) : (
-                <Loader />
-              )}
-              <h3 className="modal__title">{content.title}</h3>
-              <p className="modal__synopsis">{content.overview}</p>
-              <div className="modal__labels">
-                <div className="modal__genre">{displayGenreMovie()}</div>
-
-                <div className="modal__release--date">
-                  {content.release_date}
-                </div>
-
-                <div className="modal__rating">
-                  <span className="modal__rating__star-icon">
-                    <StarOutlineIcon
-                      sx={{
-                        color: "rgba(235, 230, 225, 0.944)",
-                      }}
-                    />
-                  </span>
-                  <span className="modal__rating__rate">
-                    <em>{content.vote_average}</em> / 10{" "}
-                  </span>
-                </div>
-              </div>
-              <div className="modal_like-icon">
-                <FavoriteTwoToneIcon />
-              </div>
-            </ThemeProvider>
-          </div>
-        </Overlay>
-      )}
+      {open && <Modal />}
     </>
   );
 };

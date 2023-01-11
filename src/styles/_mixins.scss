@@ -16,3 +16,12 @@
             + 'Please make sure it is defined in `$breakpoints` map.';
     }
 }
+
+//---
+@mixin titleContainer {
+    font-family: 'Merriweather', serif;
+    letter-spacing: 1px;
+    color: $white;
+    font-size: 0.8rem;
+    font-weight: 700;
+}

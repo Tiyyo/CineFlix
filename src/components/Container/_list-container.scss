@@ -3,11 +3,10 @@
     flex-direction: column;
     max-height: 80vh;
     padding: 2rem 0;
-    margin-bottom: 3rem;
+    font-family: 'Merriweather', serif;
     
     h2 {
-      color: white;
-      font-size: 1rem;
+      @include titleContainer;
       padding: 1rem 0 1rem 0.5rem;
     }
   }
@@ -15,13 +14,6 @@
     width: 100vw;
     height: auto;
     font-size: 1.2rem;
-    // display: flex;
-    // gap : 20px ;
-    // display: none;
-  
-      .swiper-pagination-bullet  {
-       color: red;
-      }
   }
   
   .swiper-slide {
@@ -55,42 +47,20 @@
     .not-avaiable-icon  {
       flex: 2 1 80%;
     }
-  
-    h3  {
-      position: absolute;
-      bottom: 30px;
-      right: 25px;
-      background-color: black;
-      color: white;
-    }
     
   }
   
-  .swiper-slide img {
-  
-    display: block;
-    aspect-ratio: 16/9;
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    object-position: center;
-    // border-radius: 18px;
-    // border: 3px solid $primary;
-  }
+
 
   .horizontal--single-x-card  {
     display: flex;
     flex-direction: column;
     width: 100vw;
     overflow: hidden;
-    padding: 0 0 15px 0;
+    padding: 0 0 5px 0;
 
     h2 {
-        font-family: 'Merriweather', serif;
-        letter-spacing: 1px;
-        color: $white;
-        font-size: 1.8rem;
-        font-weight: 700;
+        @include titleContainer;
         padding: 0.5rem;
     }
     .outer-cards-container {
@@ -110,15 +80,14 @@
 .recommendation--list  {
     display: flex;
     flex-direction: column;
-    padding: 2rem 1rem 3rem 1rem;
+    padding: 0.5rem 1rem 3rem 1rem;
     height: 600px;
     height: fit-content;
 
 
     h2 {
-        color: white;
-        // font-size: 1rem;
-        // padding: 1rem 0 1rem 0.5rem;
+      @include titleContainer;
+      padding: 0.5rem 0 1rem 0.5rem;
       }
 }
 

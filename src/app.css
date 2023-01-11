@@ -69,6 +69,7 @@ input {
   align-items: center;
   width: 100%;
   position: fixed;
+  z-index: 10;
   height: 50px;
   background-color: #0b0b0b;
 }
@@ -145,8 +146,7 @@ h1 {
 .nav__links {
   position: fixed;
   background-color: #0b0b0b;
-  z-index: 100;
-  top: 50px;
+  top: 35px;
   left: -15vw;
   height: calc(100vh - 50px);
   width: 17.5vw;
@@ -160,6 +160,15 @@ h1 {
 .nav__links.is-active {
   left: -0.5rem;
   transition: left 0.3s ease-in;
+}
+
+.blur {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.227);
 }
 
 .search__container {
@@ -216,7 +225,6 @@ h1 {
 .search__container .search__icon {
   position: absolute;
   cursor: pointer;
-  z-index: 10;
 }
 .search__container .search__icon.isactive {
   left: 10px;
@@ -288,12 +296,36 @@ h1 {
 .movie-card {
   font-family: "Merriweather", serif;
   background-color: rgba(0, 0, 0, 0.15);
-  border: 1px solid #ffbd45;
+  box-shadow: 0 0 5px 1px rgba(190, 158, 116, 0.1);
   border-radius: 9px;
-  min-width: 150px;
+  min-width: 100px;
   height: auto;
   overflow: hidden;
   list-style-type: none;
+  position: relative;
+}
+.movie-card__image--container {
+  position: relative;
+}
+.movie-card__image--container__type {
+  position: absolute;
+  bottom: 2px;
+  left: 1px;
+  color: rgba(235, 230, 225, 0.944);
+  mix-blend-mode: difference;
+}
+.movie-card__image--container__like-icon {
+  position: absolute;
+  right: 1px;
+  top: 2px;
+  border: 0;
+  background-color: transparent;
+}
+.movie-card__title {
+  color: rgba(235, 230, 225, 0.944);
+  font-size: 0.5rem;
+  font-size: 700;
+  padding: 0.25rem;
 }
 .movie-card img {
   aspect-ratio: 2/3;
@@ -302,11 +334,6 @@ h1 {
   -o-object-fit: fill;
      object-fit: fill;
   box-shadow: 0px -40px 60px 0px rgba(255, 255, 255, 0.414);
-}
-.movie-card h3 {
-  color: rgba(235, 230, 225, 0.944);
-  font-size: 0.6rem;
-  font-size: 700;
 }
 .movie-card__infos {
   display: flex;
@@ -338,35 +365,12 @@ h1 {
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.6);
-  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow-y: scroll;
 }
 
-.modal {
-  font-family: "Lato", sans-serif;
-  position: absolute;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  width: 80%;
-  max-width: 1200px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #fb8c00;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #0b0b0b;
-  color: rgba(235, 230, 225, 0.944);
-  padding: 0.7rem;
-  line-height: 1.3;
-  border-radius: 6px;
-}
 .modal__close-icon {
   position: absolute;
   top: 20px;
@@ -455,16 +459,47 @@ h1 {
   color: rgba(235, 230, 225, 0.944);
 }
 
+.banner--card__image--container {
+  position: relative;
+  aspect-ratio: 16/9;
+}
+.banner--card__image--container__image {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16/9;
+  height: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  border-radius: 18px;
+  padding: 0.35rem;
+}
+.banner--card__image--container__title {
+  position: absolute;
+  font-size: 0.7rem;
+  padding: 0.3rem;
+  color: rgba(235, 230, 225, 0.944);
+  top: 20px;
+  left: 10px;
+  mix-blend-mode: hard-light;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
 .banner--container {
   display: flex;
   flex-direction: column;
   max-height: 80vh;
   padding: 2rem 0;
-  margin-bottom: 3rem;
+  font-family: "Merriweather", serif;
 }
 .banner--container h2 {
-  color: white;
-  font-size: 1rem;
+  font-family: "Merriweather", serif;
+  letter-spacing: 1px;
+  color: rgba(235, 230, 225, 0.944);
+  font-size: 0.8rem;
+  font-weight: 700;
   padding: 1rem 0 1rem 0.5rem;
 }
 
@@ -472,9 +507,6 @@ h1 {
   width: 100vw;
   height: auto;
   font-size: 1.2rem;
-}
-.swiper .swiper-pagination-bullet {
-  color: red;
 }
 
 .swiper-slide {
@@ -497,37 +529,19 @@ h1 {
 .swiper-slide .not-avaiable-icon {
   flex: 2 1 80%;
 }
-.swiper-slide h3 {
-  position: absolute;
-  bottom: 30px;
-  right: 25px;
-  background-color: black;
-  color: white;
-}
-
-.swiper-slide img {
-  display: block;
-  aspect-ratio: 16/9;
-  width: 100%;
-  height: auto;
-  -o-object-fit: cover;
-     object-fit: cover;
-  -o-object-position: center;
-     object-position: center;
-}
 
 .horizontal--single-x-card {
   display: flex;
   flex-direction: column;
   width: 100vw;
   overflow: hidden;
-  padding: 0 0 15px 0;
+  padding: 0 0 5px 0;
 }
 .horizontal--single-x-card h2 {
   font-family: "Merriweather", serif;
   letter-spacing: 1px;
   color: rgba(235, 230, 225, 0.944);
-  font-size: 1.8rem;
+  font-size: 0.8rem;
   font-weight: 700;
   padding: 0.5rem;
 }
@@ -548,14 +562,19 @@ h1 {
 .recommendation--list {
   display: flex;
   flex-direction: column;
-  padding: 2rem 1rem 3rem 1rem;
+  padding: 0.5rem 1rem 3rem 1rem;
   height: 600px;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
 }
 .recommendation--list h2 {
-  color: white;
+  font-family: "Merriweather", serif;
+  letter-spacing: 1px;
+  color: rgba(235, 230, 225, 0.944);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.5rem 0 1rem 0.5rem;
 }
 
 .recommendation--swiper {
@@ -577,4 +596,82 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  font-family: "Lato", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #0b0b0b;
+  color: rgba(235, 230, 225, 0.944);
+  line-height: 1.6;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+}
+.card__header {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem 1rem;
+}
+.card__header__return-btn {
+  flex: 1 1 10%;
+}
+.card__header__search-bar {
+  flex: 10 0 80%;
+  padding-left: 2vw;
+}
+.card__header__avatar {
+  flex: 1 0 10%;
+}
+.card .trailer-container {
+  display: grid;
+  place-items: center;
+  height: 40vh;
+  width: 100%;
+  border: 1px solid white;
+}
+.card .title {
+  padding: 0.25rem 0.5rem;
+}
+.card .infos {
+  display: flex;
+  padding: 0.25rem 0.5rem;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+}
+.card .type {
+  flex: 1 1 10%;
+}
+.card .release-year {
+  flex: 1 1 10%;
+}
+.card .genres {
+  flex: 5 1 70%;
+  display: flex;
+}
+.card .rating {
+  flex: 1 1 10%;
+}
+.card .synopsis {
+  padding: 0.25rem 0.5rem;
+  width: 70%;
+}
+.card .actor {
+  display: flex;
+  padding: 0.5rem;
 }/*# sourceMappingURL=app.css.map */

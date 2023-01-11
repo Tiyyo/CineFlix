@@ -7,6 +7,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import BrowserNotSupportedIcon from "@mui/icons-material/BrowserNotSupported";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
+import BannerCard from "../Cards/BannerCard";
 
 const Trendings = (props) => {
   const [genreList, setGenreList] = useState([]);
@@ -59,27 +60,7 @@ const Trendings = (props) => {
           content.map((el) => {
             return (
               <SwiperSlide key={el.id}>
-                {el.backdrop_path ? (
-                  <div>
-                    <img
-                      src={imageFormatUrl(el, 1)}
-                      alt={"image of " + el.title || el.name}
-                    />
-                    <h3>{el.title || el.name}</h3>
-                  </div>
-                ) : (
-                  <ThemeProvider theme={theme}>
-                    <p className="message-error-img">
-                      Image content not avaiable
-                    </p>
-                    <BrowserNotSupportedIcon
-                      className="not-avaiable-icon"
-                      color="primary"
-                      size="large"
-                    />
-                    <p className="title-error-img">{el.title || el.name}</p>
-                  </ThemeProvider>
-                )}
+                <BannerCard element={el} config={config} />
               </SwiperSlide>
             );
           })
