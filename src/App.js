@@ -5,6 +5,7 @@ import Likes from "./pages/Likes/Likes";
 import "./app.scss";
 import Films from "./pages/Films/Films";
 import TvShow from "./pages/TvShow/TvShow";
+import Modal from "./components/Cards/Modal";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/likes" element={<Likes />} />
         <Route path="/Films" element={<Films />} />
         <Route path="/TvShow" element={<TvShow />} />
+        <Route path="/*/Modal" element={<Modal />} />
       </Routes>
     </BrowserRouter>
   );

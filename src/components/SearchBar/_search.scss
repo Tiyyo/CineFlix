@@ -26,7 +26,7 @@
             width: 2rem;
             height: 2rem;
             background-color: rgba(46, 35, 8, 0.656);
-            transition: border-radius 0.5s ease-in-out,
+            transition: border-radius 0.3s ease-in-out,
                         width 0.5s ease-in-out;
                         
                         &:not(:placeholder-shown) ~ .search__backspace{
@@ -62,7 +62,7 @@
             right: 0;
             padding: 1.5rem;
             cursor: pointer;
-            transition: 0.5s ease-in;
+            transition: 0.3s ease-in;
 
             &.isactive{
               display: block;

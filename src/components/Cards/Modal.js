@@ -4,6 +4,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import Navigation from "../Navigation/Navigation";
 import SearchBar from "../SearchBar/SearchBar";
 import { Avatar } from "@mui/material";
+import { Player } from "video-react";
 
 const Modal = (props) => {
   const content = props.element;
@@ -16,7 +17,6 @@ const Modal = (props) => {
     let movieGenreNames = [];
     arrGenres.forEach((genre) => {
       genreList.forEach((el) => {
-        console.log(el.id);
         if (el.id == genre) {
           movieGenreNames.push(el.name);
         }
@@ -74,7 +74,7 @@ const Modal = (props) => {
       <main className="card">
         <div className="card__header">
           <button className="card__header__return-btn">
-            <KeyboardBackspaceIcon />
+            <KeyboardBackspaceIcon sx={{ color: "#fb8c00" }} />
           </button>
           <div className="card__header__search-bar">
             <SearchBar />
@@ -85,7 +85,15 @@ const Modal = (props) => {
         </div>
 
         <div className="card__trailer-container">
-          <div className="player">Player</div>
+          <div className="player">
+            <Player
+              fluid="true"
+              muted="true"
+              aspectRatio="4:3"
+              autoPlay="true"
+              src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+            ></Player>
+          </div>
         </div>
         <div className="card__title">{content.title}</div>
         <div className="card__infos">

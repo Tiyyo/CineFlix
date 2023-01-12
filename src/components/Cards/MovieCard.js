@@ -8,7 +8,10 @@ import { ThemeProvider, createTheme } from "@mui/material";
 import axios from "axios";
 import DynamicRating from "./DynamicRating";
 import TheatersOutlinedIcon from "@mui/icons-material/TheatersOutlined";
+import TvOutlinedIcon from "@mui/icons-material/TvOutlined";
+import HideImageIcon from "@mui/icons-material/HideImage";
 import Modal from "./Modal";
+import { Link } from "react-router-dom";
 
 const MovieCard = (props) => {
   const { content, config } = props;
@@ -49,8 +52,10 @@ const MovieCard = (props) => {
   });
 
   const displayTypeIcon = (entries) => {
-    if (entries === "movie") {
-      return `<div>`;
+    if (entries === "Movie") {
+      return <TheatersOutlinedIcon sx={{ fontSize: "0.8rem" }} />;
+    } else {
+      return <TvOutlinedIcon sx={{ fontSize: "0.8rem" }} />;
     }
   };
 
@@ -68,19 +73,16 @@ const MovieCard = (props) => {
   // console.log(content);
   return (
     <>
-      <div
-        className="movie-card"
-        // layoutId={movie.id}
-      >
-        {handleConfigState() && content.poster_path ? (
-          <div className="movie-card__image--container">
-            <p className="movie-card__image--container__type">
-              <TheatersOutlinedIcon sx={{ fontSize: "0.8rem" }} />
-            </p>
-            <DynamicRating
-              rate={content.vote_average}
-              className="movie-card__image--container__rating"
-            />
+      <div className="movie-card">
+        <div className="movie-card__image--container">
+          <p className="movie-card__image--container__type">
+            {displayTypeIcon(content.type)}
+          </p>
+          <DynamicRating
+            rate={content.vote_average}
+            className="movie-card__image--container__rating"
+          />
+          {handleConfigState() && content.poster_path ? (
             <img
               src={
                 config.base_url + config.poster_sizes[1] + content.poster_path
@@ -90,15 +92,17 @@ const MovieCard = (props) => {
                 setOpen(true);
               }}
             />
-            <button className="movie-card__image--container__like-icon">
-              <FavoriteTwoToneIcon
-                sx={{ color: "rgba(235, 230, 225, 0.944)", fontSize: "1.2rem" }}
-              />
-            </button>
-          </div>
-        ) : (
-          <div className="load--image__container"></div>
-        )}
+          ) : (
+            <div className="movie-card__image--container__default--image">
+              <HideImageIcon size="large" sx={{ color: "#fb8c00" }} />
+            </div>
+          )}
+          <button className="movie-card__image--container__like-icon">
+            <FavoriteTwoToneIcon
+              sx={{ color: "rgba(235, 230, 225, 0.944)", fontSize: "1.2rem" }}
+            />
+          </button>
+        </div>
         <div className="movie-card__title">
           <h3>{content.title || content.name}</h3>
         </div>
