@@ -5,13 +5,14 @@ import Navigation from "../Navigation/Navigation";
 import SearchBar from "../SearchBar/SearchBar";
 import { Avatar } from "@mui/material";
 import { Player } from "video-react";
+import { StarOutline } from "@mui/icons-material";
 
 const Modal = (props) => {
   const content = props.element;
   const genreList = props.genres;
-  console.log(content);
+  const modalState = props.modalState;
+  const getModalState = props.getModalState;
   const { id, genre_ids, type, video } = content;
-  console.log(id);
 
   const displayGenreMovie = (arrGenres, genreList) => {
     let movieGenreNames = [];
@@ -31,49 +32,57 @@ const Modal = (props) => {
     });
   };
 
-  useEffect(() => {
-    const fetchFilmsVideo = async () => {
-      const result = await axios
-        .get(
-          `https://api.themoviedb.org/3/movie/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`
-        )
-        .then((res) => console.log(res))
-        .catch((error) => console.log(error));
-    };
-    fetchFilmsVideo();
-  }, [id]);
+  // useEffect(() => {
+  //   const fetchFilmsVideo = async () => {
+  //     const result = await axios
+  //       .get(
+  //         `https://api.themoviedb.org/3/movie/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`
+  //       )
+  //       .then((res) => console.log(res))
+  //       .catch((error) => console.log(error));
+  //   };
+  //   fetchFilmsVideo();
+  // }, [id]);
 
-  useEffect(() => {
-    const fetchDetails = async () => {
-      const result = await axios
-        .get(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`
-        )
-        .then((res) => console.log(res))
-        .catch((error) => console.log(error));
-    };
-    fetchDetails();
-  }, [id]);
+  // useEffect(() => {
+  //   const fetchDetails = async () => {
+  //     const result = await axios
+  //       .get(
+  //         `https://api.themoviedb.org/3/movie/${id}?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`
+  //       )
+  //       .then((res) => console.log(res))
+  //       .catch((error) => console.log(error));
+  //   };
+  //   fetchDetails();
+  // }, [id]);
 
-  useEffect(() => {
-    const fetchCasts = async () => {
-      const result = await axios
-        .get(
-          `https://api.themoviedb.org/3/movie/${id}/credits?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`
-        )
-        .then((res) => console.log(res))
-        .catch((error) => console.log(error));
-    };
-    fetchCasts();
-  }, [id]);
+  // useEffect(() => {
+  //   const fetchCasts = async () => {
+  //     const result = await axios
+  //       .get(
+  //         `https://api.themoviedb.org/3/movie/${id}/credits?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`
+  //       )
+  //       .then((res) => console.log(res))
+  //       .catch((error) => console.log(error));
+  //   };
+  //   fetchCasts();
+  // }, [id]);
 
   //api.themoviedb.org/3/movie/{movie_id}?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR
 
   https: return (
-    <div className="modal">
+    <div
+      className="modal"
+      style={modalState ? { display: "flex" } : { display: "none" }}
+    >
       <main className="card">
         <div className="card__header">
-          <button className="card__header__return-btn">
+          <button
+            className="card__header__return-btn"
+            onClick={() => {
+              getModalState(false);
+            }}
+          >
             <KeyboardBackspaceIcon sx={{ color: "#fb8c00" }} />
           </button>
           <div className="card__header__search-bar">
@@ -86,26 +95,27 @@ const Modal = (props) => {
 
         <div className="card__trailer-container">
           <div className="player">
-            <Player
-              fluid="true"
-              muted="true"
+            {/* <Player
+              fluid={true}
+              muted={true}
               aspectRatio="4:3"
-              autoPlay="true"
+              autoPlay={true}
               src="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-            ></Player>
+            ></Player> */}
           </div>
         </div>
         <div className="card__title">{content.title}</div>
         <div className="card__infos">
           <div className="card__infos__type">{content.type}</div>
           <div className="card__infos__release-year">
-            {content.release_date.substring(0, 4)}
+            {content.release_date ? content.release_date.substring(0, 4) : ""}
           </div>
           <div className="card__infos__genres">
             {displayGenreMovie(content.genre_ids, genreList)}
           </div>
           <div className="card__infos__rating">
-            {content.vote_average * 10}%{" "}
+            <StarOutline sx={{ color: "yellow" }} />
+            {content.vote_average} / 10{" "}
           </div>
         </div>
         <div className="card__synopsis">{content.overview}</div>

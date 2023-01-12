@@ -1,14 +1,12 @@
 .modal {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    // right: 0;
+    // bottom: 0;
     z-index: 100;
     height : 100vh;
     width : 100vw;
-    display: grid;
-    place-items : center;
     font-family: 'Lato', sans-serif;
     display: flex;
     align-items: center;
@@ -17,7 +15,7 @@
     background-color: $secondary;
     color: $white;
     line-height: 1.6;
-    overflow: hidden;
+    overflow-y: scroll;
 
   }
   .card {
@@ -54,21 +52,32 @@
         border : 1px solid white;
     }
     &__title  {
-        padding : 0.25rem 0.5rem
+
+        padding : 0.5rem 0.75rem;
+        font-size: 1.2rem;
+        color: $white;
+
     }
     &__infos  {
         display : flex;
-        padding : 0.25rem 0.5rem;
+        align-items: baseline;
+        padding : 0.25rem 0.75rem;
         column-gap : 10px;
 
+
         &__type  {
-            flex: 1 1 10%
+            flex: 1 1 10%;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            font-weight: 700;
+
         }
         &__release-year  {
-            flex :1 1 10%
+            flex :1 1 10%;
+            font-size: 0.7rem;
         }
         &__genres  {
-            flex: 5 1 70%;
+            flex: 5 1 60%;
             display : flex;
             flex-wrap: wrap;
             align-content: center;
@@ -84,14 +93,21 @@
             }
         }
         &__rating  {
-            flex: 1 1 10%
+            flex: 1 1 20%;
+            display: flex;
+            align-items: baseline;
+            font-size: 0.8rem;
+
         }
     }
     &__synopsis  {
         font-family: 'Merriweather', sans-serif;
         font-size: 0.8rem;
-        padding: 0.25rem 0.5rem ;
+        padding: 0.5rem 0.75rem ;
         width: 95%;
+        color: rgb(192, 187, 183);
+        text-align: justify;
+
     }
     &__actors  {
         display: flex;

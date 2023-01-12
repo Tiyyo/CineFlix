@@ -2,7 +2,7 @@
     font-family: 'Merriweather', serif;
     background-color: rgba(0, 0, 0, 0.15);
     // border: 1px solid $primary_light;
-    box-shadow: 0 0 5px 1px rgba(190, 158, 116, 0.1);
+    // box-shadow: 0 0 5px 1px rgba(190, 158, 116, 0.1);
     border-radius: 9px;
     min-width: 100px;
     height: auto; // 300px 
@@ -10,6 +10,20 @@
     // pointer-events: none;
     list-style-type: none;
     position: relative;
+
+    &__header  {
+        display: flex;
+        justify-content: space-between;
+        background-color: $secondary_dark;
+        height: 30px;
+
+        &__like-icon {
+            border: 0;
+            background-color: transparent;
+
+        }
+
+    }
 
     &__image--container  {
         position: relative;
@@ -22,13 +36,6 @@
             mix-blend-mode: difference;
         }
 
-        &__like-icon  {
-            position: absolute;
-            right: 1px;
-            top: 2px;
-            border: 0;
-            background-color: transparent;
-        }
 
         &__default--image  {
             height: auto;
@@ -38,17 +45,11 @@
             place-items: center;
         }
 
-        &__rating  {
-            position: absolute;
-            top: 2px;
-            left: 1px;
-            width: 20%;
-        }
     }
     &__title  {
         color: $white;
         font-size: 0.5rem;
-        font-size: 700;
+        font-weight: 700;
         padding: 0.25rem;
     }
 
@@ -58,7 +59,7 @@
         height: auto;
         width: 100%;
         object-fit: fill;
-        box-shadow: 0px -40px 60px 0px rgba(255, 255, 255, 0.414);
+        // box-shadow: 0px -40px 60px 0px rgba(255, 255, 255, 0.414);
 
     }
 
@@ -68,31 +69,12 @@
         align-items: center;
         padding: 0.3rem 0.3rem;
     }
-    &__like-icon {
-        svg  {
-            fill: $white;
-            fill-opacity: 1px;
-            // stroke: $white;
-            // stroke-width: 2px;
-        }
-    }
 
-    &__rating {
-        display: flex;
-        color: $white;
-        padding: 0.1rem 0.3rem 0.5rem 0.3rem;
-        font-size: 0.7rem;
-        align-items: baseline;
-        &__star-icon  {
-            svg {
-                fill: $yellow_star;
-                stroke: $yellow_star;
-                stroke-width: 1px;
-            }
-        }
+    
 
-    }
 }
+
+
 .overlay {
     position: fixed;
     top: 0;
@@ -254,49 +236,42 @@
 
 .progress-card {
     display: flex;
-    width: 60px;
-    padding: 10px 0;
+    padding: 5px 7px;
     background-color: black;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+
 
 }
 
 .progress-circle  {
-  position: relative;
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-  background: conic-gradient(rgb(107, 11, 20) 180deg , green   rgb(31, 212, 15) 0deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &::before  {
-    content: "";
-    position: absolute;
-    height: 18px;
-    width: 18px;
+    position: relative;
+    height: 22px;
+    width: 22px;
     border-radius: 50%;
-    background-color: black;
-  }
+    // background: conic-gradient(rgba(255,255,255,1) 0deg , rgba(98,245,12,1) 0deg, rgb(255 242 10) 90deg, rgb(215 106 26) 181deg,rgb(251 10 10) 270deg );
     
+    // display: flex;
+    // align-items: center;
+    // justify-content: center; 
 }
 
 .progress-text  {
+    border: 1px solid black;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
-    background-color: black;
-    height: 22px;
-    width: 22px;
+    color: $white;
+    background-color: rgb(0, 0, 0);
+    // background-color: rgba(91, 86, 86, 0.435);
+    height: 18px;
+    width: 18px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.3rem;
+    font-size: 0.35rem;
 
 }
 

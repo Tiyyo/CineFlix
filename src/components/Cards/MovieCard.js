@@ -22,9 +22,13 @@ const MovieCard = (props) => {
     setOpen(true);
   };
 
-  const closeModal = () => {
+  const pullModalState = (state) => {
     setOpen(false);
   };
+
+  // const closeModal = () => {
+  //   setOpen(false);
+  // };
 
   const handleConfigState = () => {
     if (config.length === 0) {
@@ -73,15 +77,31 @@ const MovieCard = (props) => {
   // console.log(content);
   return (
     <>
+      <Modal
+        key={content.id}
+        modalState={open}
+        element={content}
+        genres={genreList}
+        getModalState={pullModalState}
+      />
       <div className="movie-card">
+        <div className="movie-card__header">
+          <DynamicRating
+            rate={content.vote_average}
+            className="movie-card__header__rating"
+          />
+          <button className="movie-card__header__like-icon">
+            <FavoriteTwoToneIcon
+              sx={{ color: "rgba(235, 230, 225, 0.944)", fontSize: "1.2rem" }}
+            />
+          </button>
+        </div>
+
         <div className="movie-card__image--container">
           <p className="movie-card__image--container__type">
             {displayTypeIcon(content.type)}
           </p>
-          <DynamicRating
-            rate={content.vote_average}
-            className="movie-card__image--container__rating"
-          />
+
           {handleConfigState() && content.poster_path ? (
             <img
               src={
@@ -97,17 +117,11 @@ const MovieCard = (props) => {
               <HideImageIcon size="large" sx={{ color: "#fb8c00" }} />
             </div>
           )}
-          <button className="movie-card__image--container__like-icon">
-            <FavoriteTwoToneIcon
-              sx={{ color: "rgba(235, 230, 225, 0.944)", fontSize: "1.2rem" }}
-            />
-          </button>
         </div>
         <div className="movie-card__title">
           <h3>{content.title || content.name}</h3>
         </div>
       </div>
-      {open && <Modal element={content} genres={genreList} />}
     </>
   );
 };
