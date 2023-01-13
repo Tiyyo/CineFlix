@@ -33,28 +33,6 @@ const DisplaySearchResult = (props) => {
           return <h2 key={el.id}>{el.title || el.name}</h2>;
         }
       })}
-      {/* {content.map((el, index) => {
-        el.length === index + 1 ? (
-          <li
-            style={{ color: "white", listStyleType: "none" }}
-            className="searchCard"
-            key={el.id}
-            ref={lastContentRef}
-          >
-            <h4>{el.title}</h4>
-            <p className="release-date">Release at {el.release_date}</p>
-          </li>
-        ) : (
-          <li
-            style={{ color: "white", listStyleType: "none" }}
-            className="searchCard"
-            key={el.id}
-          >
-            <h4>{el.title}</h4>
-            <p className="release-date">Release at {el.release_date}</p>
-          </li>
-        );
-      })} */}
     </div>
   );
 };

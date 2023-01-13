@@ -26,10 +26,6 @@ const MovieCard = (props) => {
     setOpen(false);
   };
 
-  // const closeModal = () => {
-  //   setOpen(false);
-  // };
-
   const handleConfigState = () => {
     if (config.length === 0) {
       return false;

@@ -10,7 +10,7 @@ const DynamicRating = (props) => {
       <div
         className="progress-circle"
         style={{
-          background: `conic-gradient(rgba(91, 86, 86, 0.435) ${y}deg , rgba(98,245,12,1) 0deg, rgb(255 242 10) 110deg, rgb(215 106 26) 200deg,rgb(251 10 10) 290deg )`,
+          background: `conic-gradient(rgba(91, 86, 86, 0.435) ${y}deg , rgba(98,245,12,1) 0deg, rgb(255 242 10) 140deg, rgb(215 106 26) 260deg,rgb(251 10 10) 360deg )`,
         }}
       >
         <p className="progress-text">{score * 10}%</p>
