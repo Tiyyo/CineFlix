@@ -11,7 +11,8 @@ import TheatersOutlinedIcon from "@mui/icons-material/TheatersOutlined";
 import TvOutlinedIcon from "@mui/icons-material/TvOutlined";
 import HideImageIcon from "@mui/icons-material/HideImage";
 import Modal from "./Modal";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
+import Essai from "./Essai";
 
 const MovieCard = (props) => {
   const { content, config } = props;
@@ -70,9 +71,10 @@ const MovieCard = (props) => {
     fetchGenreList();
   }, []);
 
-  // console.log(content);
   return (
     <>
+      <Link to={content.id}>Click Here to load Essai</Link>
+      <Outlet />
       <Modal
         key={content.id}
         modalState={open}
@@ -80,6 +82,7 @@ const MovieCard = (props) => {
         genres={genreList}
         getModalState={pullModalState}
       />
+
       <div className="movie-card">
         <div className="movie-card__header">
           <DynamicRating

@@ -6,6 +6,7 @@ import "./app.scss";
 import Films from "./pages/Films/Films";
 import TvShow from "./pages/TvShow/TvShow";
 import Modal from "./components/Cards/Modal";
+import Essai from "./components/Cards/Essai";
 
 const App = () => {
   return (
@@ -14,9 +15,10 @@ const App = () => {
         <Route path={"/"} element={<Home />} />
         <Route path={"*"} element={<Home />} />
         <Route path="/likes" element={<Likes />} />
-        <Route path="/Films" element={<Films />} />
+        <Route path="/Films" element={<Films />}>
+          <Route path=":id" element={<Essai />} />
+        </Route>
         <Route path="/TvShow" element={<TvShow />} />
-        <Route path="/*/Modal" element={<Modal />} />
       </Routes>
     </BrowserRouter>
   );

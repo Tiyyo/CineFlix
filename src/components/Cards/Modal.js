@@ -28,16 +28,18 @@ const Modal = (props) => {
         }
       });
     });
-    return movieGenreNames.map((genreName) => {
+    return movieGenreNames.map((genreName, index) => {
       return (
-        <span key={content.name} className="genre">
+        <span key={index} className="genre">
           {genreName}
         </span>
       );
     });
   };
 
-  console.log(details);
+  const singleData = [...new Set(details)];
+
+  // console.log(singleData);
 
   const displayCastsActors = () => {
     return (

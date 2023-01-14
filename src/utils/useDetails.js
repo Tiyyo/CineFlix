@@ -1,3 +1,4 @@
+import { RepartitionRounded } from "@mui/icons-material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -21,6 +22,8 @@ const useDetails = (type, id) => {
 
   let tvShowUrls = [tvVideoUrl, tvCreditsUrl, tvSimilarUrl];
 
+  let tryToFix = [];
+
   const getAllData = (urlList) => {
     setData([]);
     return Promise.all(urlList.map(fetchData));
@@ -31,9 +34,7 @@ const useDetails = (type, id) => {
     const result = await axios
       .get(url)
       .then((res) => {
-        setData((prevData) => {
-          return [...prevData, res.data];
-        });
+        tryToFix.push(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -41,9 +42,11 @@ const useDetails = (type, id) => {
   };
 
   useEffect(() => {
-    setData([]);
-    if (type == "Movie") {
+    setData(null);
+    if (type === "Movie" && data.length < 4) {
       getAllData(filmsUrl);
+    } else {
+      return;
     }
     if (type === "TvShow") {
       getAllData(tvShowUrls);
