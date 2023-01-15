@@ -12,13 +12,16 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<Home />} />
+        <Route path={"/"} element={<Home />}></Route>
         <Route path={"*"} element={<Home />} />
-        <Route path="/likes" element={<Likes />} />
-        <Route path="/Films" element={<Films />}>
-          <Route path=":id" element={<Essai />} />
-        </Route>
-        <Route path="/TvShow" element={<TvShow />} />
+        <Route path={"/Home"} element={<Home />}></Route>
+        <Route path="/Likes" element={<Likes />}></Route>
+        <Route path="/Films" element={<Films />}></Route>
+        <Route path="/TvShow" element={<TvShow />}></Route>
+        <Route
+          path={`/${"Films" || "TvShow" || "Likes" || "Home"}/:id`}
+          element={<Modal />}
+        />
       </Routes>
     </BrowserRouter>
   );

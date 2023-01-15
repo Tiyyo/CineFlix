@@ -7,6 +7,7 @@ import { Avatar } from "@mui/material";
 import { Player } from "video-react";
 import { StarOutline } from "@mui/icons-material";
 import useDetails from "../../utils/useDetails";
+import { useLocation, useParams } from "react-router-dom";
 
 const Modal = (props) => {
   const content = props.element;
@@ -18,6 +19,8 @@ const Modal = (props) => {
   const [casts, setCats] = useState([]);
 
   const details = useDetails(type, id);
+  const params = useParams();
+  const location = useLocation();
 
   const displayGenreMovie = (arrGenres, genreList) => {
     let movieGenreNames = [];

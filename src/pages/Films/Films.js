@@ -13,6 +13,7 @@ import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
 import axios from "axios";
+import { Outlet } from "react-router-dom";
 
 const Films = () => {
   let currentDate = new Date();

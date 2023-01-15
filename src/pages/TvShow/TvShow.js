@@ -13,6 +13,7 @@ import useSearch from "../../utils/useSearch";
 import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import axios from "axios";
 import ProfileBtn from "../../components/Navigation/ProfileBtn";
+import { Outlet } from "react-router-dom";
 
 const TvShow2 = () => {
   let currentDate = new Date();

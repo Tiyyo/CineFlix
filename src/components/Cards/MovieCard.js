@@ -71,10 +71,14 @@ const MovieCard = (props) => {
     fetchGenreList();
   }, []);
 
+  let idString = content.id.toString();
+
   return (
     <>
-      <Link to={content.id}>Click Here to load Essai</Link>
-      <Outlet />
+      <Link to={idString} state={content}>
+        Click Here to load Essai
+      </Link>
+
       <Modal
         key={content.id}
         modalState={open}
@@ -95,28 +99,29 @@ const MovieCard = (props) => {
             />
           </button>
         </div>
+        <Link to={idString} state={{ content, genreList }}>
+          <div className="movie-card__image--container">
+            <p className="movie-card__image--container__type">
+              {displayTypeIcon(content.type)}
+            </p>
 
-        <div className="movie-card__image--container">
-          <p className="movie-card__image--container__type">
-            {displayTypeIcon(content.type)}
-          </p>
-
-          {handleConfigState() && content.poster_path ? (
-            <img
-              src={
-                config.base_url + config.poster_sizes[1] + content.poster_path
-              }
-              alt={"poster of " + content.title}
-              onClick={() => {
-                setOpen(true);
-              }}
-            />
-          ) : (
-            <div className="movie-card__image--container__default--image">
-              <HideImageIcon size="large" sx={{ color: "#fb8c00" }} />
-            </div>
-          )}
-        </div>
+            {handleConfigState() && content.poster_path ? (
+              <img
+                src={
+                  config.base_url + config.poster_sizes[1] + content.poster_path
+                }
+                alt={"poster of " + content.title}
+                onClick={() => {
+                  setOpen(true);
+                }}
+              />
+            ) : (
+              <div className="movie-card__image--container__default--image">
+                <HideImageIcon size="large" sx={{ color: "#fb8c00" }} />
+              </div>
+            )}
+          </div>
+        </Link>
         <div className="movie-card__title">
           <h3>{content.title || content.name}</h3>
         </div>

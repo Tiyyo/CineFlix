@@ -10,6 +10,7 @@ import ProfileBtn from "../../components/Navigation/ProfileBtn";
 import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
+import { Outlet } from "react-router-dom";
 
 const Home = () => {
   let currentDate = new Date();
