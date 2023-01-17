@@ -1274,13 +1274,22 @@ h1 {
 .movie-card {
   font-family: "Merriweather", serif;
   background-color: rgba(0, 0, 0, 0.15);
-  box-shadow: 0 0 5px 1px rgba(190, 158, 116, 0.1);
   border-radius: 9px;
   min-width: 100px;
   height: auto;
   overflow: hidden;
   list-style-type: none;
   position: relative;
+}
+.movie-card__header {
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+  height: 30px;
+}
+.movie-card__header__like-icon {
+  border: 0;
+  background-color: transparent;
 }
 .movie-card__image--container {
   position: relative;
@@ -1292,13 +1301,6 @@ h1 {
   color: rgba(235, 230, 225, 0.944);
   mix-blend-mode: difference;
 }
-.movie-card__image--container__like-icon {
-  position: absolute;
-  right: 1px;
-  top: 2px;
-  border: 0;
-  background-color: transparent;
-}
 .movie-card__image--container__default--image {
   height: auto;
   width: 100%;
@@ -1306,16 +1308,10 @@ h1 {
   display: grid;
   place-items: center;
 }
-.movie-card__image--container__rating {
-  position: absolute;
-  top: 2px;
-  left: 1px;
-  width: 20%;
-}
 .movie-card__title {
   color: rgba(235, 230, 225, 0.944);
   font-size: 0.5rem;
-  font-size: 700;
+  font-weight: 700;
   padding: 0.25rem;
 }
 .movie-card img {
@@ -1324,29 +1320,12 @@ h1 {
   width: 100%;
   -o-object-fit: fill;
      object-fit: fill;
-  box-shadow: 0px -40px 60px 0px rgba(255, 255, 255, 0.414);
 }
 .movie-card__infos {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.3rem 0.3rem;
-}
-.movie-card__like-icon svg {
-  fill: rgba(235, 230, 225, 0.944);
-  fill-opacity: 1px;
-}
-.movie-card__rating {
-  display: flex;
-  color: rgba(235, 230, 225, 0.944);
-  padding: 0.1rem 0.3rem 0.5rem 0.3rem;
-  font-size: 0.7rem;
-  align-items: baseline;
-}
-.movie-card__rating__star-icon svg {
-  fill: rgb(234, 223, 14);
-  stroke: rgb(234, 223, 14);
-  stroke-width: 1px;
 }
 
 .overlay {
@@ -1472,46 +1451,34 @@ h1 {
 
 .progress-card {
   display: flex;
-  width: 60px;
-  padding: 10px 0;
-  background-color: black;
-  flex-direction: column;
+  padding: 5px 7px;
+  background-color: transparent;
   align-items: center;
+  justify-content: center;
 }
 
 .progress-circle {
   position: relative;
-  height: 25px;
-  width: 25px;
+  height: 22px;
+  width: 22px;
   border-radius: 50%;
-  background: conic-gradient(rgb(107, 11, 20) 180deg, green rgb(31, 212, 15) 0deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.progress-circle::before {
-  content: "";
-  position: absolute;
-  height: 18px;
-  width: 18px;
-  border-radius: 50%;
-  background-color: black;
 }
 
 .progress-text {
+  border: 1px solid black;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
-  background-color: black;
-  height: 22px;
-  width: 22px;
+  color: rgba(235, 230, 225, 0.944);
+  background-color: rgb(0, 0, 0);
+  height: 18px;
+  width: 18px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.3rem;
+  font-size: 0.35rem;
 }
 
 .banner--container {
@@ -1626,16 +1593,12 @@ h1 {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
   z-index: 100;
   height: 100vh;
   width: 100vw;
-  display: grid;
-  place-items: center;
   font-family: "Lato", sans-serif;
   display: flex;
   align-items: center;
@@ -1644,55 +1607,55 @@ h1 {
   background-color: #0b0b0b;
   color: rgba(235, 230, 225, 0.944);
   line-height: 1.6;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .card {
   width: 100%;
   height: 100%;
+  padding-left: 0.5rem;
 }
 .card__header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   padding: 1rem 1rem;
 }
 .card__header__return-btn {
-  flex: 1 1 10%;
   border: 0;
   background-color: transparent;
   color: rgba(235, 230, 225, 0.944);
-}
-.card__header__search-bar {
-  flex: 10 0 80%;
-  padding-left: 2vw;
-}
-.card__header__avatar {
-  flex: 1 0 10%;
 }
 .card__trailer-container {
   display: grid;
   place-items: center;
   height: 40vh;
   width: 100%;
-  border: 1px solid white;
 }
 .card__title {
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 1.2rem;
+  color: rgba(235, 230, 225, 0.944);
 }
 .card__infos {
   display: flex;
-  padding: 0.25rem 0.5rem;
+  align-items: baseline;
+  padding: 0.25rem 0.75rem;
   -moz-column-gap: 10px;
        column-gap: 10px;
 }
 .card__infos__type {
   flex: 1 1 10%;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 700;
 }
 .card__infos__release-year {
   flex: 1 1 10%;
+  font-size: 0.7rem;
 }
 .card__infos__genres {
-  flex: 5 1 70%;
+  flex: 5 1 65%;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
@@ -1707,15 +1670,78 @@ h1 {
   margin: 5px 5px;
 }
 .card__infos__rating {
-  flex: 1 1 10%;
+  flex: 1 1 25%;
+  display: flex;
+  align-items: baseline;
+  font-size: 0.8rem;
 }
 .card__synopsis {
-  font-family: "Merriweather", sans-serif;
   font-size: 0.8rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
   width: 95%;
 }
-.card__actors {
+.card__synopsis span {
+  display: inline;
+  font-style: italic;
+  font-size: 0.6rem;
+  padding: 0 0.2rem;
+  cursor: pointer;
+}
+.card__synopsis span span {
+  text-decoration: underline;
+}
+.card__synopsis--container {
+  display: inline-block;
+  font-family: "Lato", sans-serif;
+  color: rgb(192, 187, 183);
+  text-align: justify;
+  overflow: hidden;
+}
+.card__casting {
   display: flex;
+  flex-direction: column;
   padding: 0.5rem;
+  margin-bottom: 20px;
+}
+.card__casting .directors {
+  font-size: 0.8rem;
+  color: rgba(235, 230, 225, 0.944);
+}
+.card__casting .directors .director {
+  padding: 0 0.2rem;
+}
+.card__casting .actors {
+  font-size: 0.8rem;
+  color: rgba(235, 230, 225, 0.944);
+}
+.card__casting .actors .actor {
+  padding: 0 0.2rem;
+}
+.card__similar--content .similar-content__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-x: scroll;
+  justify-content: space-evenly;
+  gap: 0.25rem;
+  padding: 0 0.25rem;
+  padding-bottom: 20px;
+}
+.card__similar--content .similar-content__wrapper img {
+  aspect-ratio: 2/3;
+  width: 90px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.card__call-to-action {
+  width: 30%;
+  min-width: 150px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.essai {
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
 }/*# sourceMappingURL=app.css.map */

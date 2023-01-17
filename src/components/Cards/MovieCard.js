@@ -75,17 +75,13 @@ const MovieCard = (props) => {
 
   return (
     <>
-      <Link to={idString} state={content}>
-        Click Here to load Essai
-      </Link>
-
-      <Modal
+      {/* <Modal
         key={content.id}
         modalState={open}
         element={content}
         genres={genreList}
         getModalState={pullModalState}
-      />
+      /> */}
 
       <div className="movie-card">
         <div className="movie-card__header">
@@ -99,7 +95,7 @@ const MovieCard = (props) => {
             />
           </button>
         </div>
-        <Link to={idString} state={{ content, genreList }}>
+        <Link to={idString} state={{ content, genreList, config }}>
           <div className="movie-card__image--container">
             <p className="movie-card__image--container__type">
               {displayTypeIcon(content.type)}
@@ -122,9 +118,6 @@ const MovieCard = (props) => {
             )}
           </div>
         </Link>
-        <div className="movie-card__title">
-          <h3>{content.title || content.name}</h3>
-        </div>
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import React from "react";
 import Modal from "./Modal";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const RecommendCard = (props) => {
   const { content, config } = props;
@@ -33,20 +34,22 @@ const RecommendCard = (props) => {
 
   return (
     <>
-      <Modal
+      {/* <Modal
         key={content.id}
         modalState={open}
         element={content}
         genres={genreList}
         getModalState={pullModalState}
-      />
+      /> */}
       <motion.div className="recommend-card">
-        <img
-          src={imageFormatUrl(content, 0)}
-          alt={"poster of " + content.title || content.original_name}
-          onClick={openModal}
-        />
-        <p>{content.title || content.original_name}</p>
+        <Link to={content.id.toString()} state={{ content, config, genreList }}>
+          <img
+            src={imageFormatUrl(content, 0)}
+            alt={"poster of " + content.title || content.original_name}
+            onClick={openModal}
+          />
+          <p>{content.title || content.original_name}</p>
+        </Link>
       </motion.div>
     </>
   );

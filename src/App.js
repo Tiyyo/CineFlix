@@ -18,10 +18,7 @@ const App = () => {
         <Route path="/Likes" element={<Likes />}></Route>
         <Route path="/Films" element={<Films />}></Route>
         <Route path="/TvShow" element={<TvShow />}></Route>
-        <Route
-          path={`/${"Films" || "TvShow" || "Likes" || "Home"}/:id`}
-          element={<Modal />}
-        />
+        <Route path={`/:id/:id`} element={<Modal />} />
       </Routes>
     </BrowserRouter>
   );

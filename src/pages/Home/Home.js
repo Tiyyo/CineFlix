@@ -11,6 +11,7 @@ import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel"
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
 import { Outlet } from "react-router-dom";
+import useDetails from "../../utils/useDetails";
 
 const Home = () => {
   let currentDate = new Date();
@@ -130,17 +131,6 @@ const Home = () => {
     };
     fetchConfig();
   }, []);
-
-  // useEffect(() => {
-  //   const fetchGenreList = async () => {
-  //     const result = await axios
-  //       .get(
-  //         "https://api.themoviedb.org/3/genre/movie/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR"
-  //       )
-  //       .then((res) => console.log(res.data.genres));
-  //   };
-  //   fetchGenreList();
-  // }, []);
 
   return (
     <div className="app">
