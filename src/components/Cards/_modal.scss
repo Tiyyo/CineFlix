@@ -22,7 +22,7 @@
   .card {
     width : 100%;
     height :100%;
-    padding-left: 0.5rem;
+    padding: 0 0.5rem;
 
     &__header  {
         display: flex;
@@ -41,8 +41,21 @@
     &__trailer-container {
         display : grid;
         place-items : center;
-        height : 40vh;
         width : 100%;
+        
+        margin-bottom: 20px;
+
+        .player {
+            aspect-ratio: 16/9;
+            max-width: 1600px;
+        }
+
+        img {
+            aspect-ratio: 16/9;
+            max-width: 1600px;
+            width: 100%;
+            height: auto;
+        }
     }
     &__title  {
 
@@ -144,6 +157,7 @@
        .similar-content__wrapper {
         display: flex;
         flex-wrap: wrap;
+        align-content:center;
         overflow-x: scroll;
         justify-content: space-evenly;
         gap: 0.25rem;

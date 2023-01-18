@@ -6,6 +6,7 @@ import { StarOutline } from "@mui/icons-material";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
+import ReactPlayer from "react-player";
 
 const Modal = () => {
   //--- Destructuring
@@ -33,6 +34,7 @@ const Modal = () => {
   let tvShowUrls = [tvVideoUrl, tvCreditsUrl, tvSimilarUrl];
 
   let role = "Director";
+  let videoType = "Trailer";
 
   //--Others Hook
   const navigate = useNavigate();
@@ -45,6 +47,7 @@ const Modal = () => {
   const [loading, setLoading] = useState(true);
   const [directors, setDirectors] = useState("");
   const [synopsisIsOpen, setSynopsisIsOpen] = useState(false);
+  const [ytKey, setYtKey] = useState("");
 
   //--Function
   const displayGenreMovie = (arrGenres, genreList) => {
@@ -172,11 +175,21 @@ const Modal = () => {
     }
   };
 
-  const displayVideo = () => {
+  const getVideoKey = () => {
     if (!loading) {
-      return <div>Something Goes Here</div>;
+      let keys = [];
+      videos.results.forEach((video) => {
+        if (video.type === videoType) {
+          keys.push(video.key);
+        }
+        setYtKey(keys[0]);
+      });
     }
   };
+
+  useEffect(() => {
+    getVideoKey();
+  }, [loading]);
   const theme = createTheme({
     palette: {
       primary: {
@@ -212,7 +225,23 @@ const Modal = () => {
             </div>
           </div>
           <div className="card__trailer-container">
-            <div className="player">{displayVideo()}</div>
+            {ytKey ? (
+              <ReactPlayer
+                url={"https://www.youtube.com/watch?v=" + ytKey}
+                controls
+                width="100%"
+                height="auto"
+                className="player"
+              ></ReactPlayer>
+            ) : (
+              <img
+                src={
+                  config.base_url +
+                  config.backdrop_sizes[1] +
+                  content.backdrop_path
+                }
+              />
+            )}
           </div>
           <div className="card__call-to-action">
             <ThemeProvider theme={theme}>
