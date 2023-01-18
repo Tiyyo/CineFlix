@@ -109,7 +109,11 @@ const Films = () => {
       </div>
       {searchIsActive ? (
         <div className="search--result__container">
-          <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
+          <DisplaySearchResult
+            search={search}
+            getPageNumber={pullPageNumber}
+            config={config}
+          />
         </div>
       ) : !loading ? (
         <div className="loader--container">

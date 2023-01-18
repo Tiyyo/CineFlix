@@ -1255,6 +1255,7 @@ h1 {
   width: 100%;
   overflow-y: scroll;
   padding-bottom: 50px;
+  font-family: "Lato", serif;
 }
 
 .search--result__wrapper {
@@ -1262,10 +1263,16 @@ h1 {
   height: 90vh;
   width: 90%;
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   color: white;
+}
+.search--result__wrapper a {
+  color: rgba(235, 230, 225, 0.944);
+  text-decoration: none;
   display: flex;
-  flex-direction: column;
-  row-gap: 70px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 .search--result__wrapper h1 {
   text-align: center;
@@ -1739,7 +1746,7 @@ h1 {
 }
 .card__similar--content .similar-content__wrapper img {
   aspect-ratio: 2/3;
-  width: 90px;
+  width: 80px;
   -o-object-fit: contain;
      object-fit: contain;
 }
