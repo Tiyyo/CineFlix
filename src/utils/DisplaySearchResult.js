@@ -14,6 +14,7 @@ const DisplaySearchResult = (props) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
+        console.log(hasMore);
         if (entries[0].isIntersecting && hasMore) {
           props.getPageNumber(1);
         }
@@ -28,10 +29,16 @@ const DisplaySearchResult = (props) => {
       {content.map((el, index) => {
         if (index === content.length - 1) {
           return (
-            <Link key={el.id.toString()} to={el.id} state={{ el: content }}>
-              <h2 key={el.id} ref={lastContentRef}>
-                {el.title || el.name} + ref
-              </h2>
+            <Link key={el.id + el.title} to={el.id.toString()} state={{ el }}>
+              {config && el.poster_path ? (
+                <img
+                  src={config.base_url + config.logo_sizes[1] + el.poster_path}
+                  alt={"poster of " + el.name || el.title}
+                  ref={lastContentRef}
+                />
+              ) : (
+                <h2 ref={lastContentRef}>{el.title || el.name}</h2>
+              )}
             </Link>
           );
         } else {

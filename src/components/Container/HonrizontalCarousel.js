@@ -45,6 +45,7 @@ const HonrizontalCarousel = (props) => {
             className="cards-container"
           >
             {shuffle(content)
+              .filter((el) => el.poster_path)
               .slice(0, 20)
               .map((el) => {
                 return (

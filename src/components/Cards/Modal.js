@@ -48,6 +48,7 @@ const Modal = () => {
   const [directors, setDirectors] = useState("");
   const [synopsisIsOpen, setSynopsisIsOpen] = useState(false);
   const [ytKey, setYtKey] = useState("");
+  const [isEnough, setIsEnough] = useState(false);
 
   //--Function
   const displayGenreMovie = (arrGenres, genreList) => {
@@ -148,7 +149,17 @@ const Modal = () => {
 
   const toggleSynopsis = () => {
     synopsisIsOpen ? setSynopsisIsOpen(false) : setSynopsisIsOpen(true);
-    console.log("working");
+  };
+
+  const sysnopsis = () => {
+    const synopsisContainer = document.querySelector(
+      ".card__synopsis--container"
+    );
+    if (synopsisContainer.offsetHeight === synopsisContainer.scrollHeight) {
+      setIsEnough(true);
+    } else {
+      setIsEnough(false);
+    }
   };
 
   const displaySimilarContent = () => {
@@ -190,6 +201,11 @@ const Modal = () => {
   useEffect(() => {
     getVideoKey();
   }, [loading]);
+
+  useEffect(() => {
+    sysnopsis();
+  }, []);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -270,6 +286,7 @@ const Modal = () => {
           <div className="card__synopsis">
             <div
               className="card__synopsis--container"
+              onClick={(e) => console.log(e)}
               style={
                 synopsisIsOpen
                   ? { maxHeight: "fit-content" }
@@ -278,9 +295,12 @@ const Modal = () => {
             >
               {content.overview}
             </div>
-            <span onClick={toggleSynopsis}>
-              {" "}
-              ...<span>{synopsisIsOpen ? "Reduce" : "See More"}</span>
+            <span
+              onClick={toggleSynopsis}
+              style={isEnough ? { display: "none" } : { display: "inline" }}
+            >
+              {console.log(isEnough)} ...
+              <span>{synopsisIsOpen ? "Reduce" : "See More"}</span>
             </span>
           </div>
 

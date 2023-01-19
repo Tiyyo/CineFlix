@@ -14,13 +14,14 @@ import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
 import axios from "axios";
 import { Outlet } from "react-router-dom";
+import useSearchMovie from "../../utils/useSearchMovie";
 
 const Films = () => {
   let currentDate = new Date();
-  const date = currentDate.setMonth(-1);
+  const date = currentDate.setMonth(-3);
 
-  const trendingMoviesUrl =
-    "https://api.themoviedb.org/3/trending/movie/week?api_key=3e2abd7e10753ed410ed7439f7e1f93f";
+  const upcomingMovieUrl =
+    "https://api.themoviedb.org/3/movie/upcoming?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&page=1&region=FR";
 
   const lastReleaseMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&region=FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_date.lte=${date}&watch_region=FR&with_watch_monetization_types=flatrate`;
 
@@ -52,13 +53,14 @@ const Films = () => {
   };
 
   const pullPageNumber = (something) => {
-    setPageNumber((prevPageNumber) => prevPageNumber + 1);
+    console.log(something);
+    setPageNumber((prevPageNumber) => prevPageNumber + something);
   };
   const {
-    content: trendingMovies,
+    content: upcomingMovies,
     error: error1,
     loading: loadTrends,
-  } = useFetch(trendingMoviesUrl);
+  } = useFetch(upcomingMovieUrl);
 
   const {
     content: lastReleaseMovies,
@@ -95,7 +97,11 @@ const Films = () => {
     fetchConfig();
   }, []);
 
-  const search = useSearch(inputSearchValue, pageNumber);
+  useEffect(() => {
+    setPageNumber(1);
+  }, [inputSearchValue]);
+
+  const search = useSearchMovie(inputSearchValue, pageNumber);
 
   return (
     <div className="app">
@@ -121,7 +127,11 @@ const Films = () => {
         </div>
       ) : (
         <div className="main">
-          <Trendings content={trendingMovies} config={config}>
+          <Trendings
+            content={upcomingMovies}
+            config={config}
+            title={"What is coming soon next"}
+          >
             <BannerCard />
           </Trendings>
           <HorizontalCarousel

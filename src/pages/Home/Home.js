@@ -10,8 +10,6 @@ import ProfileBtn from "../../components/Navigation/ProfileBtn";
 import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
-import { Outlet } from "react-router-dom";
-import useDetails from "../../utils/useDetails";
 
 const Home = () => {
   let currentDate = new Date();
@@ -102,7 +100,10 @@ const Home = () => {
     ...recommendationsTvShow,
   ];
 
+  const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputSearchValue}&page=${pageNumber}&include_adult=false`;
+
   const search = useSearch(inputSearchValue, pageNumber);
+
   let loadsArray = [
     loadTrends,
     loadLastMovies,
@@ -132,6 +133,10 @@ const Home = () => {
     fetchConfig();
   }, []);
 
+  useEffect(() => {
+    setPageNumber(1);
+  }, [inputSearchValue]);
+
   return (
     <div className="app">
       <div className="header">
@@ -144,11 +149,19 @@ const Home = () => {
       </div>
       {searchIsActive === true ? (
         <div className="search--result__container">
-          <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
+          <DisplaySearchResult
+            search={search}
+            getPageNumber={pullPageNumber}
+            config={config}
+          />
         </div>
       ) : loading ? (
         <div className="main">
-          <Trendings content={trendingAll} config={config} />
+          <Trendings
+            content={trendingAll}
+            config={config}
+            title={"What is Trending now"}
+          />
           <HonrizontalCarousel
             content={lastReleaseAll}
             config={config}

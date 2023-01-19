@@ -44,7 +44,9 @@ const SearchBar = (props) => {
       const results = inputValue
         ? await axios
             .get(
-              `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputValue}&include_adult=false`
+              `https://api.themoviedb.org/3/search/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${encodeURI(
+                inputValue
+              )}&page=1&include_adult=false&region=FR`
             )
             .then((res) => setSearchedMovie(res.data.results))
         : "";

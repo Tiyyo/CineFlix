@@ -12,7 +12,7 @@ import BannerCard from "../Cards/BannerCard";
 const Trendings = (props) => {
   const [genreList, setGenreList] = useState([]);
 
-  const { content, config } = props;
+  const { content, config, title } = props;
 
   const imageFormatUrl = (el, number) => {
     return config.base_url + config.backdrop_sizes[number] + el.backdrop_path;
@@ -48,7 +48,7 @@ const Trendings = (props) => {
 
   return (
     <div className="banner--container">
-      <h2>Trending Last week</h2>
+      <h2>{title}</h2>
       <Swiper
         pagination={{
           dynamicBullets: true,
@@ -57,13 +57,15 @@ const Trendings = (props) => {
         className="swiper"
       >
         {content && config !== undefined ? (
-          content.map((el) => {
-            return (
-              <SwiperSlide key={el.id}>
-                <BannerCard element={el} config={config} />
-              </SwiperSlide>
-            );
-          })
+          content
+            .filter((el) => el.backdrop_path)
+            .map((el) => {
+              return (
+                <SwiperSlide key={el.id}>
+                  <BannerCard element={el} config={config} />
+                </SwiperSlide>
+              );
+            })
         ) : (
           <Loader />
         )}

@@ -14,6 +14,7 @@ import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import axios from "axios";
 import ProfileBtn from "../../components/Navigation/ProfileBtn";
 import { Outlet } from "react-router-dom";
+import useSearchShow from "../../utils/useSearchShow";
 
 const TvShow2 = () => {
   let currentDate = new Date();
@@ -97,7 +98,11 @@ const TvShow2 = () => {
     fetchConfig();
   }, []);
 
-  const search = useSearch(inputSearchValue, pageNumber);
+  useEffect(() => {
+    setPageNumber(1);
+  }, [inputSearchValue]);
+
+  const search = useSearchShow(inputSearchValue, pageNumber);
   return (
     <div className="app">
       <div className="header">
@@ -110,7 +115,11 @@ const TvShow2 = () => {
       </div>
       {searchIsActive ? (
         <div className="search--result__container">
-          <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
+          <DisplaySearchResult
+            search={search}
+            getPageNumber={pullPageNumber}
+            config={config}
+          />
         </div>
       ) : !loading ? (
         <div className="loader--container">
@@ -118,9 +127,11 @@ const TvShow2 = () => {
         </div>
       ) : (
         <div className="main">
-          <Trendings content={trendingTvShows} config={config}>
-            {/* <BannerCard /> */}
-          </Trendings>
+          <Trendings
+            content={trendingTvShows}
+            config={config}
+            title={"What is Trending now"}
+          />
           <HorizontalCarousel
             content={lastReleaseTvShow}
             config={config}
