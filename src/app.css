@@ -1124,7 +1124,7 @@ h1 {
 
 .nav__links {
   position: fixed;
-  background-color: rgba(11, 11, 11, 0.9254901961);
+  background-color: rgba(11, 11, 11, 0.9176470588);
   top: 70px;
   left: -15vw;
   height: 50vh;
@@ -1549,7 +1549,7 @@ h1 {
   font-size: 1rem;
 }
 .promoted--card__infos--synopsis {
-  max-height: 55px;
+  max-height: 42px;
   overflow: hidden;
   line-height: 1.2;
 }

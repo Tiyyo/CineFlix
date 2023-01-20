@@ -46,7 +46,7 @@ const HonrizontalCarousel = (props) => {
           >
             {shuffle(content)
               .filter((el) => el.poster_path)
-              .slice(0, 20)
+              .slice(0, 35)
               .map((el) => {
                 return (
                   <MovieCard

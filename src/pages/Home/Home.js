@@ -34,6 +34,12 @@ const Home = () => {
   const playingNowMovieUrl =
     "https://api.themoviedb.org/3/movie/now_playing?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1&region=US";
 
+  const topRatedShowUrl =
+    "https://api.themoviedb.org/3/tv/top_rated?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1";
+
+  const topRatedMoviesUrl =
+    "https://api.themoviedb.org/3/movie/top_rated?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1&region=FR";
+
   const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState([]);
@@ -105,6 +111,21 @@ const Home = () => {
   const promotedElements = [...promotedTvShows, ...promotedMovies];
 
   const {
+    content: topRatedMovies,
+    error: topRatedMoviesError,
+    loading: loadTopRatedMovie,
+  } = useFetch(topRatedMoviesUrl);
+
+  const {
+    content: topRatedShow,
+    error: topRatedShowError,
+    loading: loadTopRatedShow,
+  } = useFetch(topRatedShowUrl);
+
+  const topRated = [...topRatedMovies, ...topRatedShow];
+  console.log(topRated);
+
+  const {
     content: playingNowMovie,
     error: playingNowMovieError,
     loading: loadPlayingNowMovie,
@@ -125,6 +146,8 @@ const Home = () => {
     loadPromotedMovie,
     loadPromotedShow,
     loadPlayingNowMovie,
+    loadTopRatedMovie,
+    loadTopRatedShow,
   ];
 
   useEffect(() => {
@@ -194,12 +217,11 @@ const Home = () => {
             title="What has been out lately ?"
           />
           <HonrizontalCarousel
-            content={lastReleaseAll}
+            content={topRated}
             config={config}
-            title="What has been out lately ?"
+            title="What users like the most"
           />
           <Promoted content={promotedElements} config={config} />
-          {/* <Recommendations content={recommendationsAll} config={config} /> */}
         </div>
       ) : (
         <div className="loader--container">

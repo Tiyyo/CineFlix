@@ -16,24 +16,26 @@ const Modal = () => {
   const params = useParams();
 
   //-- Const and var
-  let filmVideoUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`;
+  let filmVideoUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US`;
 
-  let filmSimilarUrl = `https://api.themoviedb.org/3/movie/${id}/similar?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&page=1`;
+  let filmSimilarUrl = `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1`;
 
-  let filmCreditsUrl = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`;
+  let filmCreditsUrl = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US`;
 
   let filmsUrl = [filmVideoUrl, filmCreditsUrl, filmSimilarUrl];
 
-  let tvVideoUrl = `https://api.themoviedb.org/3/tv/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`;
+  let tvVideoUrl = `https://api.themoviedb.org/3/tv/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US`;
 
-  let tvCreditsUrl = `https://api.themoviedb.org/3/tv/${id}/credits?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`;
+  let tvCreditsUrl = `https://api.themoviedb.org/3/tv/${id}/credits?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US`;
 
   let tvSimilarUrl = `
-  https://api.themoviedb.org/3/tv/${id}/similar?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&page=1`;
+  https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1`;
 
   let tvShowUrls = [tvVideoUrl, tvCreditsUrl, tvSimilarUrl];
 
-  let role = "Director";
+  let director = "Director";
+  let directorAlternative = "Storyboard Artist";
+
   let videoType = "Trailer";
 
   //--Others Hook
@@ -84,7 +86,6 @@ const Modal = () => {
   };
 
   useEffect(() => {
-    console.log("i fire once in Modal");
     if (type === "Movie") {
       getDetails(filmsUrl);
     }
@@ -116,14 +117,16 @@ const Modal = () => {
   const displayCastsDirectors = () => {
     if (loading) {
       return;
-    } else if (credits.crew.length > 2) {
+    } else if (credits.crew.length > 0) {
       const { cast, crew, id } = credits;
+      console.log(crew);
       let mainDirector = [];
       for (let i = 0; i < crew.length; i++) {
-        if (crew[i].job === role) {
+        if (crew[i].job === director || crew[i].job === directorAlternative) {
           mainDirector.push(crew[i]);
         }
       }
+      mainDirector = [...new Set(mainDirector)];
       return (
         <div className="directors">
           <span>De : </span>
