@@ -5,9 +5,10 @@ const Promoted = (props) => {
   const { content, config } = props;
   const [randomIndexElement, setRandomIndex] = useState(0);
 
+  let numberElementDisplayed = 1;
   const pickRandomNumber = () => {
     if (randomIndexElement < 0) {
-      return setRandomIndex(0);
+      return setRandomIndex(1);
     } else {
       return setRandomIndex(Math.floor(Math.random() * (content.length - 1)));
     }
@@ -16,10 +17,6 @@ const Promoted = (props) => {
   useEffect(() => {
     pickRandomNumber();
   }, [content]);
-  //   let randomIndexElement = Math.floor(Math.random() * (content.length - 1));
-  let numberElementDisplayed = 1;
-
-  console.log(randomIndexElement);
 
   return (
     <div className="promoted">

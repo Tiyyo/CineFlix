@@ -40,6 +40,12 @@ const Home = () => {
   const topRatedMoviesUrl =
     "https://api.themoviedb.org/3/movie/top_rated?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1&region=FR";
 
+  const popularMoviesUrl =
+    "https://api.themoviedb.org/3/movie/popular?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1&region=FR";
+
+  const popularTvShowsUrl =
+    "https://api.themoviedb.org/3/tv/popular?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1";
+
   const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState([]);
@@ -123,7 +129,20 @@ const Home = () => {
   } = useFetch(topRatedShowUrl);
 
   const topRated = [...topRatedMovies, ...topRatedShow];
-  console.log(topRated);
+
+  const {
+    content: popularMovies,
+    error: popularMoviesError,
+    loading: loadPopularMovie,
+  } = useFetch(popularMoviesUrl);
+
+  const {
+    content: popularTvShow,
+    error: popularTvShowError,
+    loading: loadPopularTvShow,
+  } = useFetch(popularTvShowsUrl);
+
+  const popularElements = [...popularTvShow, ...popularMovies];
 
   const {
     content: playingNowMovie,
@@ -148,6 +167,8 @@ const Home = () => {
     loadPlayingNowMovie,
     loadTopRatedMovie,
     loadTopRatedShow,
+    loadPopularTvShow,
+    loadPopularMovie,
   ];
 
   useEffect(() => {
@@ -204,7 +225,7 @@ const Home = () => {
           <HonrizontalCarousel
             content={lastReleaseAll}
             config={config}
-            title="What has been out lately ?"
+            title="What has been out lately "
           />
           <Trendings
             content={trendingAll}
@@ -212,9 +233,9 @@ const Home = () => {
             title={"What is Trending now"}
           />
           <HonrizontalCarousel
-            content={lastReleaseAll}
+            content={popularElements}
             config={config}
-            title="What has been out lately ?"
+            title="You should look at it "
           />
           <HonrizontalCarousel
             content={topRated}
