@@ -1042,6 +1042,7 @@ input {
 .app {
   background-color: #0b0b0b;
   min-height: 100vh;
+  padding-bottom: 50px;
 }
 .app .header {
   display: flex;
@@ -1049,9 +1050,9 @@ input {
   align-items: center;
   width: 100%;
   position: fixed;
-  z-index: 10;
+  z-index: 3;
   height: 50px;
-  background-color: #0b0b0b;
+  background: linear-gradient(180deg, #0b0b0b 0%, rgba(11, 11, 11, 0.3764705882) 30% rgba(11, 11, 11, 0.1490196078) 100%);
 }
 .app .header .nav {
   position: absolute;
@@ -1123,10 +1124,10 @@ h1 {
 
 .nav__links {
   position: fixed;
-  background-color: #0b0b0b;
-  top: 35px;
+  background-color: rgba(11, 11, 11, 0.9254901961);
+  top: 70px;
   left: -15vw;
-  height: calc(100vh - 50px);
+  height: 50vh;
   width: 17.5vw;
   display: flex;
   flex-direction: column;
@@ -1134,6 +1135,8 @@ h1 {
   row-gap: 40px;
   padding-top: 25px;
   transition: left 0.25s ease-in;
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 48px;
 }
 .nav__links.is-active {
   left: -0.5rem;
@@ -1170,7 +1173,7 @@ h1 {
   outline: none;
   width: 2rem;
   height: 2rem;
-  background-color: rgba(46, 35, 8, 0.656);
+  background-color: transparent;
   transition: border-radius 0.3s ease-in-out, width 0.5s ease-in-out;
 }
 .search__container .search__input:not(:-moz-placeholder-shown) ~ .search__backspace {
@@ -1199,6 +1202,7 @@ h1 {
   max-width: 65vw;
   width: 600px;
   padding-left: 35px;
+  background-color: rgba(46, 35, 8, 0.656);
 }
 .search__container .search__icon {
   position: absolute;
@@ -1264,7 +1268,9 @@ h1 {
   width: 90%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  grid-template-rows: repeat(auto-fit);
   color: white;
+  align-content: start;
 }
 .search--result__wrapper a {
   color: rgba(235, 230, 225, 0.944);
@@ -1488,6 +1494,83 @@ h1 {
   font-size: 0.35rem;
 }
 
+.promoted--card {
+  position: relative;
+  box-shadow: 0px 0px 15px 2px rgba(104, 104, 104, 0.25);
+  height: 250px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.promoted--card__banner {
+  position: relative;
+  z-index: 1;
+  height: 50%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.promoted--card__banner img {
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  -o-object-position: 0px -50px;
+     object-position: 0px -50px;
+}
+.promoted--card__poster {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  position: absolute;
+  z-index: 3;
+  bottom: 40px;
+  left: 20px;
+  border-radius: 9px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.promoted--card__infos {
+  position: absolute;
+  z-index: 2;
+  width: 70%;
+  max-height: 50%;
+  padding: 5px 15px;
+  font-size: 0.7rem;
+  right: 0;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  row-gap: 7px;
+}
+.promoted--card__infos--title {
+  font-size: 1rem;
+}
+.promoted--card__infos--synopsis {
+  max-height: 55px;
+  overflow: hidden;
+  line-height: 1.2;
+}
+.promoted--card__infos__details {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px 0;
+}
+.promoted--card__infos__details--type {
+  flex: 1 1 20%;
+  text-transform: uppercase;
+  padding: 0 5px;
+}
+.promoted--card__infos__details--year {
+  flex: 6 1 60%;
+}
+.promoted--card__infos__details--score {
+  flex: 1 1 10%;
+}
+
 .banner--container {
   display: flex;
   flex-direction: column;
@@ -1597,6 +1680,30 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.home-image {
+  height: 50vh;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  margin-bottom: 350px;
+}
+.home-image img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  height: auto;
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+          mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
+}
+
+.promoted {
+  margin: 0 auto;
+  height: 30vh;
+  width: 95%;
+  font-family: "Lato", serif;
+  background-color: #0b0b0b;
+  color: rgba(235, 230, 225, 0.944);
 }
 
 .modal {

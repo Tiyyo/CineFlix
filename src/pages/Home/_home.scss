@@ -1,6 +1,7 @@
 .app  {
     background-color: $secondary;
     min-height: 100vh;
+    padding-bottom: 50px;
 
     .header  {
         display: flex;
@@ -8,10 +9,9 @@
         align-items: center;
         width: 100%;
         position: fixed;
-        z-index: 10;
+        z-index: 3;
         height: 50px;
-        background-color: $secondary;
-
+        background: $secondary-transparent;
         .nav {
             position: absolute;
             top: 50%;
@@ -40,6 +40,7 @@
 
     .main  {
         padding-top: $heightheader;
+ 
     }
     
 }

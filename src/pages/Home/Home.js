@@ -10,23 +10,29 @@ import ProfileBtn from "../../components/Navigation/ProfileBtn";
 import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
+// import Promoted from "../../components/Container/Promoted";
+import HeaderHome from "../../components/Container/HeaderHome";
+import Spacer from "../../components/Container/Spacer";
+import Promoted from "../../components/Container/Promoted";
 
 const Home = () => {
   let currentDate = new Date();
   const date = currentDate.setMonth(-1);
+  let promotedElementPageNumber = Math.floor(Math.random() * 10);
 
   const trendingAllUrl =
     "https://api.themoviedb.org/3/trending/all/week?api_key=3e2abd7e10753ed410ed7439f7e1f93f";
 
-  const lastReleaseMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=release_date.desc&include_adult=false&include_video=true&page=1&release_date.lte=${date}&watch_region=FR&with_watch_monetization_types=flatrate`;
+  const lastReleaseMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&sort_by=release_date.desc&include_adult=false&include_video=true&page=1&release_date.lte=${date}&watch_region=FR&with_watch_monetization_types=flatrate`;
 
-  const lastReleaseTvShowUrl = `https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=popularity.asc&air_date.lte=${date}&page=1&timezone=Europe%2FParis&include_null_first_air_dates=false&with_watch_providers=FR&with_watch_monetization_types=flatrate&with_status=0&with_type=0`;
+  const lastReleaseTvShowUrl = `https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&sort_by=popularity.asc&air_date.lte=${date}&page=1&timezone=Europe%2FParis&include_null_first_air_dates=false&with_watch_providers=FR&with_watch_monetization_types=flatrate&with_status=0&with_type=0`;
 
-  const recommendationsMoviesUrl =
-    "https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1&vote_count.gte=5000&vote_average.gte=8&with_watch_monetization_types=flatrate";
+  const promotedMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page=${promotedElementPageNumber}&vote_count.gte=5000&vote_average.gte=8&with_watch_monetization_types=flatrate`;
 
-  const recommendationsTvShowUrl =
-    "https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=vote_average.desc&page=1&vote_average.gte=6&vote_count.gte=100&include_null_first_air_dates=false&with_watch_providers=FR&with_watch_monetization_types=flatrate&with_status=0&with_type=0";
+  const promotedShowsUrl = `https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&sort_by=vote_average.desc&page=${promotedElementPageNumber}&vote_average.gte=6&vote_count.gte=100&include_null_first_air_dates=false&with_watch_providers=FR&with_watch_monetization_types=flatrate&with_status=0&with_type=0`;
+
+  const playingNowMovieUrl =
+    "https://api.themoviedb.org/3/movie/now_playing?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1&region=US";
 
   const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -34,6 +40,7 @@ const Home = () => {
   const [genreList, setGenreList] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
+  const [imageHeaderHeight, setHeightImage] = useState(0);
 
   const token = {
     headers: {
@@ -85,31 +92,39 @@ const Home = () => {
   const lastReleaseAll = [...lastReleaseMovies, ...lastReleaseTvShow];
 
   const {
-    content: recommendationsMovie,
+    content: promotedMovies,
     error: error5,
-    loading: loadRecommendMovies,
-  } = useFetch(recommendationsMoviesUrl);
+    loading: loadPromotedMovie,
+  } = useFetch(promotedMoviesUrl);
   const {
-    content: recommendationsTvShow,
+    content: promotedTvShows,
     error: error6,
-    loading: loadRecommendTvShows,
-  } = useFetch(recommendationsTvShowUrl);
+    loading: loadPromotedShow,
+  } = useFetch(promotedShowsUrl);
 
-  const recommendationsAll = [
-    ...recommendationsMovie,
-    ...recommendationsTvShow,
-  ];
+  const promotedElements = [...promotedTvShows, ...promotedMovies];
+
+  const {
+    content: playingNowMovie,
+    error: playingNowMovieError,
+    loading: loadPlayingNowMovie,
+  } = useFetch(playingNowMovieUrl);
 
   const searchUrl = `https://api.themoviedb.org/3/search/multi?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&query=${inputSearchValue}&page=${pageNumber}&include_adult=false`;
 
   const search = useSearch(inputSearchValue, pageNumber);
 
+  const getHeight = (height) => {
+    setHeightImage(height);
+  };
+
   let loadsArray = [
     loadTrends,
     loadLastMovies,
     loadLastTvShows,
-    loadRecommendMovies,
-    loadRecommendTvShows,
+    loadPromotedMovie,
+    loadPromotedShow,
+    loadPlayingNowMovie,
   ];
 
   useEffect(() => {
@@ -157,6 +172,17 @@ const Home = () => {
         </div>
       ) : loading ? (
         <div className="main">
+          <HeaderHome
+            content={playingNowMovie}
+            config={config}
+            getHeight={getHeight}
+          />
+          <Spacer imageHeaderHeight={imageHeaderHeight} />
+          <HonrizontalCarousel
+            content={lastReleaseAll}
+            config={config}
+            title="What has been out lately ?"
+          />
           <Trendings
             content={trendingAll}
             config={config}
@@ -167,7 +193,13 @@ const Home = () => {
             config={config}
             title="What has been out lately ?"
           />
-          <Recommendations content={recommendationsAll} config={config} />
+          <HonrizontalCarousel
+            content={lastReleaseAll}
+            config={config}
+            title="What has been out lately ?"
+          />
+          <Promoted content={promotedElements} config={config} />
+          {/* <Recommendations content={recommendationsAll} config={config} /> */}
         </div>
       ) : (
         <div className="loader--container">
