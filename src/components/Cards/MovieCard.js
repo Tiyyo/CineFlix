@@ -85,10 +85,14 @@ const MovieCard = (props) => {
 
       <div className="movie-card">
         <div className="movie-card__header">
-          <DynamicRating
-            rate={content.vote_average}
-            className="movie-card__header__rating"
-          />
+          {content.vote_average > 7 ? (
+            <DynamicRating
+              rate={content.vote_average}
+              className="movie-card__header__rating"
+            />
+          ) : (
+            ""
+          )}
           <button className="movie-card__header__like-icon">
             <FavoriteTwoToneIcon
               sx={{ color: "rgba(235, 230, 225, 0.944)", fontSize: "1.2rem" }}

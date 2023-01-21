@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import BrowserNotSupportedIcon from "@mui/icons-material/BrowserNotSupported";
 import { Swiper, SwiperSlide } from "swiper/react";
+import axios from "axios";
 
 const BannerCard = (props) => {
   const { element: el, config } = props;

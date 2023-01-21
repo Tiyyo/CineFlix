@@ -14,6 +14,7 @@ import useSearch from "../../utils/useSearch";
 import HeaderHome from "../../components/Container/HeaderHome";
 import Spacer from "../../components/Container/Spacer";
 import Promoted from "../../components/Container/Promoted";
+import { CircularProgress } from "@mui/material";
 
 const Home = () => {
   let currentDate = new Date();
@@ -222,27 +223,35 @@ const Home = () => {
             getHeight={getHeight}
           />
           <Spacer imageHeaderHeight={imageHeaderHeight} />
-          <HonrizontalCarousel
-            content={lastReleaseAll}
-            config={config}
-            title="What has been out lately "
-          />
-          <Trendings
-            content={trendingAll}
-            config={config}
-            title={"What is Trending now"}
-          />
-          <HonrizontalCarousel
-            content={popularElements}
-            config={config}
-            title="You should look at it "
-          />
-          <HonrizontalCarousel
-            content={topRated}
-            config={config}
-            title="What users like the most"
-          />
-          <Promoted content={promotedElements} config={config} />
+          {imageHeaderHeight > 200 ? (
+            <div>
+              <HonrizontalCarousel
+                content={lastReleaseAll}
+                config={config}
+                title="What has been out lately "
+              />
+              <Trendings
+                content={trendingAll}
+                config={config}
+                title={"What is Trending now"}
+              />
+              <HonrizontalCarousel
+                content={popularElements}
+                config={config}
+                title="You should look at it "
+              />
+              <HonrizontalCarousel
+                content={topRated}
+                config={config}
+                title="What users like the most"
+              />
+              <Promoted content={promotedElements} config={config} />
+            </div>
+          ) : (
+            <div className="loading">
+              <CircularProgress sx={{ color: "#fb8c00" }} />
+            </div>
+          )}
         </div>
       ) : (
         <div className="loader--container">
