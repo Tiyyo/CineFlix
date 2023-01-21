@@ -3,18 +3,19 @@ import React, { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import Navigation from "../../components/Navigation/Navigation";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import Trendings from "../../components/Container/Trendings";
+import {Trendings, Recommendations, HorizontalCarousel, HeaderHome, Spacer, Promoted, FavoriteGenre} from "../../components/Container";
+// import Trendings from "../../components/Container/Trendings";
 import DisplaySearchResult from "../../utils/DisplaySearchResult";
-import Recommendations from "../../components/Container/Recommendations";
+// import Recommendations from "../../components/Container/Recommendations";
 import ProfileBtn from "../../components/Navigation/ProfileBtn";
-import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
+// import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
+// import HeaderHome from "../../components/Container/HeaderHome";
+// import Spacer from "../../components/Container/Spacer";
 // import Promoted from "../../components/Container/Promoted";
-import HeaderHome from "../../components/Container/HeaderHome";
-import Spacer from "../../components/Container/Spacer";
-import Promoted from "../../components/Container/Promoted";
 import { CircularProgress } from "@mui/material";
+
 
 const Home = () => {
   let currentDate = new Date();
@@ -223,7 +224,7 @@ const Home = () => {
             getHeight={getHeight}
           />
           <Spacer imageHeaderHeight={imageHeaderHeight} />
-          {imageHeaderHeight > 200 ? (
+          {imageHeaderHeight ? (
             <div>
               <HonrizontalCarousel
                 content={lastReleaseAll}
@@ -246,6 +247,7 @@ const Home = () => {
                 title="What users like the most"
               />
               <Promoted content={promotedElements} config={config} />
+              <FavoriteGenre />
             </div>
           ) : (
             <div className="loading">
