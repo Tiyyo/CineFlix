@@ -5,7 +5,7 @@ import MovieCard from "../Cards/MovieCard";
 import { MotionConfig } from "framer-motion";
 import { motion } from "framer-motion";
 
-const GenreList = () => {
+const InfiniteHorizontalCarousel = () => {
   const [genreMovieResults, setGenreResults] = useState();
   const [genreList, setGenreList] = useState([]);
   const [config, setConfig] = useState([]);
@@ -83,4 +83,4 @@ const GenreList = () => {
   );
 };
 
-export default GenreList;
+export default InfiniteHorizontalCarousel;

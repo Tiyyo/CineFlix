@@ -24,7 +24,7 @@ const Promoted = (props) => {
         .filter((el) => el.backdrop_path)
         .slice(randomIndexElement, randomIndexElement + numberElementDisplayed)
         .map((el) => {
-          return <PromotedCard content={el} config={config} />;
+          return <PromotedCard key={el.id} content={el} config={config} />;
         })}
     </div>
   );

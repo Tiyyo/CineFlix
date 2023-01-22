@@ -3,7 +3,6 @@ import React from "react";
 const PromotedCard = (props) => {
   const { content, config } = props;
 
-  console.log(content);
   return (
     <div className="promoted--card">
       <div className="promoted--card__banner">

@@ -2,7 +2,6 @@ import React from "react";
 
 const Spacer = (props) => {
   const { imageHeaderHeight } = props;
-  console.log(imageHeaderHeight);
 
   return (
     <div

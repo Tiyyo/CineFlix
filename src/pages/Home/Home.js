@@ -3,19 +3,18 @@ import React, { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import Navigation from "../../components/Navigation/Navigation";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import {Trendings, Recommendations, HorizontalCarousel, HeaderHome, Spacer, Promoted, FavoriteGenre} from "../../components/Container";
-// import Trendings from "../../components/Container/Trendings";
+import Trendings from "../../components/Container/Trendings";
 import DisplaySearchResult from "../../utils/DisplaySearchResult";
-// import Recommendations from "../../components/Container/Recommendations";
+import Recommendations from "../../components/Container/Recommendations";
 import ProfileBtn from "../../components/Navigation/ProfileBtn";
-// import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
+import HonrizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
-// import HeaderHome from "../../components/Container/HeaderHome";
-// import Spacer from "../../components/Container/Spacer";
-// import Promoted from "../../components/Container/Promoted";
+import HeaderHome from "../../components/Container/HeaderHome";
+import Spacer from "../../components/Container/Spacer";
+import Promoted from "../../components/Container/Promoted";
 import { CircularProgress } from "@mui/material";
-
+import FavoriteGenre from "../../components/Container/FavoriteGenre";
 
 const Home = () => {
   let currentDate = new Date();
@@ -51,7 +50,8 @@ const Home = () => {
   const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
   const [config, setConfig] = useState([]);
-  const [genreList, setGenreList] = useState([]);
+  const [genreListMovie, setGenreListMovie] = useState([]);
+  const [genreListTv, setGenreListTv] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [imageHeaderHeight, setHeightImage] = useState(0);
@@ -198,6 +198,28 @@ const Home = () => {
     setPageNumber(1);
   }, [inputSearchValue]);
 
+  useEffect(() => {
+    const fetchGenreListMovie = async () => {
+      const result = await axios
+        .get(
+          "https://api.themoviedb.org/3/genre/movie/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US"
+        )
+        .then((res) => setGenreListMovie(res.data.genres));
+    };
+    fetchGenreListMovie();
+  }, []);
+
+  useEffect(() => {
+    const fetchGenreListTv = async () => {
+      const result = await axios
+        .get(
+          "https://api.themoviedb.org/3/genre/tv/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US"
+        )
+        .then((res) => setGenreListTv(res.data.genres));
+    };
+    fetchGenreListTv();
+  }, []);
+
   return (
     <div className="app">
       <div className="header">
@@ -247,7 +269,7 @@ const Home = () => {
                 title="What users like the most"
               />
               <Promoted content={promotedElements} config={config} />
-              <FavoriteGenre />
+              <FavoriteGenre genreLists={[genreListMovie, genreListTv]} />
             </div>
           ) : (
             <div className="loading">

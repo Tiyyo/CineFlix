@@ -7,7 +7,7 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import BannerCard from "../../components/Cards/BannerCard";
 import MovieCard from "../../components/Cards/MovieCard";
 import Recommendations from "../../components/Container/Recommendations";
-import ListByGenre from "../../components/Container/ListByGenre";
+import InfiniteHorizontalCarousel from "../../components/Container/InfiniteHorizontalCarousel";
 import ProfileBtn from "../../components/Navigation/ProfileBtn";
 import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import useFetch from "../../utils/useFetch";

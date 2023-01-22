@@ -6,14 +6,13 @@ import Navigation from "../../components/Navigation/Navigation";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import BannerCard from "../../components/Cards/BannerCard";
 import Recommendations from "../../components/Container/Recommendations";
-import ListByGenre from "../../components/Container/ListByGenre";
+import InfiniteHorizontalCarousel from "../../components/Container/InfiniteHorizontalCarousel";
 import HorizontalCarousel from "../../components/Container/HonrizontalCarousel";
 import useFetch from "../../utils/useFetch";
 import useSearch from "../../utils/useSearch";
 import DisplaySearchResult from "../../utils/DisplaySearchResult";
 import axios from "axios";
 import ProfileBtn from "../../components/Navigation/ProfileBtn";
-import { Outlet } from "react-router-dom";
 import useSearchShow from "../../utils/useSearchShow";
 
 const TvShow2 = () => {
@@ -140,9 +139,6 @@ const TvShow2 = () => {
           <Recommendations content={recommendationsTvShow} config={config}>
             <MovieCard />
           </Recommendations>
-          {/* {favoriteGenre.map((genre) => {
-            return <ListByGenre key={genre} />;
-          })} */}
         </div>
       )}
     </div>
