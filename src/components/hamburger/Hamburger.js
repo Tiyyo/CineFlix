@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./hamburgers.css";
 
 const Hamburger = (props) => {
+  const parentNavState = props.parentNavState;
   const [btnState, setBtnState] = useState(false);
   const hamburgerBtn = document.querySelector(".hamburger");
 
@@ -14,6 +15,13 @@ const Hamburger = (props) => {
       props.getOpenState(false);
     }
   };
+
+  useEffect(() => {
+    setBtnState(parentNavState);
+    if (parentNavState === false && hamburgerBtn) {
+      hamburgerBtn.classList.remove("is-active");
+    }
+  }, [parentNavState]);
 
   return (
     <button

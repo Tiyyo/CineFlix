@@ -4,23 +4,9 @@ import { motion } from "framer-motion";
 import MovieCard from "../Cards/MovieCard";
 
 const HonrizontalCarousel = (props) => {
-  const { content, config, title } = props;
+  const { content, config, title, genreListMovie, genreListTv } = props;
   const [width, setWidth] = useState(0);
   const carousel = useRef();
-
-  const shuffle = (arr) => {
-    let currentIndex = arr.length,
-      randomIndex;
-    while (currentIndex != 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-      [arr[currentIndex], arr[randomIndex]] = [
-        arr[randomIndex],
-        arr[currentIndex],
-      ];
-    }
-    return arr;
-  };
 
   useEffect(() => {
     if (carousel.current == undefined) {
@@ -44,7 +30,7 @@ const HonrizontalCarousel = (props) => {
             dragConstraints={{ right: 0, left: -width }}
             className="cards-container"
           >
-            {shuffle(content)
+            {content
               .filter((el) => el.poster_path)
               .slice(0, 35)
               .map((el) => {
@@ -54,6 +40,8 @@ const HonrizontalCarousel = (props) => {
                     key={el.id}
                     content={el}
                     config={config}
+                    genreListMovie={genreListMovie}
+                    genreListTv={genreListTv}
                   />
                 );
               })}

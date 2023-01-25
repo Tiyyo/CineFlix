@@ -150,11 +150,17 @@
 }
 
 .promoted  {
-  margin: 0 auto;
+  margin: 0 auto 35px auto;
   height: 30vh;
   width: 95%;
 
   font-family: 'Lato', serif;
   background-color: $secondary;
   color: $white;
+}
+
+.genre-list  {
+  h2  {
+    @include titleContainer;
+  }
 }

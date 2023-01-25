@@ -12,7 +12,7 @@ import BannerCard from "../Cards/BannerCard";
 const Trendings = (props) => {
   const [genreList, setGenreList] = useState([]);
 
-  const { content, config, title } = props;
+  const { content, config, title, genreLists } = props;
 
   const imageFormatUrl = (el, number) => {
     return config.base_url + config.backdrop_sizes[number] + el.backdrop_path;

@@ -1,21 +1,15 @@
-import Loader from "../Loader/Loader";
 import { useState, useEffect } from "react";
-import Overlay from "../Overlay/Overlay";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import CloseIcon from "@mui/icons-material/Close";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { createTheme } from "@mui/material";
 import axios from "axios";
 import DynamicRating from "./DynamicRating";
 import TheatersOutlinedIcon from "@mui/icons-material/TheatersOutlined";
 import TvOutlinedIcon from "@mui/icons-material/TvOutlined";
 import HideImageIcon from "@mui/icons-material/HideImage";
-import Modal from "./Modal";
-import { Link, Outlet } from "react-router-dom";
-import Essai from "./Essai";
+import { Link } from "react-router-dom";
 
 const MovieCard = (props) => {
-  const { content, config } = props;
+  const { content, config, genreListMovie, genreListTv } = props;
   const [open, setOpen] = useState(false);
   const [genreList, setGenreList] = useState([]);
 
@@ -99,7 +93,10 @@ const MovieCard = (props) => {
             />
           </button>
         </div>
-        <Link to={idString} state={{ content, genreList, config }}>
+        <Link
+          to={idString}
+          state={{ content, config, genreListMovie, genreListTv }}
+        >
           <div className="movie-card__image--container">
             <p className="movie-card__image--container__type">
               {displayTypeIcon(content.type)}

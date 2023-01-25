@@ -3,15 +3,16 @@ import React, { useEffect, useState } from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Avatar, createTheme, ThemeProvider } from "@mui/material";
 import { StarOutline } from "@mui/icons-material";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
+import AddIcon from "@mui/icons-material/Add";
 import ReactPlayer from "react-player";
 
 const Modal = () => {
   //--- Destructuring
   const location = useLocation();
-  const { content, genreList, config } = location.state;
+  const { content, config, genreListMovie, genreListTv } = location.state;
   const { id, genre_ids, type } = content;
   const params = useParams();
 
@@ -37,6 +38,8 @@ const Modal = () => {
   let directorAlternative = "Storyboard Artist";
 
   let videoType = "Trailer";
+  let movie = "Movie";
+  let tvShow = "TvShow";
 
   //--Others Hook
   const navigate = useNavigate();
@@ -53,22 +56,45 @@ const Modal = () => {
   const [isEnough, setIsEnough] = useState(false);
 
   //--Function
-  const displayGenreMovie = (arrGenres, genreList) => {
+  const displayGenre = (arrGenres, type) => {
     let movieGenreNames = [];
-    arrGenres.forEach((genre) => {
-      genreList.forEach((el) => {
-        if (el.id == genre) {
-          movieGenreNames.push(el.name);
-        }
+    if (type === movie) {
+      console.log(arrGenres);
+      arrGenres.forEach((genre) => {
+        genreListMovie.forEach((el) => {
+          if (el.id === genre) {
+            movieGenreNames.push(el.name);
+          }
+        });
       });
-    });
+    }
+    if (type === tvShow) {
+      console.log(arrGenres);
+      arrGenres.forEach((genre) => {
+        genreListTv.forEach((el) => {
+          if (el.id === genre) {
+            movieGenreNames.push(el.name);
+          }
+        });
+      });
+    }
     return movieGenreNames.map((genreName, index) => {
+      console.log(movieGenreNames);
       return (
         <span key={index} className="genre">
           {genreName}
         </span>
       );
     });
+  };
+
+  const displayReleaseYear = () => {
+    if (content.first_air_date) {
+      return content.first_air_date.substring(0, 4);
+    }
+    if (content.release_date) {
+      return content.release_date.substring(0, 4);
+    }
   };
 
   const getDetails = async (querys) => {
@@ -119,7 +145,6 @@ const Modal = () => {
       return;
     } else if (credits.crew.length > 0) {
       const { cast, crew, id } = credits;
-      console.log(crew);
       let mainDirector = [];
       for (let i = 0; i < crew.length; i++) {
         if (crew[i].job === director || crew[i].job === directorAlternative) {
@@ -201,6 +226,10 @@ const Modal = () => {
     }
   };
 
+  const addToFavorite = () => {
+    return;
+  };
+
   useEffect(() => {
     getVideoKey();
   }, [loading]);
@@ -264,22 +293,32 @@ const Modal = () => {
           </div>
           <div className="card__call-to-action">
             <ThemeProvider theme={theme}>
-              <div className="card__call-to-action__favorite">
+              <div
+                className="card__call-to-action__favorite"
+                onClick={() => {
+                  addToFavorite();
+                }}
+              >
                 <BookmarkBorderIcon />
+              </div>
+              <div className="card__call-to-action__add-to">
+                <Link to="add_to_playlist" state={{ content }}>
+                  <AddIcon sx={{ color: "white" }} />
+                </Link>
               </div>
               <div className="card__call-to-action__share">
                 <ShareIcon />
               </div>
             </ThemeProvider>
           </div>
-          <div className="card__title">{content.title}</div>
+          <div className="card__title">{content.title || content.name}</div>
           <div className="card__infos">
             <div className="card__infos__type">{content.type}</div>
             <div className="card__infos__release-year">
-              {content.release_date ? content.release_date.substring(0, 4) : ""}
+              {displayReleaseYear()}
             </div>
             <div className="card__infos__genres">
-              {displayGenreMovie(content.genre_ids, genreList)}
+              {displayGenre(genre_ids, type)}
             </div>
             <div className="card__infos__rating">
               <StarOutline sx={{ color: "yellow" }} />
@@ -302,7 +341,6 @@ const Modal = () => {
               onClick={toggleSynopsis}
               style={isEnough ? { display: "none" } : { display: "inline" }}
             >
-              {console.log(isEnough)} ...
               <span>{synopsisIsOpen ? "Reduce" : "See More"}</span>
             </span>
           </div>

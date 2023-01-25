@@ -8,8 +8,13 @@ import { createTheme, ThemeProvider } from "@mui/material";
 
 import { NavLink } from "react-router-dom";
 import Hamburger from "../hamburger/Hamburger";
+import ProfileBtn from "./ProfileBtn";
+import SearchBar from "../SearchBar/SearchBar";
 
-const Navigation = () => {
+const Navigation = (props) => {
+  const getNavState = props.getNavState;
+  const parentNavState = props.parentNavState;
+
   const [openMenu, setOpenMenu] = useState(false);
   const theme = createTheme({
     palette: {
@@ -35,30 +40,41 @@ const Navigation = () => {
     state ? setOpenMenu(true) : setOpenMenu(false);
   };
 
+  useEffect(() => {
+    setOpenMenu(parentNavState);
+  }, [parentNavState]);
+
+  useEffect(() => {
+    getNavState(openMenu);
+  }, [openMenu]);
+
   return (
     <div className="nav">
-      <Hamburger getOpenState={pullOpenState}></Hamburger>
+      <Hamburger
+        getOpenState={pullOpenState}
+        parentNavState={openMenu}
+      ></Hamburger>
       <ul
         className="nav__links"
         style={openMenu ? { left: "-0.5rem" } : { left: "-20vw" }}
       >
         <ThemeProvider theme={theme}>
-          <NavLink to="/Home">
+          <NavLink to="/home">
             <li>
               <HomeOutlinedIcon color="primary" size="extra-large" />
             </li>
           </NavLink>
-          <NavLink to="/Films">
+          <NavLink to="/films">
             <li>
               <TheatersOutlinedIcon color="primary" />
             </li>
           </NavLink>
-          <NavLink to="/TvShow">
+          <NavLink to="/tvshow">
             <li>
               <TvOutlinedIcon color="primary" />
             </li>
           </NavLink>
-          <NavLink to="/Likes">
+          <NavLink to="/lists">
             <li>
               <FavoriteBorderOutlinedIcon color="primary" />
             </li>
