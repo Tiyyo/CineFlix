@@ -1,5 +1,5 @@
 import Loader from "../Loader/Loader";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Overlay from "../Overlay/Overlay";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
@@ -14,10 +14,14 @@ import Modal from "./Modal";
 import { Link, Outlet } from "react-router-dom";
 import Essai from "./Essai";
 
+
 const MovieCard = (props) => {
-  const { content, config } = props;
+  const { content } = props;
+  const {config, genreListMovie, genreListTv} = useContext(AppContext)
   const [open, setOpen] = useState(false);
   const [genreList, setGenreList] = useState([]);
+  
+  
 
   const openModal = () => {
     setOpen(true);
