@@ -2,29 +2,41 @@ import React, { useEffect, useState } from "react";
 import PromotedCard from "../Cards/PromotedCard";
 
 const Promoted = (props) => {
-  const { content, config } = props;
+  const { content, config, genreListMovie, genreListTv } = props;
   const [randomIndexElement, setRandomIndex] = useState(0);
 
   let numberElementDisplayed = 1;
+
+  const filteredContent = content.filter((el) => el.backdrop_path);
+
   const pickRandomNumber = () => {
-    if (randomIndexElement < 0) {
-      return setRandomIndex(1);
-    } else {
-      return setRandomIndex(Math.floor(Math.random() * (content.length - 1)));
+    return setRandomIndex(
+      Math.floor(Math.random() * (filteredContent.length - 1))
+    );
+  };
+  const controls = () => {
+    if (randomIndexElement === -1) {
+      setRandomIndex(0);
     }
   };
 
   useEffect(() => {
     pickRandomNumber();
+    controls();
   }, [content]);
 
   return (
     <div className="promoted">
-      {content
-        .filter((el) => el.backdrop_path)
+      {filteredContent
         .slice(randomIndexElement, randomIndexElement + numberElementDisplayed)
         .map((el) => {
-          return <PromotedCard key={el.id} content={el} config={config} />;
+          return (
+            <PromotedCard
+              key={el.id + el.title || el.name}
+              content={el}
+              config={config}
+            />
+          );
         })}
     </div>
   );

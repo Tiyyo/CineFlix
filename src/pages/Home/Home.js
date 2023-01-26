@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Loader from "../../components/Loader/Loader";
 import Navigation from "../../components/Navigation/Navigation";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -19,7 +19,8 @@ import FavoriteGenre from "../../components/Container/FavoriteGenre";
 const Home = () => {
   let currentDate = new Date();
   const date = currentDate.setMonth(-1);
-  let promotedElementPageNumber = Math.floor(Math.random() * 10);
+  let promotedElementPageNumber = Math.ceil(Math.random() * 5);
+  let promotedShowElementPageNumber = 1;
 
   const trendingAllUrl =
     "https://api.themoviedb.org/3/trending/all/week?api_key=3e2abd7e10753ed410ed7439f7e1f93f";
@@ -30,7 +31,7 @@ const Home = () => {
 
   const promotedMoviesUrl = `https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page=${promotedElementPageNumber}&vote_count.gte=5000&vote_average.gte=8&with_watch_monetization_types=flatrate`;
 
-  const promotedShowsUrl = `https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&sort_by=vote_average.desc&page=${promotedElementPageNumber}&vote_average.gte=6&vote_count.gte=100&include_null_first_air_dates=false&with_watch_providers=FR&with_watch_monetization_types=flatrate&with_status=0&with_type=0`;
+  const promotedShowsUrl = `https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&sort_by=vote_average.desc&page=${promotedShowElementPageNumber}&vote_average.gte=6&vote_count.gte=50&include_null_first_air_dates=false&with_watch_providers=FR&with_watch_monetization_types=flatrate&with_status=0&with_type=0`;
 
   const playingNowMovieUrl =
     "https://api.themoviedb.org/3/movie/now_playing?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&page=1&region=US";
@@ -55,6 +56,7 @@ const Home = () => {
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [imageHeaderHeight, setHeightImage] = useState(0);
+  const [navIsOpen, setNavOpen] = useState(false);
 
   const token = {
     headers: {
@@ -85,6 +87,10 @@ const Home = () => {
     setPageNumber((prevPageNumber) => prevPageNumber + 1);
   };
 
+  const pullNavState = (something) => {
+    setNavOpen(something);
+  };
+
   const {
     content: trendingAll,
     error: error1,
@@ -110,6 +116,7 @@ const Home = () => {
     error: error5,
     loading: loadPromotedMovie,
   } = useFetch(promotedMoviesUrl);
+
   const {
     content: promotedTvShows,
     error: error6,
@@ -221,9 +228,16 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="app">
+    <div
+      className="app"
+      onClick={() => {
+        if (navIsOpen) {
+          setNavOpen(false);
+        }
+      }}
+    >
       <div className="header">
-        <Navigation />
+        <Navigation getNavState={pullNavState} parentNavState={navIsOpen} />
         <SearchBar
           getInputValue={pullInputValue}
           getOpenState={pullSearchOpenState}
@@ -231,13 +245,11 @@ const Home = () => {
         <ProfileBtn />
       </div>
       {searchIsActive === true ? (
-        <div className="search--result__container">
-          <DisplaySearchResult
-            search={search}
-            getPageNumber={pullPageNumber}
-            config={config}
-          />
-        </div>
+        <DisplaySearchResult
+          search={search}
+          getPageNumber={pullPageNumber}
+          config={config}
+        />
       ) : loading ? (
         <div className="main">
           <HeaderHome
@@ -246,30 +258,54 @@ const Home = () => {
             getHeight={getHeight}
           />
           <Spacer imageHeaderHeight={imageHeaderHeight} />
+          {console.log(imageHeaderHeight)}
           {imageHeaderHeight ? (
             <div>
               <HonrizontalCarousel
                 content={lastReleaseAll}
                 config={config}
                 title="What has been out lately "
+                genreListMovie={genreListMovie}
+                genreListTv={genreListTv}
               />
               <Trendings
                 content={trendingAll}
                 config={config}
                 title={"What is Trending now"}
+                genreListMovie={genreListMovie}
+                genreListTv={genreListTv}
               />
               <HonrizontalCarousel
                 content={popularElements}
                 config={config}
                 title="You should look at it "
+                genreListMovie={genreListMovie}
+                genreListTv={genreListTv}
               />
               <HonrizontalCarousel
                 content={topRated}
                 config={config}
                 title="What users like the most"
+                genreListMovie={genreListMovie}
+                genreListTv={genreListTv}
               />
-              <Promoted content={promotedElements} config={config} />
-              <FavoriteGenre genreLists={[genreListMovie, genreListTv]} />
+              <Promoted
+                content={promotedElements}
+                config={config}
+                genreListMovie={genreListMovie}
+                genreListTv={genreListTv}
+              />
+              <FavoriteGenre
+                genreListMovie={genreListMovie}
+                genreListTv={genreListTv}
+                dataToDisplay="Both"
+              />
+              <Promoted
+                content={promotedElements}
+                config={config}
+                genreListMovie={genreListMovie}
+                genreListTv={genreListTv}
+              />
             </div>
           ) : (
             <div className="loading">

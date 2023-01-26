@@ -2,62 +2,69 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Loader from "../Loader/Loader";
 import MovieCard from "../Cards/MovieCard";
-import { MotionConfig } from "framer-motion";
 import { motion } from "framer-motion";
 
-const InfiniteHorizontalCarousel = () => {
-  const [genreMovieResults, setGenreResults] = useState();
-  const [genreList, setGenreList] = useState([]);
-  const [config, setConfig] = useState([]);
+const InfiniteHorizontalCarousel = (props) => {
+  const { genre, config, genreListMovie, genreListTv } = props;
+  const { id, name, type } = genre;
+
+  let movie = "Movie";
+  let tvShow = "TvShow";
+
+  const [pageNumber, setPageNumber] = useState(1);
+  const [loading, setloading] = useState(true);
+  const [data, setData] = useState([]);
   const [width, setWidth] = useState(0);
+
   const carousel = useRef();
+
   useEffect(() => {
-    if (carousel.current == undefined) {
-      console.log("current is not defined");
-    } else {
+    if (type === movie) {
+      const fetchData = async () => {
+        const result = await axios
+          .get(
+            `https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&region=FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=${pageNumber}&vote_count.lte=150&with_genres=${id}&watch_region=FR&with_watch_monetization_types=flatrate`
+          )
+          .then((res) => {
+            res.data.results.forEach((el) => (el.type = movie));
+            setData(res.data);
+          })
+          .catch((err) => console.log(err))
+          .finally(() => setloading(false));
+      };
+      fetchData();
+    }
+    if (type === tvShow) {
+      const fetchData = async () => {
+        const result = await axios
+          .get(
+            `https://api.themoviedb.org/3/discover/tv?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US&sort_by=popularity.desc&page=${pageNumber}&timezone=Europe%2FAmerica&with_genres=${id}&include_null_first_air_dates=false&watch_region=FR&with_watch_monetization_types=flatrate&with_status=0`
+          )
+          .then((res) => {
+            res.data.results.forEach((el) => (el.type = tvShow));
+            setData(res.data);
+          })
+          .catch((err) => console.log(err))
+          .finally(() => setloading(false));
+      };
+      fetchData();
+    }
+  }, [pageNumber]);
+
+  useEffect(() => {
+    if (carousel?.current) {
       setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
     }
   });
 
-  useEffect(() => {
-    const fetchConfig = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/configuration?api_key=3e2abd7e10753ed410ed7439f7e1f93f"
-        )
-        .then((res) => setConfig(res.data.images));
-    };
-    fetchConfig();
-  }, []);
-
-  useEffect(() => {
-    const fetchGenreList = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/genre/movie/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR"
-        )
-        .then((res) => setGenreList(res.data.genres));
-    };
-    fetchGenreList();
-  }, []);
-
-  useEffect(() => {
-    const fetchGenreMovies = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/discover/movie?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=true&page=1&with_genres=comedie&watch_region=FR&with_watch_monetization_types=flatrate"
-        )
-        .then((res) => {
-          setGenreResults(res.data.results);
-        });
-    };
-    fetchGenreMovies();
-  }, []);
-
   return (
     <div className="genre-list">
-      <h2>Genre</h2>
-      {genreMovieResults ? (
+      <h2>
+        {type} | {name}
+      </h2>
+      {loading ? (
+        <Loader />
+      ) : (
         <motion.div
           className="outer-cards-container"
           ref={carousel}
@@ -68,16 +75,20 @@ const InfiniteHorizontalCarousel = () => {
             dragConstraints={{ right: 0, left: -width }}
             className="cards-container"
           >
-            {genreMovieResults.map((movie) => {
-              const props = { movie, config };
+            {data.results.map((el) => {
               return (
-                <MovieCard className="item" key={movie.id} props={props} />
+                <MovieCard
+                  className="item"
+                  key={el.id}
+                  content={el}
+                  config={config}
+                  genreListMovie={genreListMovie}
+                  genreListTv={genreListTv}
+                />
               );
             })}
           </motion.div>
         </motion.div>
-      ) : (
-        <Loader />
       )}
     </div>
   );
