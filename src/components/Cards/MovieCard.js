@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import { createTheme } from "@mui/material";
 import axios from "axios";
+import { useState, useContext } from "react";
+import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import DynamicRating from "./DynamicRating";
 import TheatersOutlinedIcon from "@mui/icons-material/TheatersOutlined";
 import TvOutlinedIcon from "@mui/icons-material/TvOutlined";
@@ -12,14 +14,12 @@ const MovieCard = (props) => {
   const { content, config, genreListMovie, genreListTv } = props;
   const [open, setOpen] = useState(false);
   const [genreList, setGenreList] = useState([]);
+import AppContext from "../../utils/Context/AppContextProvider";
 
-  const openModal = () => {
-    setOpen(true);
-  };
-
-  const pullModalState = (state) => {
-    setOpen(false);
-  };
+const MovieCard = (props) => {
+  const { content } = props;
+  const { config } = useContext(AppContext);
+  const [genreList, setGenreList] = useState([]);
 
   const handleConfigState = () => {
     if (config.length === 0) {
@@ -29,23 +29,6 @@ const MovieCard = (props) => {
     }
   };
 
-  const theme = createTheme({
-    palette: {
-      primary: {
-        light: "#ffbd45",
-        main: "#fb8c00",
-        dark: "#c25e00",
-        contrastText: "#000000",
-      },
-      secondary: {
-        light: "#484848",
-        main: "#121212",
-        dark: "#000000",
-        contrastText: "#ffffff",
-      },
-    },
-  });
-
   const displayTypeIcon = (entries) => {
     if (entries === "Movie") {
       return <TheatersOutlinedIcon sx={{ fontSize: "0.8rem" }} />;
@@ -54,29 +37,10 @@ const MovieCard = (props) => {
     }
   };
 
-  useEffect(() => {
-    const fetchGenreList = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/genre/movie/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR"
-        )
-        .then((res) => setGenreList(res.data.genres));
-    };
-    fetchGenreList();
-  }, []);
-
   let idString = content.id.toString();
 
   return (
     <>
-      {/* <Modal
-        key={content.id}
-        modalState={open}
-        element={content}
-        genres={genreList}
-        getModalState={pullModalState}
-      /> */}
-
       <div className="movie-card">
         <div className="movie-card__header">
           {content.vote_average > 7 ? (
@@ -108,9 +72,6 @@ const MovieCard = (props) => {
                   config.base_url + config.poster_sizes[1] + content.poster_path
                 }
                 alt={"poster of " + content.title}
-                onClick={() => {
-                  setOpen(true);
-                }}
               />
             ) : (
               <div className="movie-card__image--container__default--image">

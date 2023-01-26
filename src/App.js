@@ -11,6 +11,7 @@ import Modal from "./components/Cards/Modal";
 import { Login } from "./pages/Login/Login";
 import AddToPlaylist from "./pages/Likes/AddToPlaylist";
 
+
 const App = () => {
   const [data, setData] = useState(["Data"]);
   return (

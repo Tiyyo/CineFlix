@@ -8,11 +8,14 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import AddIcon from "@mui/icons-material/Add";
 import ReactPlayer from "react-player";
+import { useContext } from "react";
+import AppContext from "../../utils/Context/AppContextProvider";
 
 const Modal = () => {
   //--- Destructuring
   const location = useLocation();
-  const { content, config, genreListMovie, genreListTv } = location.state;
+  const { config, genreListMovie, genreListTv } = useContext(AppContext);
+  const { content } = location.state;
   const { id, genre_ids, type } = content;
   const params = useParams();
 
@@ -87,6 +90,7 @@ const Modal = () => {
       );
     });
   };
+
 
   const displayReleaseYear = () => {
     if (content.first_air_date) {
@@ -319,6 +323,7 @@ const Modal = () => {
             </div>
             <div className="card__infos__genres">
               {displayGenre(genre_ids, type)}
+
             </div>
             <div className="card__infos__rating">
               <StarOutline sx={{ color: "yellow" }} />
