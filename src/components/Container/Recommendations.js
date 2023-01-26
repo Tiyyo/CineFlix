@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/pagination";

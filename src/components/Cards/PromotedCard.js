@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import AppContext from "../../utils/Context/AppContextProvider";
 
 const PromotedCard = (props) => {
-  const { content, config } = props;
-
+  const { content } = props;
+  const { config } = useContext(AppContext);
   return (
     <div className="promoted--card">
       <div className="promoted--card__banner">

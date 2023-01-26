@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useContext } from "react";
+import AppContext from "../../utils/Context/AppContextProvider";
 import useWindowSize from "../../utils/useWindowSize";
 
 const HeaderHome = (props) => {
-  const { content, config, getHeight } = props;
+  const { config } = useContext(AppContext);
+  const { content, getHeight } = props;
 
   const [posterToDisplay, setPosterToDisplay] = useState(1);
   const [height, setHeight] = useState();

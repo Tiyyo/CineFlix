@@ -50,9 +50,6 @@ const Home = () => {
 
   const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [config, setConfig] = useState([]);
-  const [genreListMovie, setGenreListMovie] = useState([]);
-  const [genreListTv, setGenreListTv] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [imageHeaderHeight, setHeightImage] = useState(0);
@@ -91,65 +88,38 @@ const Home = () => {
     setNavOpen(something);
   };
 
-  const {
-    content: trendingAll,
-    error: error1,
-    loading: loadTrends,
-  } = useFetch(trendingAllUrl);
+  const { content: trendingAll, loading: loadTrends } =
+    useFetch(trendingAllUrl);
 
-  const {
-    content: lastReleaseMovies,
-    error: error2,
-    loading: loadLastMovies,
-  } = useFetch(lastReleaseMoviesUrl);
+  const { content: lastReleaseMovies, loading: loadLastMovies } =
+    useFetch(lastReleaseMoviesUrl);
 
-  const {
-    content: lastReleaseTvShow,
-    error: error3,
-    loading: loadLastTvShows,
-  } = useFetch(lastReleaseTvShowUrl);
+  const { content: lastReleaseTvShow, loading: loadLastTvShows } =
+    useFetch(lastReleaseTvShowUrl);
 
   const lastReleaseAll = [...lastReleaseMovies, ...lastReleaseTvShow];
 
-  const {
-    content: promotedMovies,
-    error: error5,
-    loading: loadPromotedMovie,
-  } = useFetch(promotedMoviesUrl);
+  const { content: promotedMovies, loading: loadPromotedMovie } =
+    useFetch(promotedMoviesUrl);
 
-  const {
-    content: promotedTvShows,
-    error: error6,
-    loading: loadPromotedShow,
-  } = useFetch(promotedShowsUrl);
+  const { content: promotedTvShows, loading: loadPromotedShow } =
+    useFetch(promotedShowsUrl);
 
   const promotedElements = [...promotedTvShows, ...promotedMovies];
 
-  const {
-    content: topRatedMovies,
-    error: topRatedMoviesError,
-    loading: loadTopRatedMovie,
-  } = useFetch(topRatedMoviesUrl);
+  const { content: topRatedMovies, loading: loadTopRatedMovie } =
+    useFetch(topRatedMoviesUrl);
 
-  const {
-    content: topRatedShow,
-    error: topRatedShowError,
-    loading: loadTopRatedShow,
-  } = useFetch(topRatedShowUrl);
+  const { content: topRatedShow, loading: loadTopRatedShow } =
+    useFetch(topRatedShowUrl);
 
   const topRated = [...topRatedMovies, ...topRatedShow];
 
-  const {
-    content: popularMovies,
-    error: popularMoviesError,
-    loading: loadPopularMovie,
-  } = useFetch(popularMoviesUrl);
+  const { content: popularMovies, loading: loadPopularMovie } =
+    useFetch(popularMoviesUrl);
 
-  const {
-    content: popularTvShow,
-    error: popularTvShowError,
-    loading: loadPopularTvShow,
-  } = useFetch(popularTvShowsUrl);
+  const { content: popularTvShow, loading: loadPopularTvShow } =
+    useFetch(popularTvShowsUrl);
 
   const popularElements = [...popularTvShow, ...popularMovies];
 
@@ -191,41 +161,8 @@ const Home = () => {
   }, [loadsArray]);
 
   useEffect(() => {
-    const fetchConfig = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/configuration?api_key=3e2abd7e10753ed410ed7439f7e1f93f"
-        )
-        .then((res) => setConfig(res.data.images));
-    };
-    fetchConfig();
-  }, []);
-
-  useEffect(() => {
     setPageNumber(1);
   }, [inputSearchValue]);
-
-  useEffect(() => {
-    const fetchGenreListMovie = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/genre/movie/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US"
-        )
-        .then((res) => setGenreListMovie(res.data.genres));
-    };
-    fetchGenreListMovie();
-  }, []);
-
-  useEffect(() => {
-    const fetchGenreListTv = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/genre/tv/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US"
-        )
-        .then((res) => setGenreListTv(res.data.genres));
-    };
-    fetchGenreListTv();
-  }, []);
 
   return (
     <div
@@ -245,67 +182,29 @@ const Home = () => {
         <ProfileBtn />
       </div>
       {searchIsActive === true ? (
-        <DisplaySearchResult
-          search={search}
-          getPageNumber={pullPageNumber}
-          config={config}
-        />
+        <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
       ) : loading ? (
         <div className="main">
-          <HeaderHome
-            content={playingNowMovie}
-            config={config}
-            getHeight={getHeight}
-          />
+          <HeaderHome content={playingNowMovie} getHeight={getHeight} />
           <Spacer imageHeaderHeight={imageHeaderHeight} />
-          {console.log(imageHeaderHeight)}
           {imageHeaderHeight ? (
             <div>
               <HonrizontalCarousel
                 content={lastReleaseAll}
-                config={config}
                 title="What has been out lately "
-                genreListMovie={genreListMovie}
-                genreListTv={genreListTv}
               />
-              <Trendings
-                content={trendingAll}
-                config={config}
-                title={"What is Trending now"}
-                genreListMovie={genreListMovie}
-                genreListTv={genreListTv}
-              />
+              <Trendings content={trendingAll} title={"What is Trending now"} />
               <HonrizontalCarousel
                 content={popularElements}
-                config={config}
                 title="You should look at it "
-                genreListMovie={genreListMovie}
-                genreListTv={genreListTv}
               />
               <HonrizontalCarousel
                 content={topRated}
-                config={config}
                 title="What users like the most"
-                genreListMovie={genreListMovie}
-                genreListTv={genreListTv}
               />
-              <Promoted
-                content={promotedElements}
-                config={config}
-                genreListMovie={genreListMovie}
-                genreListTv={genreListTv}
-              />
-              <FavoriteGenre
-                genreListMovie={genreListMovie}
-                genreListTv={genreListTv}
-                dataToDisplay="Both"
-              />
-              <Promoted
-                content={promotedElements}
-                config={config}
-                genreListMovie={genreListMovie}
-                genreListTv={genreListTv}
-              />
+              <Promoted content={promotedElements} />
+              <FavoriteGenre dataToDisplay="Both" />
+              <Promoted content={promotedElements} />
             </div>
           ) : (
             <div className="loading">

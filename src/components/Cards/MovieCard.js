@@ -1,25 +1,15 @@
-import { useState, useEffect } from "react";
-import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
-import { createTheme } from "@mui/material";
-import axios from "axios";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 import DynamicRating from "./DynamicRating";
 import TheatersOutlinedIcon from "@mui/icons-material/TheatersOutlined";
 import TvOutlinedIcon from "@mui/icons-material/TvOutlined";
 import HideImageIcon from "@mui/icons-material/HideImage";
 import { Link } from "react-router-dom";
-
-const MovieCard = (props) => {
-  const { content, config, genreListMovie, genreListTv } = props;
-  const [open, setOpen] = useState(false);
-  const [genreList, setGenreList] = useState([]);
 import AppContext from "../../utils/Context/AppContextProvider";
 
 const MovieCard = (props) => {
   const { content } = props;
-  const { config } = useContext(AppContext);
-  const [genreList, setGenreList] = useState([]);
+  const { config, genreListMovie, genreListTv } = useContext(AppContext);
 
   const handleConfigState = () => {
     if (config.length === 0) {

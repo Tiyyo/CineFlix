@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 
 const useDetailsTwo = (type, id) => {
   let filmVideoUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=fr-FR`;
@@ -19,16 +19,10 @@ const useDetailsTwo = (type, id) => {
 
   let tvShowUrls = [tvVideoUrl, tvCreditsUrl, tvSimilarUrl];
 
-  const [credits, setCredits] = useState([]);
-  const [similars, setSimilars] = useState([]);
-  const [videos, setVideos] = useState([]);
-
   const fetchData = async (querys) => {
-    axios.all(querys.map((url) => axios.get(url))).then(
-      axios.spread((video, credit, similar) => {
-        console.log(video.data, credit.data, similar.data);
-      })
-    );
+    axios
+      .all(querys.map((url) => axios.get(url)))
+      .then(axios.spread((video, credit, similar) => {}));
   };
   useEffect(() => {
     if (type === "Movie") {

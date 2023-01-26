@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import PromotedCard from "../Cards/PromotedCard";
 
 const Promoted = (props) => {
-  const { content, config, genreListMovie, genreListTv } = props;
+  const { content } = props;
   const [randomIndexElement, setRandomIndex] = useState(0);
 
   let numberElementDisplayed = 1;
@@ -31,11 +31,7 @@ const Promoted = (props) => {
         .slice(randomIndexElement, randomIndexElement + numberElementDisplayed)
         .map((el) => {
           return (
-            <PromotedCard
-              key={el.id + el.title || el.name}
-              content={el}
-              config={config}
-            />
+            <PromotedCard key={el.id + el.title || el.name} content={el} />
           );
         })}
     </div>

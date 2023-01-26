@@ -38,14 +38,9 @@ const Films = () => {
 
   const [searchIsActive, setSearchActive] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [config, setConfig] = useState([]);
-  const [genreListMovie, setGenreListMovie] = useState([]);
-  const [genreListTv, setGenreListTv] = useState([]);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [navIsOpen, setNavOpen] = useState(false);
-
-  const favoriteGenre = [];
 
   const pullInputValue = (inputValue) => {
     setInputSearchValue(inputValue);
@@ -73,35 +68,20 @@ const Films = () => {
     setNavOpen(something);
   };
 
-  const {
-    content: upcomingMovies,
-    error: error1,
-    loading: loadTrends,
-  } = useFetch(upcomingMovieUrl);
+  const { content: upcomingMovies, loading: loadTrends } =
+    useFetch(upcomingMovieUrl);
 
-  const {
-    content: lastReleaseMovies,
-    error: error2,
-    loading: loadLastMovies,
-  } = useFetch(lastReleaseMoviesUrl);
+  const { content: lastReleaseMovies, loading: loadLastMovies } =
+    useFetch(lastReleaseMoviesUrl);
 
-  const {
-    content: recommendationsMovie,
-    error: error5,
-    loading: loadRecommendMovies,
-  } = useFetch(recommendationsMoviesUrl);
+  const { content: recommendationsMovie, loading: loadRecommendMovies } =
+    useFetch(recommendationsMoviesUrl);
 
-  const {
-    content: promotedMovies,
-    error: promotedMovieError,
-    loading: loadPromotedMovie,
-  } = useFetch(promotedMoviesUrl);
+  const { content: promotedMovies, loading: loadPromotedMovie } =
+    useFetch(promotedMoviesUrl);
 
-  const {
-    content: popularMovies,
-    error: popularMoviesError,
-    loading: loadPopularMovie,
-  } = useFetch(popularMoviesUrl);
+  const { content: popularMovies, loading: loadPopularMovie } =
+    useFetch(popularMoviesUrl);
 
   let loadsArray = [
     loadTrends,
@@ -120,39 +100,6 @@ const Films = () => {
     };
     updatelLoading();
   }, [loadsArray]);
-
-  useEffect(() => {
-    const fetchConfig = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/configuration?api_key=3e2abd7e10753ed410ed7439f7e1f93f"
-        )
-        .then((res) => setConfig(res.data.images));
-    };
-    fetchConfig();
-  }, []);
-
-  useEffect(() => {
-    const fetchGenreListMovie = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/genre/movie/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US"
-        )
-        .then((res) => setGenreListMovie(res.data.genres));
-    };
-    fetchGenreListMovie();
-  }, []);
-
-  useEffect(() => {
-    const fetchGenreListTv = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/genre/tv/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US"
-        )
-        .then((res) => setGenreListTv(res.data.genres));
-    };
-    fetchGenreListTv();
-  }, []);
 
   useEffect(() => {
     setPageNumber(1);
@@ -182,11 +129,7 @@ const Films = () => {
         <ProfileBtn />
       </div>
       {searchIsActive ? (
-        <DisplaySearchResult
-          search={search}
-          getPageNumber={pullPageNumber}
-          config={config}
-        />
+        <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
       ) : !loading ? (
         <div className="loader--container">
           <Loader />
@@ -195,37 +138,16 @@ const Films = () => {
         <div className="main">
           <Trendings
             content={upcomingMovies}
-            config={config}
-            genreListMovie={genreListMovie}
-            genreListTv={genreListTv}
             title={"What is coming soon next"}
           />
           <HorizontalCarousel
             content={lastReleaseMovies}
-            config={config}
-            genreListMovie={genreListMovie}
-            genreListTv={genreListTv}
             title="What has been out lately"
           />
-          <Promoted content={promotedMovies} config={config} />
-          <HorizontalCarousel
-            content={popularMovies}
-            config={config}
-            genreListMovie={genreListMovie}
-            genreListTv={genreListTv}
-            title="Popular"
-          />
-          <FavoriteGenre
-            genreListMovie={genreListMovie}
-            genreListTv={genreListTv}
-            dataToDisplay="Movie"
-          />
-          <Promoted
-            content={promotedMovies}
-            config={config}
-            genreListMovie={genreListMovie}
-            genreListTv={genreListTv}
-          />
+          <Promoted content={promotedMovies} />
+          <HorizontalCarousel content={popularMovies} title="Popular" />
+          <FavoriteGenre dataToDisplay="Movie" />
+          <Promoted content={promotedMovies} />
 
           {/* <Recommendations content={recommendationsMovie} config={config}>
             <MovieCard />

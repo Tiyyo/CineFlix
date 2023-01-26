@@ -1,6 +1,5 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
-
+import { useEffect, useState } from "react";
 const useSearchMovie = (query, pageNumber) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);

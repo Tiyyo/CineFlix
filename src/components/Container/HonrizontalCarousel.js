@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import MovieCard from "../Cards/MovieCard";
 
 const HonrizontalCarousel = (props) => {
-  const { content, config, title, genreListMovie, genreListTv } = props;
+  const { content, title } = props;
   const [width, setWidth] = useState(0);
   const carousel = useRef();
 
@@ -34,16 +34,7 @@ const HonrizontalCarousel = (props) => {
               .filter((el) => el.poster_path)
               .slice(0, 35)
               .map((el) => {
-                return (
-                  <MovieCard
-                    className="item"
-                    key={el.id}
-                    content={el}
-                    config={config}
-                    genreListMovie={genreListMovie}
-                    genreListTv={genreListTv}
-                  />
-                );
+                return <MovieCard className="item" key={el.id} content={el} />;
               })}
           </motion.div>
         </motion.div>

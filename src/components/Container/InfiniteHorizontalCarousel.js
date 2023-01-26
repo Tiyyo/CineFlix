@@ -5,7 +5,7 @@ import MovieCard from "../Cards/MovieCard";
 import { motion } from "framer-motion";
 
 const InfiniteHorizontalCarousel = (props) => {
-  const { genre, config, genreListMovie, genreListTv } = props;
+  const { genre } = props;
   const { id, name, type } = genre;
 
   let movie = "Movie";
@@ -76,16 +76,7 @@ const InfiniteHorizontalCarousel = (props) => {
             className="cards-container"
           >
             {data.results.map((el) => {
-              return (
-                <MovieCard
-                  className="item"
-                  key={el.id}
-                  content={el}
-                  config={config}
-                  genreListMovie={genreListMovie}
-                  genreListTv={genreListTv}
-                />
-              );
+              return <MovieCard className="item" key={el.id} content={el} />;
             })}
           </motion.div>
         </motion.div>

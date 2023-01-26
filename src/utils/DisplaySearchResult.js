@@ -1,13 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useContext } from "react";
+import AppContext from "./Context/AppContextProvider";
 
 const DisplaySearchResult = (props) => {
   const { content, error, loading, hasMore } = props.search;
-  const config = props.config;
-  const [genreListMovie, setGenreListMovie] = useState([]);
-  const [genreListTv, setGenreListTv] = useState([]);
-
+  const { config } = useContext(AppContext);
   const observer = useRef();
   const lastContentRef = useCallback(
     (node) => {
@@ -24,28 +23,6 @@ const DisplaySearchResult = (props) => {
     [loading, hasMore]
   );
 
-  useEffect(() => {
-    const fetchGenreListMovie = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/genre/movie/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US"
-        )
-        .then((res) => setGenreListMovie(res.data.genres));
-    };
-    fetchGenreListMovie();
-  }, []);
-
-  useEffect(() => {
-    const fetchGenreListTv = async () => {
-      const result = await axios
-        .get(
-          "https://api.themoviedb.org/3/genre/tv/list?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US"
-        )
-        .then((res) => setGenreListTv(res.data.genres));
-    };
-    fetchGenreListTv();
-  }, []);
-
   return (
     <div className="search--result__container">
       <div className="search--result__wrapper">
@@ -55,7 +32,7 @@ const DisplaySearchResult = (props) => {
               <Link
                 key={el.id + el.title}
                 to={el.id.toString()}
-                state={{ content: el, config, genreListMovie, genreListTv }}
+                state={{ content: el }}
               >
                 {config && el.poster_path ? (
                   <img

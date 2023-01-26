@@ -2,10 +2,9 @@ import React from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import CloseIcon from "@mui/icons-material/Close";
 import AddIcon from "@mui/icons-material/Add";
-import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 const AddToPlaylist = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   return (
     <div className="add-to-playlist">
@@ -20,7 +19,6 @@ const AddToPlaylist = () => {
       <button className="new-playlist">Create a new list</button>
 
       <div className="playlists">
-        {/* <Link to={name}> */}
         <div className="playlist">
           <h4 className="name">Ma liste de Film a voir</h4>
           <button className="add">
@@ -30,7 +28,6 @@ const AddToPlaylist = () => {
             <CloseIcon sx={{ color: "white" }} />
           </button>
         </div>
-        {/* </Link> */}
       </div>
     </div>
   );

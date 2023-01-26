@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import TvOutlinedIcon from "@mui/icons-material/TvOutlined";
@@ -8,8 +7,6 @@ import { createTheme, ThemeProvider } from "@mui/material";
 
 import { NavLink } from "react-router-dom";
 import Hamburger from "../hamburger/Hamburger";
-import ProfileBtn from "./ProfileBtn";
-import SearchBar from "../SearchBar/SearchBar";
 
 const Navigation = (props) => {
   const getNavState = props.getNavState;
@@ -35,7 +32,7 @@ const Navigation = (props) => {
       fontSize: 14,
     },
   });
-  const navLinks = document.querySelector(".nav__links");
+
   const pullOpenState = (state) => {
     state ? setOpenMenu(true) : setOpenMenu(false);
   };

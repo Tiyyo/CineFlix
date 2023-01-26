@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Avatar, createTheme, ThemeProvider } from "@mui/material";
 import { StarOutline } from "@mui/icons-material";
@@ -8,14 +8,13 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import AddIcon from "@mui/icons-material/Add";
 import ReactPlayer from "react-player";
-import { useContext } from "react";
 import AppContext from "../../utils/Context/AppContextProvider";
 
 const Modal = () => {
   //--- Destructuring
   const location = useLocation();
-  const { config, genreListMovie, genreListTv } = useContext(AppContext);
   const { content } = location.state;
+  const { config, genreListMovie, genreListTv } = useContext(AppContext);
   const { id, genre_ids, type } = content;
   const params = useParams();
 
@@ -51,9 +50,7 @@ const Modal = () => {
   const [credits, setCredits] = useState([]);
   const [similars, setSimilars] = useState([]);
   const [videos, setVideos] = useState([]);
-  const [castToDisplay, setCastToDisplay] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [directors, setDirectors] = useState("");
   const [synopsisIsOpen, setSynopsisIsOpen] = useState(false);
   const [ytKey, setYtKey] = useState("");
   const [isEnough, setIsEnough] = useState(false);
@@ -62,7 +59,6 @@ const Modal = () => {
   const displayGenre = (arrGenres, type) => {
     let movieGenreNames = [];
     if (type === movie) {
-      console.log(arrGenres);
       arrGenres.forEach((genre) => {
         genreListMovie.forEach((el) => {
           if (el.id === genre) {
@@ -72,7 +68,6 @@ const Modal = () => {
       });
     }
     if (type === tvShow) {
-      console.log(arrGenres);
       arrGenres.forEach((genre) => {
         genreListTv.forEach((el) => {
           if (el.id === genre) {
@@ -82,7 +77,6 @@ const Modal = () => {
       });
     }
     return movieGenreNames.map((genreName, index) => {
-      console.log(movieGenreNames);
       return (
         <span key={index} className="genre">
           {genreName}
@@ -90,7 +84,6 @@ const Modal = () => {
       );
     });
   };
-
 
   const displayReleaseYear = () => {
     if (content.first_air_date) {
@@ -128,11 +121,11 @@ const Modal = () => {
     if (loading) {
       return;
     } else if (credits.cast.length > 0) {
-      let castToDisplay2 = credits.cast.slice(0, 3);
+      let castToDisplay = credits.cast.slice(0, 3);
       return (
         <div className="actors">
           <span>Avec : </span>
-          {castToDisplay2.map((person) => {
+          {castToDisplay.map((person) => {
             return (
               <span key={person.id} className="actor">
                 {person.name}
@@ -148,7 +141,7 @@ const Modal = () => {
     if (loading) {
       return;
     } else if (credits.crew.length > 0) {
-      const { cast, crew, id } = credits;
+      const { crew } = credits;
       let mainDirector = [];
       for (let i = 0; i < crew.length; i++) {
         if (crew[i].job === director || crew[i].job === directorAlternative) {
@@ -323,7 +316,6 @@ const Modal = () => {
             </div>
             <div className="card__infos__genres">
               {displayGenre(genre_ids, type)}
-
             </div>
             <div className="card__infos__rating">
               <StarOutline sx={{ color: "yellow" }} />
@@ -333,7 +325,6 @@ const Modal = () => {
           <div className="card__synopsis">
             <div
               className="card__synopsis--container"
-              onClick={(e) => console.log(e)}
               style={
                 synopsisIsOpen
                   ? { maxHeight: "fit-content" }
