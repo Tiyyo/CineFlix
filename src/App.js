@@ -6,13 +6,9 @@ import "./app.scss";
 import Films from "./pages/Films/Films";
 import TvShow from "./pages/TvShow/TvShow";
 import Modal from "./components/Cards/Modal";
-import AppContextProvider from "./utils/Context/AppContextProvider"
-import UserContextProvider from "./utils/Context/UserContextProvider"
 
 const App = () => {
   return (
-    <UserContext.Provider>
-    <AppContext.Provider>
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<Home />}></Route>
@@ -24,8 +20,6 @@ const App = () => {
         <Route path={`/:id/:id`} element={<Modal />} />
       </Routes>
     </BrowserRouter>
-    </AppContext.Provider>
-    </UserContext.Provider>
   );
 };
 

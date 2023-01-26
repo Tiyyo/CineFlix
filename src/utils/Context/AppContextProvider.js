@@ -1,16 +1,15 @@
-import React, {createContext, useState, useEffect} from "react"
-import axios from "axios
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
+export const AppContext = createContext(null);
 
-export const AppContext = createContext(AppContext);
+export const AppContextProvider = ({ children }) => {
+  const [config, setConfig] = useState(null);
+  const [genreListMovie, setGenreListMovie] = useState([]);
+  const [genreListTv, setGenreListTv] = useState([]);
 
-export const AppContextProvider = ({children}) => {
-const [config, setConfig] = useState(null)
-const [genreListMovie, setGenreListMovie] = useState([])
-const [genreListTv, setGenreListTv] = useState([])
+  const value = { config, genreListMovie, genreListTv };
 
-const value={config, genreListMovie, genreListTv}
-
-   useEffect(() => {
+  useEffect(() => {
     const fetchConfig = async () => {
       const result = await axios
         .get(
@@ -42,7 +41,7 @@ const value={config, genreListMovie, genreListTv}
     };
     fetchGenreListTv();
   }, []);
-return (<AppContext.Provider value={value}>{children}</AppContext.Provider>)
-}
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+};
 
 export default AppContext;

@@ -7,11 +7,14 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import ReactPlayer from "react-player";
+import { useContext } from "react";
+import AppContext from "../../utils/Context/AppContextProvider";
 
 const Modal = () => {
   //--- Destructuring
   const location = useLocation();
-  const { content, genreList, config } = location.state;
+  const { config, genreListMovie, genreListTv } = useContext(AppContext);
+  const { content } = location.state;
   const { id, genre_ids, type } = content;
   const params = useParams();
 
@@ -37,6 +40,8 @@ const Modal = () => {
   let directorAlternative = "Storyboard Artist";
 
   let videoType = "Trailer";
+  let movie = "Movie";
+  let tvShow = "TvShow";
 
   //--Others Hook
   const navigate = useNavigate();
@@ -69,6 +74,12 @@ const Modal = () => {
         </span>
       );
     });
+  };
+
+  const matchGenreType = () => {
+    if (type === movie) {
+      alert("Movie");
+    }
   };
 
   const getDetails = async (querys) => {
@@ -279,7 +290,7 @@ const Modal = () => {
               {content.release_date ? content.release_date.substring(0, 4) : ""}
             </div>
             <div className="card__infos__genres">
-              {displayGenreMovie(content.genre_ids, genreList)}
+              {matchGenreType(content.genre_ids, type)}
             </div>
             <div className="card__infos__rating">
               <StarOutline sx={{ color: "yellow" }} />
