@@ -36,7 +36,7 @@ const BannerCard = (props) => {
 
   return (
     <div className="banner--card">
-      {el.backdrop_path ? (
+      {el?.backdrop_path ? (
         <div className="banner--card__image--container">
           <img
             src={imageFormatUrl(el, sizeBackdrop())}

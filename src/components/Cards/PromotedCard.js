@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import AppContext from "../../utils/Context/AppContextProvider";
 
 const PromotedCard = (props) => {
@@ -14,12 +15,14 @@ const PromotedCard = (props) => {
           alt="banner"
         />
       </div>
-      <div className="promoted--card__poster">
-        <img
-          src={config.base_url + config.logo_sizes[1] + content.poster_path}
-          alt="poster"
-        />
-      </div>
+      <Link to={content.id.toString()} state={{ content }}>
+        <div className="promoted--card__poster">
+          <img
+            src={config.base_url + config.logo_sizes[1] + content.poster_path}
+            alt="poster"
+          />
+        </div>
+      </Link>
       <div className="promoted--card__infos">
         <h4 className="promoted--card__infos--title">
           {content.title || content.name}

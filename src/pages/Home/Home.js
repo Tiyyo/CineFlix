@@ -15,6 +15,10 @@ import Spacer from "../../components/Container/Spacer";
 import Promoted from "../../components/Container/Promoted";
 import { CircularProgress } from "@mui/material";
 import FavoriteGenre from "../../components/Container/FavoriteGenre";
+import HomeContext, {
+  HomeContextProvider,
+} from "../../utils/Context/HomeContextProvider";
+import { useContext } from "react";
 
 const Home = () => {
   let currentDate = new Date();
@@ -52,9 +56,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [imageHeaderHeight, setHeightImage] = useState(0);
   const [navIsOpen, setNavOpen] = useState(false);
-
   const token = {
     headers: {
       Authorizarion:
@@ -133,9 +135,9 @@ const Home = () => {
 
   const search = useSearch(inputSearchValue, pageNumber);
 
-  const getHeight = (height) => {
-    setHeightImage(height);
-  };
+  // const getHeight = (height) => {
+  //   setHeightImage(height);
+  // };
 
   let loadsArray = [
     loadTrends,
@@ -165,29 +167,29 @@ const Home = () => {
   }, [inputSearchValue]);
 
   return (
-    <div
-      className="app"
-      onClick={() => {
-        if (navIsOpen) {
-          setNavOpen(false);
-        }
-      }}
-    >
-      <div className="header">
-        <Navigation getNavState={pullNavState} parentNavState={navIsOpen} />
-        <SearchBar
-          getInputValue={pullInputValue}
-          getOpenState={pullSearchOpenState}
-        />
-        <ProfileBtn />
-      </div>
-      {searchIsActive === true ? (
-        <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
-      ) : loading ? (
-        <div className="main">
-          <HeaderHome content={playingNowMovie} getHeight={getHeight} />
-          <Spacer imageHeaderHeight={imageHeaderHeight} />
-          {imageHeaderHeight ? (
+    <HomeContextProvider>
+      <div
+        className="app"
+        onClick={() => {
+          if (navIsOpen) {
+            setNavOpen(false);
+          }
+        }}
+      >
+        <div className="header">
+          <Navigation getNavState={pullNavState} parentNavState={navIsOpen} />
+          <SearchBar
+            getInputValue={pullInputValue}
+            getOpenState={pullSearchOpenState}
+          />
+          <ProfileBtn />
+        </div>
+        {searchIsActive === true ? (
+          <DisplaySearchResult search={search} getPageNumber={pullPageNumber} />
+        ) : loading ? (
+          <div className="main">
+            <HeaderHome content={playingNowMovie} />
+            <Spacer />
             <div>
               <HonrizontalCarousel
                 content={lastReleaseAll}
@@ -206,18 +208,14 @@ const Home = () => {
               <FavoriteGenre dataToDisplay="Both" />
               <Promoted content={promotedElements} />
             </div>
-          ) : (
-            <div className="loading">
-              <CircularProgress sx={{ color: "#fb8c00" }} />
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="loader--container">
-          <Loader />
-        </div>
-      )}
-    </div>
+          </div>
+        ) : (
+          <div className="loader--container">
+            <Loader />
+          </div>
+        )}
+      </div>
+    </HomeContextProvider>
   );
 };
 

@@ -1,21 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useContext } from "react";
 import AppContext from "../../utils/Context/AppContextProvider";
+import HomeContext from "../../utils/Context/HomeContextProvider";
 import useWindowSize from "../../utils/useWindowSize";
 
 const HeaderHome = (props) => {
   const { config } = useContext(AppContext);
-  const { content, getHeight } = props;
+  const { setImageHeaderHeight, imageHeaderHeight } = useContext(HomeContext);
+  const { content } = props;
 
   const [posterToDisplay, setPosterToDisplay] = useState(1);
-  const [height, setHeight] = useState();
   const image = useRef();
   const windowSize = useWindowSize();
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
-      setHeight(entry.target.clientHeight);
-      getHeight(height);
+      setImageHeaderHeight(entry.target.clientHeight);
     });
     observer.observe(image.current);
   }, [image, windowSize]);

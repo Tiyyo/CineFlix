@@ -18,6 +18,8 @@ const Modal = () => {
   const { id, genre_ids, type } = content;
   const params = useParams();
 
+  console.log(content);
+
   //-- Const and var
   let filmVideoUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US`;
 
@@ -152,8 +154,12 @@ const Modal = () => {
       return (
         <div className="directors">
           <span>De : </span>
-          {mainDirector.map((director) => {
-            return <span className="director">{director.name}</span>;
+          {mainDirector.map((director, index) => {
+            return (
+              <span key={index} className="director">
+                {director.name}
+              </span>
+            );
           })}
         </div>
       );
@@ -202,6 +208,7 @@ const Modal = () => {
                     config.base_url + config.logo_sizes[1] + element.poster_path
                   }
                   alt={"logo of" + element.name || element.title}
+                  key={element.id}
                 />
               </>
             );

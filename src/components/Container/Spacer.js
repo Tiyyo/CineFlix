@@ -1,7 +1,9 @@
 import React from "react";
+import { useContext } from "react";
+import HomeContext from "../../utils/Context/HomeContextProvider";
 
-const Spacer = (props) => {
-  const { imageHeaderHeight } = props;
+const Spacer = () => {
+  const { imageHeaderHeight } = useContext(HomeContext);
 
   return (
     <div
