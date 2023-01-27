@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import Loader from "../../components/Loader/Loader";
+import LoaderUI from "../../components/Loader/LoaderUI";
 import Navigation from "../../components/Navigation/Navigation";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import Trendings from "../../components/Container/Trendings";
@@ -210,9 +211,7 @@ const Home = () => {
             </div>
           </div>
         ) : (
-          <div className="loader--container">
-            <Loader />
-          </div>
+          <LoaderUI />
         )}
       </div>
     </HomeContextProvider>

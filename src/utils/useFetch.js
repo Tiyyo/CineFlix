@@ -9,7 +9,7 @@ const useFetch = (url) => {
   const shuffle = (arr) => {
     let currentIndex = arr.length,
       randomIndex;
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
       [arr[currentIndex], arr[randomIndex]] = [
@@ -34,7 +34,7 @@ const useFetch = (url) => {
         .finally(() => setLoading(true));
     };
     fetchData();
-  }, []);
+  }, [url]);
 
   content.forEach((el) => {
     if (!url.includes("tv")) {

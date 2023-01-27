@@ -6,7 +6,7 @@ import useWindowSize from "../../utils/useWindowSize";
 
 const HeaderHome = (props) => {
   const { config } = useContext(AppContext);
-  const { setImageHeaderHeight, imageHeaderHeight } = useContext(HomeContext);
+  const { setImageHeaderHeight } = useContext(HomeContext);
   const { content } = props;
 
   const [posterToDisplay, setPosterToDisplay] = useState(1);
@@ -18,7 +18,7 @@ const HeaderHome = (props) => {
       setImageHeaderHeight(entry.target.clientHeight);
     });
     observer.observe(image.current);
-  }, [image, windowSize]);
+  }, [image, windowSize, setImageHeaderHeight]);
 
   useEffect(() => {
     const changeImage = setInterval(() => {

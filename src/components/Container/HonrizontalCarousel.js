@@ -9,12 +9,10 @@ const HonrizontalCarousel = (props) => {
   const carousel = useRef();
 
   useEffect(() => {
-    if (carousel.current == undefined) {
-      console.log("current is not defined");
-    } else {
+    if (carousel?.current) {
       setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
     }
-  });
+  }, []);
 
   return (
     <div className="horizontal--single-x-card">

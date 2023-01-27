@@ -6,11 +6,8 @@ import AppContext from "../../utils/Context/AppContextProvider";
 const FavoriteGenre = (props) => {
   const { dataToDisplay } = props;
 
-  const {
-    genreListTv: genreTvList,
-    genreListMovie: genreMovieList,
-    config,
-  } = useContext(AppContext);
+  const { genreListTv: genreTvList, genreListMovie: genreMovieList } =
+    useContext(AppContext);
   let flatGenreLists = [...genreMovieList, ...genreTvList];
   let numberValues = 3;
   let movie = "Movie";
@@ -19,8 +16,6 @@ const FavoriteGenre = (props) => {
 
   const randomValues = useRef([]);
   const favoriteGenre = useRef([]);
-
-  const [genres, setGenres] = useState([]);
 
   const choseRandomValues = (numberValues, referenceGenre) => {
     let indexes = [];
@@ -63,30 +58,34 @@ const FavoriteGenre = (props) => {
     favoriteGenre.current.forEach((genre) => (genre.type = tvShow));
   };
 
-  const passDataToState = () => {
-    setGenres(favoriteGenre.current);
-  };
-
-  useEffect(() => {
-    if (dataToDisplay === both) {
-      choseRandomValues(numberValues, flatGenreLists);
-      matchIndexes(flatGenreLists);
-      addTypeBoth();
-      passDataToState();
-    }
-    if (dataToDisplay === movie) {
-      choseRandomValues(numberValues, genreMovieList);
-      matchIndexes(genreMovieList);
-      addMovieType();
-      passDataToState();
-    }
-    if (dataToDisplay === tvShow) {
-      choseRandomValues(numberValues, genreTvList);
-      matchIndexes(genreTvList);
-      addTvShowType();
-      passDataToState();
-    }
-  }, []);
+  useEffect(
+    () => {
+      if (dataToDisplay === both) {
+        choseRandomValues(numberValues, flatGenreLists);
+        matchIndexes(flatGenreLists);
+        addTypeBoth();
+      }
+      if (dataToDisplay === movie) {
+        choseRandomValues(numberValues, genreMovieList);
+        matchIndexes(genreMovieList);
+        addMovieType();
+      }
+      if (dataToDisplay === tvShow) {
+        choseRandomValues(numberValues, genreTvList);
+        matchIndexes(genreTvList);
+        addTvShowType();
+      }
+    },
+    [
+      // tvShow,
+      // movie,
+      // both,
+      // genreTvList,
+      // genreMovieList,
+      // numberValues,
+      // flatGenreLists,
+    ]
+  );
 
   return (
     <div className="favorite-genre">

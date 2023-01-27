@@ -10,7 +10,7 @@ const Recommendations = (props) => {
   const shuffle = (arr) => {
     let currentIndex = arr.length,
       randomIndex;
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
       [arr[currentIndex], arr[randomIndex]] = [

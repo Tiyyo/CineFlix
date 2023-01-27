@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import { Avatar, createTheme, ThemeProvider } from "@mui/material";
 import { StarOutline } from "@mui/icons-material";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import AddIcon from "@mui/icons-material/Add";
@@ -16,9 +16,6 @@ const Modal = () => {
   const { content } = location.state;
   const { config, genreListMovie, genreListTv } = useContext(AppContext);
   const { id, genre_ids, type } = content;
-  const params = useParams();
-
-  console.log(content);
 
   //-- Const and var
   let filmVideoUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=3e2abd7e10753ed410ed7439f7e1f93f&language=en-US`;
@@ -117,7 +114,7 @@ const Modal = () => {
     if (type === "TvShow") {
       getDetails(tvShowUrls);
     }
-  }, []);
+  }, [type, filmsUrl, tvShowUrls]);
 
   const displayCastsActors = () => {
     if (loading) {
@@ -292,6 +289,7 @@ const Modal = () => {
                   config.backdrop_sizes[1] +
                   content.backdrop_path
                 }
+                alt={"poster of " + content.name || content.title}
               />
             )}
           </div>
