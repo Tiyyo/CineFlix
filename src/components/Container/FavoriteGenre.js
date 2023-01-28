@@ -19,11 +19,27 @@ const FavoriteGenre = (props) => {
 
   const choseRandomValues = (numberValues, referenceGenre) => {
     let indexes = [];
-    for (let i = 0; i < numberValues; i++) {
-      indexes.push(Math.floor(Math.random() * referenceGenre.length));
+    while (indexes.length < 3) {
+      let randomNumber = Math.floor(Math.random() * referenceGenre.length);
+      if (indexes.includes(randomNumber)) {
+        return;
+      } else {
+        indexes.push(randomNumber);
+      }
     }
     randomValues.current = indexes;
+    console.log(indexes);
   };
+
+  // for (let i = 0; i < indexes; i++) {
+  //   let randomNumber = Math.floor(Math.random() * referenceGenre.length);
+  //   if (indexes.includes(randomNumber)) {
+  //     return;
+  //   } else {
+  //     indexes.push(randomNumber);
+  //   }
+  // }
+  // randomValues.current = indexes;
 
   const matchIndexes = (referenceGenre) => {
     let genre = [];

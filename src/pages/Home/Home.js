@@ -24,8 +24,15 @@ import { useContext } from "react";
 const Home = () => {
   let currentDate = new Date();
   const date = currentDate.setMonth(-1);
-  let promotedElementPageNumber = Math.ceil(Math.random() * 5);
-  let promotedShowElementPageNumber = 1;
+
+  const [promotedElementPageNumber, setPromotedElementPageNumber] = useState(1);
+  const [promotedShowElementPageNumber, setPromotedShowElementPageNumber] =
+    useState(1);
+
+  useEffect(() => {
+    setPromotedElementPageNumber(Math.ceil(Math.random() * +1));
+    setPromotedShowElementPageNumber(1);
+  }, []);
 
   const trendingAllUrl =
     "https://api.themoviedb.org/3/trending/all/week?api_key=3e2abd7e10753ed410ed7439f7e1f93f";
@@ -58,6 +65,7 @@ const Home = () => {
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [navIsOpen, setNavOpen] = useState(false);
+
   const token = {
     headers: {
       Authorizarion:
@@ -161,7 +169,7 @@ const Home = () => {
       return setLoading(loadsArray.every(isTrue));
     };
     updatelLoading();
-  }, [loadsArray]);
+  }, loadsArray);
 
   useEffect(() => {
     setPageNumber(1);

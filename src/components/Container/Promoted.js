@@ -23,7 +23,7 @@ const Promoted = (props) => {
   useEffect(() => {
     pickRandomNumber();
     controls();
-  }, [content]);
+  }, []);
 
   return (
     <div className="promoted">
