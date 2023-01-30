@@ -20,6 +20,7 @@ import HomeContext, {
   HomeContextProvider,
 } from "../../utils/Context/HomeContextProvider";
 import { useContext } from "react";
+import { useCallback } from "react";
 
 const Home = () => {
   let currentDate = new Date();
@@ -65,6 +66,20 @@ const Home = () => {
   const [inputSearchValue, setInputSearchValue] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const [navIsOpen, setNavOpen] = useState(false);
+
+  const ref = useRef();
+
+  const handleScroll = useCallback(() => {
+    console.log("i'm scrolling");
+  }, []);
+
+  useEffect(() => {
+    const mainDiv = ref.current;
+    console.log(mainDiv);
+    mainDiv.addEventListener("scroll", () => {
+      handleScroll();
+    });
+  }, [handleScroll]);
 
   const token = {
     headers: {
@@ -144,10 +159,6 @@ const Home = () => {
 
   const search = useSearch(inputSearchValue, pageNumber);
 
-  // const getHeight = (height) => {
-  //   setHeightImage(height);
-  // };
-
   let loadsArray = [
     loadTrends,
     loadLastMovies,
@@ -179,6 +190,7 @@ const Home = () => {
     <HomeContextProvider>
       <div
         className="app"
+        ref={ref}
         onClick={() => {
           if (navIsOpen) {
             setNavOpen(false);

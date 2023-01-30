@@ -19,7 +19,7 @@ const FavoriteGenre = (props) => {
 
   const choseRandomValues = (numberValues, referenceGenre) => {
     let indexes = [];
-    while (indexes.length < 3) {
+    while (indexes.length < numberValues) {
       let randomNumber = Math.floor(Math.random() * referenceGenre.length);
       if (indexes.includes(randomNumber)) {
         return;
