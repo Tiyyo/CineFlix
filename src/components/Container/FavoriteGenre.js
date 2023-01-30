@@ -25,6 +25,7 @@ const FavoriteGenre = (props) => {
         return;
       } else {
         indexes.push(randomNumber);
+        console.log(randomNumber)
       }
     }
     randomValues.current = indexes;
