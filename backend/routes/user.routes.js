@@ -8,5 +8,3 @@ router.post("/", createUser);
 module.exports = router;
 
 
-router.get('/', (req,res) => res.json({message : 'voici un message'}))
-module.exports = router
