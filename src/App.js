@@ -8,12 +8,18 @@ import TvShow from "./pages/TvShow/TvShow";
 import Modal from "./components/Cards/Modal";
 import { Login } from "./pages/Login/Login";
 import AddToPlaylist from "./pages/Likes/AddToPlaylist";
+import Register from "./components/Authentification/Register";
+import SignIn from "./components/Authentification/SignIn";
+
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<Login />}></Route>
+        <Route path={"/"} element={<Login />}>
+        </Route>
+          <Route path="signin" element={<SignIn/>}/>         
+          <Route path="register" element={<Register/>}/>
         <Route path={"*"} element={<Home />} />
         <Route path={"/Home"} element={<Home />}></Route>
         <Route path="/Likes" element={<Likes />}></Route>
