@@ -5,8 +5,10 @@
     align-items: center;
     justify-content: center;
 }
-.main {
+
+.register-main {
     background-color: $primary;
+    border : 2px solid green;
     border-radius: 12px;
     width: 75%;
     height: 55vh;
@@ -47,6 +49,14 @@
     .inputWrapper  {
         width : 80%;
         padding : 0.3rem 0;
+        
+        .error-container  {
+            max-height: fit-content;
+            color: rgb(255, 0, 0);
+            font-size : 0.9rem;
+            font-weight: 700;
+            padding: 5px 8px;
+        }
     }
     
 
@@ -55,6 +65,7 @@
         height: 45px;
         border-radius: 9px;
         border: 1px solid $secondary;
+        padding-left: 10px;
 
         &::placeholder  {
             padding-left: 10px;
@@ -64,7 +75,7 @@
     }
 
     button  {
-        font-family: 'merriweather', serif;
+        font-family: 'Merriweather', serif;
         font-size: 0.8rem;
         font-weight: 600;
         background-color: $secondary;

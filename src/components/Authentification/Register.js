@@ -1,7 +1,17 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const Register = () => {
-  return (
+    const [errorUsername, setErrorUsername] = useState(null)
+    const [errorEmail, setErrorMail] = useState(null)
+
+    useEffect(() => {
+        setErrorMail('This email is already used ')
+        setErrorUsername('Username already taken')
+    })
+
+   return (
     <div className="register-page">
     <div className="main">
         <div className="header">
@@ -11,19 +21,19 @@ const Register = () => {
       <form className="register-form">
         <div className="inputWrapper username">
           <input type="text" className="inputUsername" placeholder="Username" required />
-          <div className="errorUsername"></div>
+          <div className="error-container errorUsername">{errorUsername ? errorUsername : ""}</div>
         </div>
         <div className="inputWrapper firstName">
           <input type="text" className="firstName" placeholder="Jonh" required />
-          <div className="errorFirstName"></div>
+          <div className="error-container errorFirstName"></div>
         </div>
         <div className="inputWrapper lastName">
           <input type="text" className="lastName" placeholder="Doe" required />
-          <div className="errorLastName"></div>
+          <div className="error-container errorLastName"></div>
         </div>
         <div className="inputWrapper email">
           <input type="email" className="email" placeholder="john.doe@gmail.com" required />
-          <div className="errorEmail"></div>
+          <div className="error-container errorEmail">{errorEmail ? errorEmail  : '' }</div>
         </div>
         <button type='submit'>Valid your Inscription</button>
 
