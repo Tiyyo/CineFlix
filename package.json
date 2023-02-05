@@ -30,7 +30,7 @@
     "react-player": "^2.11.0",
     "react-router": "^6.6.1",
     "react-router-dom": "^6.5.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "redux": "^4.2.0",
     "sass": "^1.57.1",
     "styled-components": "^5.3.6",
@@ -62,5 +62,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tiyyo/CineFlix.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tiyyo/CineFlix/issues"
+  },
+  "homepage": "https://github.com/Tiyyo/CineFlix#readme"
 }

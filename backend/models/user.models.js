@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
   firstName: {
     type: String,
     required: true,
-    default : null,
+    default: null,
   },
   lastName: {
     type: String,
@@ -16,13 +16,13 @@ const userSchema = mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique : true,
+    unique: true,
   },
-  password :{
-    type : String
+  password: {
+    type: String,
   },
-  token : {
-    type : String
+  token: {
+    type: String,
   },
   admin: {
     type: Boolean,

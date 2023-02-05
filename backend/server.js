@@ -19,7 +19,9 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/user", require("./routes/user.routes"));
-app.use(expres.static(path.join(__dirname, 'client', 'build')))
-app.get('/*', (req,res) => {res.sendFile(path.join('../public/index.html'))})
+app.use(expres.static(path.join(__dirname, "client", "build")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join("../public/index.html"));
+});
 
-app.listen(port, () => console.log("server start at port " + port))
+app.listen(port, () => console.log("server start at port " + port));
