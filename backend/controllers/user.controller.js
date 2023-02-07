@@ -1,5 +1,10 @@
-
 const UserModel = require("../models/user.models");
+const bycrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const userModels = require("../models/user.models");
+const dotenv = require("dotenv").config();
+const cookieParser = require("cookie-parser");
+const { createTokens } = require("./JWT");
 
 module.exports.createUser = async (req, res) => {
   try {
@@ -8,6 +13,7 @@ module.exports.createUser = async (req, res) => {
     if (!(username && firstName && lastName && email && password)) {
       res.status(400).send("All input is required");
     }
+
     const emailUsed = await UserModel.findOne({ email });
 
     if (emailUsed) {
@@ -19,21 +25,19 @@ module.exports.createUser = async (req, res) => {
     if (usernameUsed) {
       return res.status(409).send("This username is already taken");
     }
-    encryptedUserPassword = await bcrypt.hash(password, 10);
+    encryptedUserPassword = await bycrypt.hash(password, 10);
 
     const user = await UserModel.create({
       username: req.body.username,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      email: req.body.email.toLowercase(),
+      email: req.body.email,
       password: encryptedUserPassword,
     });
 
-    const token = jwt.sign({ user_id: user_id, email }, process.env.TOKEN_KEY, {
-      expriesIn: "5h",
-    });
+    const accesToken = createTokens(user);
 
-    user.token = token;
+    user.token = accesToken;
 
     res.status(200).json(user);
   } catch (error) {
@@ -42,23 +46,22 @@ module.exports.createUser = async (req, res) => {
 };
 
 module.exports.loginUser = async (req, res) => {
-  try {
-    const {email, password} = req.body
-    if(!(email && password)) {
-      res.status(400).send('All inputs are required')
-    }
+  const { email, password } = req.body;
+  const user = await UserModel.findOne({ email: email });
 
-    const user = await User.findOne({email})
+  if (!user) res.status(400).json({ error: " User doesn't exist" });
 
-    if(user && ( await bycrypt.compare(password, user.password))){
-      const token = jwt.sign({user_id: user_id, email}, process.env.TOKEN_KEY, {expriresIn : '5h'})
+  const dbPassword = user.password;
+  const isMatch = bycrypt.compare(password, dbPassword);
 
-      user.token = token ;
-
-      return res.status(200).json(user)
-    }
-    return res.status(400).send('Invalid Credentials')
-  } catch (error) {
-    console.log(error);
-  }
+  if (isMatch) res.status(200).send(isMatch);
+  // bycrypt.compare(password, dbPassword).then((match) => {
+  //   if (!match) {
+  //     res
+  //       .status(400)
+  //       .json({ error: "Wrong Username and Password Combination" });
+  //   } else {
+  //     res.json("logged In");
+  //   }
+  // });
 };
