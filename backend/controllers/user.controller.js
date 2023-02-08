@@ -1,67 +1,71 @@
-const UserModel = require("../models/user.models");
-const bycrypt = require("bcrypt");
+const Users = require("../models/user.models");
+const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const asyncHandler = require("express-async-handler");
 const userModels = require("../models/user.models");
 const dotenv = require("dotenv").config();
 const cookieParser = require("cookie-parser");
 const { createTokens } = require("./JWT");
+//@desc Register a User
+//@route POST /user/register
+//@acces public
 
-module.exports.createUser = async (req, res) => {
-  try {
-    const { username, firstName, lastName, email, password } = req.body;
-
-    if (!(username && firstName && lastName && email && password)) {
-      res.status(400).send("All input is required");
-    }
-
-    const emailUsed = await UserModel.findOne({ email });
-
-    if (emailUsed) {
-      return res.status(409).send("User already exist. Please Login");
-    }
-
-    const usernameUsed = await UserModel.findOne({ username });
-
-    if (usernameUsed) {
-      return res.status(409).send("This username is already taken");
-    }
-    encryptedUserPassword = await bycrypt.hash(password, 10);
-
-    const user = await UserModel.create({
-      username: req.body.username,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      password: encryptedUserPassword,
-    });
-
-    const accesToken = createTokens(user);
-
-    user.token = accesToken;
-
-    res.status(200).json(user);
-  } catch (error) {
-    console.log(error);
+module.exports.createUser = asyncHandler(async (req, res) => {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
+    res.status(400);
+    throw new Error("All fields are required ! ");
   }
-};
 
-module.exports.loginUser = async (req, res) => {
+  const userAvailable = await Users.findOne({ email });
+  if (userAvailable) {
+    res.status(400);
+    throw new Error("User already registered ! PLease Login");
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  console.log("Hashed Password : ", hashedPassword);
+
+  const user = await Users.create({
+    username,
+    email,
+    password: hashedPassword,
+  });
+
+  if (user) {
+    res.status(201).json({ _id: user.id, email: user.email });
+    res.json({ message: "User registerd" });
+  } else {
+    res.status(400);
+    throw new Error("User data is not valid");
+  }
+});
+
+//@desc Login User
+//@route POST /user/login
+//@acces public
+
+module.exports.loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  const user = await UserModel.findOne({ email: email });
+  if (!email || !password) {
+    res.status(400);
+    throw new Error("All fileds are required");
+  }
+  const user = await Users.findOne({ email });
 
-  if (!user) res.status(400).json({ error: " User doesn't exist" });
+  if (user && (await bcrypt.compare(password, user.password))) {
+    const accessToken = createTokens(user);
+    res.status(200).json({ accessToken });
+  } else {
+    res.status(401);
+    throw new Error("Email or Password is not valid");
+  }
 
-  const dbPassword = user.password;
-  const isMatch = bycrypt.compare(password, dbPassword);
+  // res.json({ message: "User Logged IN" });
+});
 
-  if (isMatch) res.status(200).send(isMatch);
-  // bycrypt.compare(password, dbPassword).then((match) => {
-  //   if (!match) {
-  //     res
-  //       .status(400)
-  //       .json({ error: "Wrong Username and Password Combination" });
-  //   } else {
-  //     res.json("logged In");
-  //   }
-  // });
-};
+//@desc Current user info
+//@route POST/ user/current
+//@acees private
+
+module.exports.currentUser = asyncHandler(async (req, res) => {});
